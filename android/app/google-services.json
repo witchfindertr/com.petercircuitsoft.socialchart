@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1091620873022",
+    "project_id": "socialchart-192aa",
+    "storage_bucket": "socialchart-192aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091620873022:android:ffd0aafbb7f8198e1e026f",
+        "android_client_info": {
+          "package_name": "com.petercircuitsoft.socialchart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091620873022-e7jpkrekdgh0ccjdrfdrg8r7l2uuc19s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhQdqpVRKH0XYdWRkBBKteQ8SYRSKN_fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091620873022-e7jpkrekdgh0ccjdrfdrg8r7l2uuc19s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1091620873022-2ot224qnt1p3dqgulpk0ogijj14hlsae.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.petercircuitsoft.socialchart"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
