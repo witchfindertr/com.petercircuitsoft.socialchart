@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'BottomTabNavigator.dart';
 
-import 'BottomTabNavigatorInfo.dart';
+import 'NavigationTree.dart';
 
 import 'package:get/get.dart';
 
@@ -30,6 +30,6 @@ Widget _buildOffstageNavigator(TabItem tabItem) {
 
   return Obx(() => Offstage(
         offstage: indexController.currentIndex.value != tabItem,
-        child: tabNavigators[tabItem],
+        child: bottomTabs[tabItem],
       ));
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'BottomTabNavigatorInfo.dart';
+import 'NavigationTree.dart';
 
 class IndexController extends GetxController {
   static IndexController get to => Get.find();
   var currentIndex = TabItem.home.obs;
 
-  void changeTabIndex(TabItem _index) => currentIndex.value = _index;
+  void changeTabIndex(TabItem index) => currentIndex.value = index;
 }
 
 class BottomTabNavigator extends StatelessWidget {
@@ -24,8 +24,7 @@ class BottomTabNavigator extends StatelessWidget {
             _buildItem(TabItem.notice),
             _buildItem(TabItem.profile),
           ],
-          currentIndex:
-              tabNavigators[indexController.currentIndex.value]!.index,
+          currentIndex: bottomTabs[indexController.currentIndex.value]!.index,
           onTap: (index) =>
               indexController.changeTabIndex(TabItem.values[index]),
         ));
@@ -33,8 +32,8 @@ class BottomTabNavigator extends StatelessWidget {
 
   BottomNavigationBarItem _buildItem(TabItem tabItem) {
     return BottomNavigationBarItem(
-      icon: Icon(tabNavigators[tabItem]!.icon),
-      label: tabNavigators[tabItem]!.name,
+      icon: Icon(bottomTabs[tabItem]!.icon),
+      label: bottomTabs[tabItem]!.name,
     );
   }
 }

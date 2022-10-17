@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 //for firebase
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:socialchart/navigators/LoginNavigator.dart';
 import 'package:socialchart/navigators/MainNavigator.dart';
 import 'firebase_options.dart';
 import 'package:get/get.dart';
@@ -22,8 +25,16 @@ class SocialChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: MainNavigator(),
-    );
+    return Scaffold(
+        body: StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return const MainNavigator();
+        } else {
+          return const LoginNavigator();
+        }
+      },
+    ));
   }
 }

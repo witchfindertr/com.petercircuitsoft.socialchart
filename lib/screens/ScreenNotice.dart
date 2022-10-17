@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ScreenExplore extends StatelessWidget {
-  const ScreenExplore({super.key});
+class ScreenNotice extends StatelessWidget {
+  const ScreenNotice({super.key});
 
   @override
   Widget build(BuildContext context) {
