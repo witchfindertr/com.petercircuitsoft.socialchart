@@ -8,12 +8,28 @@ class InsightCardBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         height: 40,
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Icon(Icons.push_pin_outlined),
-            Icon(Icons.chat_bubble_outline),
-            Icon(Icons.share_outlined),
+            IconButton(
+              iconSize: 20,
+              splashRadius: 20,
+              onPressed: () => {},
+              icon: Icon(Icons.push_pin_outlined),
+            ),
+            IconButton(
+              iconSize: 20,
+              splashRadius: 20,
+              onPressed: () => {},
+              icon: Icon(Icons.chat_bubble_outline),
+            ),
+            IconButton(
+              iconSize: 20,
+              splashRadius: 20,
+              onPressed: () => {},
+              icon: Icon(Icons.share_outlined),
+            ),
           ],
         ));
   }

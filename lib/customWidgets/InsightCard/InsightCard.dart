@@ -23,6 +23,7 @@ class InsightCard extends StatelessWidget {
               ),
               InsightCardBody(),
               Divider(
+                height: 10,
                 thickness: 0.5,
                 indent: 10,
                 endIndent: 10,
