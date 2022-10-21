@@ -11,11 +11,13 @@ class ScreenHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text("Home Screen")),
-        body: ListView.builder(
-          itemCount: test.length,
-          itemBuilder: (context, index) {
-            return InsightCard();
-          },
-        ));
+        body: Container(
+            color: Colors.black12,
+            child: ListView.builder(
+              itemCount: test.length,
+              itemBuilder: (context, index) {
+                return InsightCard();
+              },
+            )));
   }
 }

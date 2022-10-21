@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialchart/navigators/NavigationTree.dart';
 import 'package:socialchart/screens/ScreenLogin.dart';
-import 'package:socialchart/screens/ScreenSignin.dart';
+import 'package:socialchart/screens/ScreenCreateAccount.dart';
 
 class LoginNavigator extends StatelessWidget {
   const LoginNavigator({super.key});

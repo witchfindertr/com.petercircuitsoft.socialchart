@@ -32,6 +32,16 @@
 				<string>com.googleusercontent.apps.1091620873022-2ot224qnt1p3dqgulpk0ogijj14hlsae</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.petercircuitsoft.com</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>socialchartapp.page.link</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>

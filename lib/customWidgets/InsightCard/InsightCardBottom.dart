@@ -6,27 +6,27 @@ class InsightCardBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final iconSize = MediaQuery.of(context).size.width * 0.05;
     return Container(
-        height: 40,
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
+        height: 30,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              iconSize: 20,
-              splashRadius: 20,
+              iconSize: iconSize,
+              splashRadius: iconSize,
               onPressed: () => {},
               icon: Icon(Icons.push_pin_outlined),
             ),
             IconButton(
-              iconSize: 20,
-              splashRadius: 20,
+              iconSize: iconSize,
+              splashRadius: iconSize,
               onPressed: () => {},
               icon: Icon(Icons.chat_bubble_outline),
             ),
             IconButton(
-              iconSize: 20,
-              splashRadius: 20,
+              iconSize: iconSize,
+              splashRadius: iconSize,
               onPressed: () => {},
               icon: Icon(Icons.share_outlined),
             ),

@@ -9,28 +9,32 @@ class InsightCard extends StatelessWidget {
   const InsightCard({super.key});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Card(
-          margin: const EdgeInsets.all(5),
-          semanticContainer: true,
-          child: Column(
-            children: [
-              InsightCardHeader(),
-              Divider(
-                thickness: 0.5,
-                indent: 10,
-                endIndent: 10,
-              ),
-              InsightCardBody(),
-              Divider(
-                height: 10,
-                thickness: 0.5,
-                indent: 10,
-                endIndent: 10,
-              ),
-              InsightCardBottom()
-            ],
-          )),
+    return Card(
+      shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(0)),
+          side: BorderSide(color: Colors.blueGrey.withOpacity(0.3))),
+      margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+      semanticContainer: true,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Column(
+          children: const <Widget>[
+            InsightCardHeader(),
+            Divider(
+              height: 0,
+              indent: 10,
+              endIndent: 10,
+            ),
+            InsightCardBody(),
+            Divider(
+              height: 0,
+              indent: 10,
+              endIndent: 10,
+            ),
+            InsightCardBottom()
+          ],
+        ),
+      ),
     );
   }
 }

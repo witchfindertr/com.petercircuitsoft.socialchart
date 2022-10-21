@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
 //for google sign-in
@@ -10,7 +11,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 //for apple sign-in
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:socialchart/customWidgets/LoginButtons.dart';
+import 'package:socialchart/controllers/authController.dart';
+import 'package:socialchart/controllers/dynamicLinkController.dart';
+import 'package:socialchart/controllers/isLoadingController.dart';
+import 'package:socialchart/customWidgets/EmailLoginForm.dart';
+import 'package:socialchart/customWidgets/SocialLoginButtons.dart';
 import 'package:socialchart/customWidgets/TermsOfServiceText.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -21,44 +26,77 @@ class ScreenLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLoadingController = Get.put(IsLoadingController());
+    var _scaffoldKey = GlobalKey<ScaffoldState>();
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
-        body: SafeArea(
+      key: _scaffoldKey,
+      body: Stack(
+        children: [
+          SafeArea(
             child: Center(
-                child: Column(
-      children: [
-        Expanded(
-            flex: 8,
-            child: Container(
-                // color: Colors.grey,
-                child: Image.asset("assets/images/Logo_Light.png",
-                    width: 230, fit: BoxFit.contain))),
-        Expanded(
-            flex: 2,
-            child: Container(
-              // color: Colors.blue,
-              child: LoginButtons(),
-            )),
-        Expanded(
-            flex: 1,
-            child: Container(
-                // color: Colors.blue,
-                child: Center(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                  InkWell(
-                    child: Text("Create account using email"),
-                    onTap: () =>
-                        {Navigator.pushNamed(context, "/ScreenSignin")},
-                  )
-                ])))),
-        Expanded(
-            flex: 1,
-            child: Container(
-              // color: Colors.amber,
-              child: TermsOfService(),
-            )),
-      ],
-    ))));
+              child: Column(
+                children: [
+                  SizedBox(height: 80),
+                  Container(
+                      child: Image.asset(
+                    "assets/images/Logo_Light.png",
+                    height: 150,
+                    fit: BoxFit.scaleDown,
+                  )),
+                  SizedBox(height: 50),
+                  Container(
+                    // height: 190,
+
+                    child: EmailLoginForm(),
+                  ),
+                  SizedBox(height: 30),
+                  Container(
+                    height: 60,
+                    // alignment: Alignment.bottomCenter,
+                    child: Text.rich(TextSpan(text: "계정이 없으신가요?", children: [
+                      TextSpan(
+                          style: TextStyle(color: Colors.blue),
+                          text: "👉만들기 🎉",
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => Navigator.pushNamed(
+                                context, "/ScreenCreateAccount")),
+                    ])),
+                  ),
+                  Container(
+                    // height: 144,
+                    // color: Colors.blue,
+                    child: SocialLoginButtons(),
+                  ),
+                  Expanded(
+                    child: Container(
+                      // color: Colors.amber,
+                      child: TermsOfService(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Obx(
+            () => Offstage(
+              offstage: !isLoadingController.isLoading.value,
+              child: const Opacity(
+                opacity: 0.5,
+                child: ModalBarrier(dismissible: false, color: Colors.black),
+              ),
+            ),
+          ),
+          Obx(
+            () => Offstage(
+              offstage: !isLoadingController.isLoading.value,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

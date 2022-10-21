@@ -4,8 +4,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:socialchart/controllers/authController.dart';
 import 'package:get/get.dart';
 
-class LoginButtons extends StatelessWidget {
-  const LoginButtons({super.key});
+class SocialLoginButtons extends StatelessWidget {
+  const SocialLoginButtons({super.key});
   @override
   Widget build(BuildContext context) {
     AuthController authController = Get.find();
@@ -16,14 +16,12 @@ class LoginButtons extends StatelessWidget {
       Container(
           width: 200,
           child: ElevatedButton(
-              onPressed: () {
-                authController.googleAuthSignIn();
-              },
+              onPressed: () => authController.signInWithGoogle(),
               child: Text("Continue with Google"))),
       Container(
           width: 200,
           child: ElevatedButton(
-              onPressed: () => print(authController.errorString),
+              onPressed: () => authController.signInWithApple(),
               child: Text("Continue with Apple"))),
     ])));
   }
