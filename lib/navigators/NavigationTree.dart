@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:socialchart/screens/ScreenResetPassword.dart';
+import 'package:socialchart/screens/ScreenReport.dart';
 import 'package:socialchart/screens/ScreenLogin.dart';
-import 'package:socialchart/screens/ScreenCreateAccount.dart';
 import 'package:socialchart/screens/ScreenTest.dart';
 
 //Tab navigator
@@ -89,7 +88,6 @@ const Map<TabItem, BottomTab?> bottomTabs = {
 const List<ScreenRoute> loginRoutes = [
   ScreenRoute(path: '/', screen: ScreenLogin()),
   ScreenRoute(path: '/ScreenLogin', screen: ScreenLogin()),
-  ScreenRoute(path: '/ScreenCreateAccount', screen: ScreenCreateAccount()),
-  ScreenRoute(path: '/ScreenResetPassword', screen: ScreenResetPassword()),
+  ScreenRoute(path: '/ScreenReport', screen: ScreenReport()),
   ScreenRoute(path: '/ScreenTest', screen: ScreenTest()),
 ];

@@ -26,7 +26,6 @@ class ScreenLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoadingController = Get.put(IsLoadingController());
     var _scaffoldKey = GlobalKey<ScaffoldState>();
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -54,13 +53,13 @@ class ScreenLogin extends StatelessWidget {
                   Container(
                     height: 60,
                     // alignment: Alignment.bottomCenter,
-                    child: Text.rich(TextSpan(text: "계정이 없으신가요?", children: [
+                    child: Text.rich(TextSpan(text: "뭔가 문제가 있으신가요?", children: [
                       TextSpan(
                           style: TextStyle(color: Colors.blue),
-                          text: "👉만들기 🎉",
+                          text: "👉신고하기 🎉",
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => Navigator.pushNamed(
-                                context, "/ScreenCreateAccount")),
+                            ..onTap = () =>
+                                Navigator.pushNamed(context, "/ScreenReport")),
                     ])),
                   ),
                   Container(
@@ -78,23 +77,23 @@ class ScreenLogin extends StatelessWidget {
               ),
             ),
           ),
-          Obx(
-            () => Offstage(
-              offstage: !isLoadingController.isLoading.value,
-              child: const Opacity(
-                opacity: 0.5,
-                child: ModalBarrier(dismissible: false, color: Colors.black),
-              ),
-            ),
-          ),
-          Obx(
-            () => Offstage(
-              offstage: !isLoadingController.isLoading.value,
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          ),
+          // Obx(
+          //   () => Offstage(
+          //     offstage: !IsLoadingController.to.isLoading.value,
+          //     child: const Opacity(
+          //       opacity: 0.5,
+          //       child: ModalBarrier(dismissible: false, color: Colors.black),
+          //     ),
+          //   ),
+          // ),
+          // Obx(
+          //   () => Offstage(
+          //     offstage: !IsLoadingController.to.isLoading.value,
+          //     child: const Center(
+          //       child: CircularProgressIndicator(),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

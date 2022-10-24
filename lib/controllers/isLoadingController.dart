@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 class IsLoadingController extends GetxController {
   static IsLoadingController get to => Get.find();
 
-  final isLoading = false.obs;
+  final _isLoading = false.obs;
 
-  void setIsLoading(bool value) => isLoading.value = value;
+  bool get isLoading => _isLoading.value;
+  set isLoading(bool value) => _isLoading.value = value;
+  void setIsLoading(bool value) => _isLoading.value = value;
 }

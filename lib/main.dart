@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:socialchart/controllers/authController.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:socialchart/controllers/dynamicLinkController.dart';
+import 'package:socialchart/controllers/isLoadingController.dart';
 
 import 'package:socialchart/navigators/LoginNavigator.dart';
 import 'package:socialchart/navigators/MainNavigator.dart';
@@ -20,6 +21,7 @@ void main() async {
   AuthController authController = Get.put(AuthController());
   DynamicLinkController dynamicLinkController =
       Get.put(DynamicLinkController());
+  IsLoadingController isLoadingController = Get.put(IsLoadingController());
   runApp(const GetMaterialApp(
     title: 'SocialChart',
     home: SocialChart(),
@@ -31,15 +33,36 @@ class SocialChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<User?>(
-        stream: auth.authStateChanges(),
-        builder: ((context, snapshot) {
-          if (snapshot.hasData) {
-            return const MainNavigator();
-          } else {
-            return const LoginNavigator();
-          }
-        }),
+      body: Stack(
+        children: [
+          StreamBuilder<User?>(
+            stream: auth.authStateChanges(),
+            builder: ((context, snapshot) {
+              if (snapshot.hasData) {
+                return const MainNavigator();
+              } else {
+                return const LoginNavigator();
+              }
+            }),
+          ),
+          Obx(
+            () => Offstage(
+              offstage: !IsLoadingController.to.isLoading,
+              child: const Opacity(
+                opacity: 0.5,
+                child: ModalBarrier(dismissible: false, color: Colors.black),
+              ),
+            ),
+          ),
+          Obx(
+            () => Offstage(
+              offstage: !IsLoadingController.to.isLoading,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

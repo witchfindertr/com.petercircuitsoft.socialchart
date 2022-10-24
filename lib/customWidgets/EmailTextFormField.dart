@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 
 class EmailTextFormField extends StatelessWidget {
-  const EmailTextFormField({super.key, required this.emailController});
+  const EmailTextFormField({
+    super.key,
+    required this.emailController,
+    this.hintMessage,
+  });
   final TextEditingController emailController;
+  final String? hintMessage;
   @override
   Widget build(BuildContext context) {
     return Container(
         height: 71,
-        margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+        margin: const EdgeInsets.fromLTRB(0, 0, 30, 0),
         child: TextFormField(
           keyboardType: TextInputType.emailAddress,
           controller: emailController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             helperText: '',
-            helperStyle: TextStyle(color: Colors.amber),
-            icon: Icon(Icons.email),
+            helperStyle: const TextStyle(color: Colors.amber),
+            icon: const Icon(Icons.email),
             labelText: "이메일",
-            hintText: "이메일을 입력해주세요.",
+            hintText: hintMessage ?? "이메일을 입력해주세요.",
             alignLabelWithHint: true,
             contentPadding:
-                EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            border: OutlineInputBorder(
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
           ),
