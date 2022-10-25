@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 //for firebase
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:socialchart/controllers/authController.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:socialchart/controllers/dynamicLinkController.dart';
@@ -48,18 +51,17 @@ class SocialChart extends StatelessWidget {
           Obx(
             () => Offstage(
               offstage: !IsLoadingController.to.isLoading,
-              child: const Opacity(
-                opacity: 0.5,
-                child: ModalBarrier(dismissible: false, color: Colors.black),
-              ),
-            ),
-          ),
-          Obx(
-            () => Offstage(
-              offstage: !IsLoadingController.to.isLoading,
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
+              child: Stack(children: const <Widget>[
+                Opacity(
+                  opacity: 0.5,
+                  child: ModalBarrier(dismissible: false, color: Colors.black),
+                ),
+                Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white60,
+                  ),
+                ),
+              ]),
             ),
           ),
         ],

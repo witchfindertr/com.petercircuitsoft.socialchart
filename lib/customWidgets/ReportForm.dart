@@ -49,6 +49,9 @@ class _ReportFormState extends State<ReportForm> {
                         .then((value) {
                       IsLoadingController.to.isLoading = false;
                       Get.snackbar("전송 완료", "말씀해주신 내용이 전송되었어요.");
+                      // Navigator.popUntil(context, (route) => route.isFirst);
+                      _textController.clear();
+                      _emailController.clear();
                     }).catchError((onError) {
                       print("에러요!${onError}");
                       Get.snackbar("에러요!", "죄송해요. 뭔가 잘못되었어요.");

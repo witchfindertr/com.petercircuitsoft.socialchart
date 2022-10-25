@@ -29,7 +29,7 @@ class EmailTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
           ),
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          autovalidateMode: AutovalidateMode.disabled,
           validator: (email) {
             if (email!.isEmpty) {
               return '이메일을 입력해주세요.';

@@ -43,7 +43,7 @@ class _ScreenReportState extends State<ScreenReport> {
                     child: Column(
                       children: [
                         TextAndLink(
-                          text: "문제가 없으시면 ",
+                          text: "문제가 없으시면 로그인 할까요?",
                           linkText: "👉로그인",
                           linkFunction: () => Navigator.popUntil(
                               context, (route) => route.isFirst),
