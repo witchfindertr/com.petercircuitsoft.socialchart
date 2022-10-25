@@ -8,43 +8,49 @@ class UserInterestedChart extends StatelessWidget {
   final List<String>? userInterestedCharts;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.all(10),
-      alignment: Alignment.centerLeft,
-      child: Column(
-        children: [
-          Container(alignment: Alignment.centerLeft, child: Text("관심 차트")),
-          Container(
-              width: double.infinity,
-              height: 200,
-              // color: Colors.amber,
-              child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return userInterestedCharts!.isNotEmpty
-                        ? Center(
-                            child: SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: Card(
-                                    child: TextButton(
-                                        onPressed: () => {},
-                                        child: Text(
-                                            userInterestedCharts![index])))))
-                        : SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: Card(child: Text("없어")));
-                  },
-                  separatorBuilder: (context, index) {
-                    return VerticalDivider(
-                      color: Colors.black,
-                    );
-                  },
-                  itemCount: userInterestedCharts!.length)),
-        ],
-      ),
-    );
+    return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+      Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          width: double.infinity,
+          child: Text(
+            "내 관심 차트",
+            style: Theme.of(context).textTheme.headline5,
+          )),
+      Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          height: 100,
+          child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return userInterestedCharts!.isNotEmpty
+                    ? Center(
+                        child: SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: Card(
+                            child: TextButton(
+                              onPressed: () => {},
+                              child: Text(
+                                userInterestedCharts![index],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: Card(
+                          child: Text("없어"),
+                        ),
+                      );
+              },
+              separatorBuilder: (context, index) {
+                return VerticalDivider(
+                  color: Colors.black,
+                );
+              },
+              itemCount: userInterestedCharts!.length))
+    ]);
   }
 }
