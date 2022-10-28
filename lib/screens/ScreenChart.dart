@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class ScreenChart extends StatelessWidget {
   const ScreenChart({super.key});
-
+  static const routeName = "/ScreenChart";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

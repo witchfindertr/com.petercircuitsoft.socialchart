@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
+import 'package:socialchart/controllers/reportController.dart';
+import 'package:socialchart/controllers/userProfileController.dart';
 //todo for the test
 import 'package:socialchart/utils/developmentHelp.dart';
 
@@ -55,7 +58,7 @@ class UserProfileHeader extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                        onPressed: () => {},
+                        onPressed: () => FirebaseAuth.instance.signOut(),
                         child: Text("프로필 수정"),
                         style: ButtonStyle(
                           alignment: Alignment.bottomCenter,

@@ -9,6 +9,7 @@ import 'package:socialchart/customWidgets/TextAndLink.dart';
 
 class ScreenResetPassword extends StatefulWidget {
   const ScreenResetPassword({super.key});
+  static const routeName = '/ScreenResetPassword';
 
   @override
   State<ScreenResetPassword> createState() => _ScreenResetPasswordState();

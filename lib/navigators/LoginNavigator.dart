@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:socialchart/navigators/NavigationTree.dart';
 import 'package:socialchart/screens/ScreenLogin.dart';
 import 'package:socialchart/screens/ScreenCreateAccount.dart';
@@ -6,9 +7,9 @@ import 'package:socialchart/screens/ScreenCreateAccount.dart';
 class LoginNavigator extends StatelessWidget {
   const LoginNavigator({super.key});
   // final List<ScreenRoute> routes;
-  Map<String, WidgetBuilder> _routeBuilder(BuildContext context) {
+  Map<String, Widget> _routeBuilder(BuildContext context) {
     return Map.fromEntries(
-        loginRoutes.map((e) => MapEntry(e.path, (context) => e.screen)));
+        loginRoutes.map((route) => MapEntry(route.path, route.screen)));
   }
 
   @override
@@ -17,8 +18,9 @@ class LoginNavigator extends StatelessWidget {
     return Navigator(
       initialRoute: '/ScreenLogin',
       onGenerateRoute: ((settings) {
-        return MaterialPageRoute(
-            builder: (context) => routeBuilder[settings.name!]!(context));
+        return GetPageRoute(page: () => routeBuilder[settings.name]!);
+        // return MaterialPageRoute(
+        //     builder: (context) => routeBuilder[settings.name]!);
       }),
     );
   }

@@ -8,6 +8,14 @@ class IndexController extends GetxController {
   var currentIndex = TabItem.home.obs;
 
   void changeTabIndex(TabItem index) => currentIndex.value = index;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+
+    // ever(currentIndex, (_) => {if(currentIndex)});
+  }
 }
 
 class BottomTabNavigator extends StatelessWidget {

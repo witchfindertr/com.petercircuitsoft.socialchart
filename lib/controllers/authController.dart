@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:socialchart/controllers/isLoadingController.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -11,15 +12,18 @@ class AuthController extends GetxController {
   static AuthController get to => Get.find();
   var errorString = "".obs;
   var isNewUser = false.obs;
-  late Rx<User?> firebaseUser;
   var userEmail = "".obs;
-  @override
-  void onInit() {}
+
+  late Rxn<User?> firebaseUser = Rxn<User?>(auth.currentUser);
+
+  // @override
+  // void onInit() {}
 
   @override
-  void onReady() {
+  void onInit() {
     super.onReady();
-    firebaseUser = Rx<User?>(auth.currentUser);
+    // firebaseUser = Rxn<User?>(auth.currentUser);
+    ever(firebaseUser, (_) => {});
     firebaseUser.bindStream(auth.userChanges());
   }
 
@@ -45,11 +49,17 @@ class AuthController extends GetxController {
           accessToken: googleAuth?.accessToken,
           idToken: googleAuth?.idToken,
         );
-        return await auth.signInWithCredential(credential);
+        IsLoadingController.to.isLoading = true;
+        return await auth.signInWithCredential(credential).then((value) {
+          IsLoadingController.to.isLoading = false;
+          return value;
+        });
       } else {
+        IsLoadingController.to.isLoading = false;
         return null;
       }
     } catch (error) {
+      IsLoadingController.to.isLoading = false;
       rethrow;
     }
   }
@@ -63,8 +73,15 @@ class AuthController extends GetxController {
         idToken: appleCredential.identityToken,
         accessToken: appleCredential.authorizationCode,
       );
-      return await auth.signInWithCredential(oauthCredential);
+      IsLoadingController.to.isLoading = true;
+      return await auth.signInWithCredential(oauthCredential).then(
+        (value) {
+          IsLoadingController.to.isLoading = false;
+          return value;
+        },
+      );
     } catch (error) {
+      IsLoadingController.to.isLoading = false;
       rethrow;
     }
   }

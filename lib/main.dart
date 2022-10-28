@@ -1,13 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 //for firebase
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:socialchart/controllers/authController.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:socialchart/controllers/dynamicLinkController.dart';
 import 'package:socialchart/controllers/isLoadingController.dart';
 
@@ -25,8 +21,9 @@ void main() async {
   DynamicLinkController dynamicLinkController =
       Get.put(DynamicLinkController());
   IsLoadingController isLoadingController = Get.put(IsLoadingController());
-  runApp(const GetMaterialApp(
+  runApp(GetMaterialApp(
     title: 'SocialChart',
+    theme: ThemeData(fontFamily: "NotoSansKR"),
     home: SocialChart(),
   ));
 }
@@ -38,15 +35,10 @@ class SocialChart extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          StreamBuilder<User?>(
-            stream: auth.authStateChanges(),
-            builder: ((context, snapshot) {
-              if (snapshot.hasData) {
-                return const MainNavigator();
-              } else {
-                return const LoginNavigator();
-              }
-            }),
+          Obx(
+            () => AuthController.to.firebaseUser.value != null
+                ? const MainNavigator()
+                : const LoginNavigator(),
           ),
           Obx(
             () => Offstage(

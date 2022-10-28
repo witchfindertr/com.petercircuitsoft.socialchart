@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/customWidgets/GradientMask.dart';
 import 'package:socialchart/customWidgets/InsightCard/InsightCard.dart';
+import 'package:socialchart/customWidgets/MainAppBar.dart';
 
 List<int> test = [1, 2, 3, 4, 5, 6, 7];
 
@@ -25,26 +26,12 @@ TextStyle appBarTitle = TextStyle(
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
+  static const routeName = '/ScreenHome';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          centerTitle: false,
-          title: Text(
-            "Social Chart",
-            style: appBarTitle,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => {},
-              child: LinearGradientMask(
-                child: Icon(Icons.search, size: 30),
-              ),
-            ),
-          ],
-        ),
+        appBar: MainAppBar(appBar: AppBar(), title: "Social Chart"),
         body: Container(
             color: Colors.black12,
             child: ListView.builder(

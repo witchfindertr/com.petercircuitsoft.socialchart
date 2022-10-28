@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 class ScreenInsightCard extends StatelessWidget {
   const ScreenInsightCard({super.key});
+  static const routeName = "/ScreenInsightCard";
 
   @override
   Widget build(BuildContext context) {

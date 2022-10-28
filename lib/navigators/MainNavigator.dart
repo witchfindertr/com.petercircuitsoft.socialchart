@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:socialchart/controllers/userProfileController.dart';
+import 'package:socialchart/navigators/HomeNavigator.dart';
+import 'package:socialchart/navigators/ProfileNavigator.dart';
 import 'BottomTabNavigator.dart';
 
 import 'NavigationTree.dart';
@@ -11,16 +14,26 @@ class MainNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     IndexController indexController = Get.put(IndexController());
+    // UserProfileController userProfileController =
+    //     Get.put(UserProfileController());
     return Scaffold(
       body: Stack(
         children: [
-          _buildOffstageNavigator(TabItem.home),
+          Obx(() => Offstage(
+                offstage: indexController.currentIndex.value != TabItem.home,
+                child: HomeNavigator(),
+              )),
+          // _buildOffstageNavigator(TabItem.home),
           _buildOffstageNavigator(TabItem.explore),
           _buildOffstageNavigator(TabItem.notice),
           _buildOffstageNavigator(TabItem.profile),
+          // Obx(() => Offstage(
+          //       offstage: indexController.currentIndex.value != TabItem.profile,
+          //       child: ProfileNavigator(),
+          //     )),
         ],
       ),
-      bottomNavigationBar: BottomTabNavigator(),
+      bottomNavigationBar: const BottomTabNavigator(),
     );
   }
 }

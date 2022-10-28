@@ -6,7 +6,7 @@ import 'package:socialchart/customWidgets/TextAndLink.dart';
 
 class ScreenReport extends StatefulWidget {
   const ScreenReport({super.key});
-
+  static const routeName = '/ScreenReport';
   @override
   State<ScreenReport> createState() => _ScreenReportState();
 }

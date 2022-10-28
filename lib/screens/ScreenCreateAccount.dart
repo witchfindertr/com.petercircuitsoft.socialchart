@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
-import 'package:socialchart/controllers/authController.dart';
 import 'package:socialchart/customWidgets/EmailCreateAccountForm.dart';
-import 'package:socialchart/customWidgets/EmailTextFormField.dart';
-import 'package:socialchart/customWidgets/ResetPasswordForm.dart';
 import 'package:socialchart/customWidgets/TextAndLink.dart';
 
 class ScreenCreateAccount extends StatefulWidget {

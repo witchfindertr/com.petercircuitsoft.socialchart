@@ -23,6 +23,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ScreenLogin extends StatelessWidget {
   const ScreenLogin({super.key});
+  static const routeName = '/ScreenLogin';
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +56,13 @@ class ScreenLogin extends StatelessWidget {
                     // alignment: Alignment.bottomCenter,
                     child: Text.rich(TextSpan(text: "뭔가 문제가 있으신가요?", children: [
                       TextSpan(
-                          style: TextStyle(color: Colors.blue),
-                          text: "👉신고하기 🎉",
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () =>
-                                Navigator.pushNamed(context, "/ScreenReport")),
+                        style: TextStyle(color: Colors.blue),
+                        text: "👉신고하기 🎉",
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () =>
+                              Navigator.pushNamed(context, "/ScreenReport"),
+                        // Get.toNamed("/ScreenReport"),
+                      ),
                     ])),
                   ),
                   Container(
