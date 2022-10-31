@@ -23,7 +23,6 @@ class AuthController extends GetxController {
   void onInit() {
     super.onReady();
     // firebaseUser = Rxn<User?>(auth.currentUser);
-    ever(firebaseUser, (_) => {});
     firebaseUser.bindStream(auth.userChanges());
   }
 
