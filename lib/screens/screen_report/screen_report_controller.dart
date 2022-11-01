@@ -19,6 +19,7 @@ class ScreenReportController extends GetxController {
 
   @override
   void onInit() {
+    print("init");
     // TODO: implement onInit
     super.onInit();
   }

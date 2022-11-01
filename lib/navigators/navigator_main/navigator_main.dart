@@ -15,42 +15,8 @@ class NavigatorMain extends GetView<MainNavigatorController> {
 
   @override
   Widget build(BuildContext context) {
-    // return CupertinoTabScaffold(
-    //   tabBar: CupertinoTabBar(
-    //     items: [
-    //       BottomNavigationBarItem(
-    //         icon: Icon(CupertinoIcons.home),
-    //         label: "홈",
-    //       ),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(CupertinoIcons.search),
-    //         label: "탐색",
-    //       ),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(CupertinoIcons.bell),
-    //         label: "알림",
-    //       ),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(CupertinoIcons.person),
-    //         label: "내정보",
-    //       ),
-    //     ],
-    //   ),
-    //   tabBuilder: (context, index) {
-    //     return Obx(
-    //       () => IndexedStack(
-    //         index: controller.currentIndex.index,
-    //         children: const [
-    //           HomeNavigator(),
-    //           ExploreNavigator(),
-    //           NoticeNavigator(),
-    //           ProfileNavigator(),
-    //         ],
-    //       ),
-    //     );
-    //   },
-    // );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Obx(
         () => IndexedStack(
           index: controller.currentIndex.index,
@@ -62,29 +28,31 @@ class NavigatorMain extends GetView<MainNavigatorController> {
           ],
         ),
       ),
-      bottomNavigationBar: Obx(() => BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.home),
-                label: "홈",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.search),
-                label: "탐색",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.bell),
-                label: "알림",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.person),
-                label: "내정보",
-              ),
-            ],
-            currentIndex: controller.currentIndex.index,
-            onTap: (index) => controller.currentIndex = NavKeys.values[index],
-          )),
+      bottomNavigationBar: Obx(() => controller.isBottomTabVisible
+          ? BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.home),
+                  label: "홈",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.search),
+                  label: "탐색",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.bell),
+                  label: "알림",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.person),
+                  label: "내정보",
+                ),
+              ],
+              currentIndex: controller.currentIndex.index,
+              onTap: (index) => controller.currentIndex = NavKeys.values[index],
+            )
+          : Container(height: 0)),
     );
   }
 }

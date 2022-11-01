@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/controllers/isLoadingController.dart';
 import 'package:socialchart/custom_widgets/email_text_formfield.dart';
+import 'package:socialchart/navigators/navigator_constant.dart';
 import 'package:socialchart/screens/screen_report/widgets/report_text_formfield.dart';
 import 'package:socialchart/screens/screen_report/screen_report_controller.dart';
 
-class ReportForm extends GetView<ScreenReportController> {
-  ReportForm({super.key});
+class ReportForm extends StatelessWidget {
+  const ReportForm({super.key, this.navKey});
+  final NavKeys? navKey;
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<ScreenReportController>(tag: navKey?.name);
     return Container(
       child: Form(
         key: controller.key,

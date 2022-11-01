@@ -27,12 +27,7 @@ class ProfileNavigator extends StatelessWidget {
             );
             break;
           default:
-            return GetPageRoute(
-              page: () => ScreenProfile(
-                  userId: FirebaseAuth.instance.currentUser!.uid,
-                  navKey: NavKeys.profile),
-              binding: ScreenProfileBinding(navKey: NavKeys.profile),
-            );
+            return null;
         }
         // });
       }),

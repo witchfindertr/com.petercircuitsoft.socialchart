@@ -24,8 +24,7 @@ class ExploreNavigator extends StatelessWidget {
                 page: () => ScreenInsightCard(navKey: NavKeys.explore));
 
           default:
-            return GetPageRoute(
-                page: () => ScreenExplore(navKey: NavKeys.explore));
+            return null;
         }
       }),
     );

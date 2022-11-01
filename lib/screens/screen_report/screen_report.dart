@@ -18,39 +18,41 @@ class ScreenReport extends GetView<ScreenReportController> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(title: Text("문제 신고하기")),
+      // resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Center(
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                alignment: Alignment.center,
-                child: Text(
-                  "문제가 있으신가요?",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
-                alignment: Alignment.center,
-                child: ReportForm(),
-              ),
-              SizedBox(height: 50),
-              Expanded(
-                child: Container(
+          child: SingleChildScrollView(
+              reverse: true,
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.3,
                     alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        TextAndLink(
-                          text: "문제가 없으시면 로그인 할까요?",
-                          linkText: "👉로그인",
-                          linkFunction: () => Get.back(id: navKey?.index),
-                        ),
-                      ],
-                    )),
-              )
-            ],
-          ),
+                    child: Text(
+                      "문제가 있으신가요?",
+                      style:
+                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                    alignment: Alignment.center,
+                    child: ReportForm(navKey: navKey),
+                  ),
+                  SizedBox(height: 50),
+                  Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          TextAndLink(
+                            text: "문제가 없으시면 로그인 할까요?",
+                            linkText: "👉로그인",
+                            linkFunction: () => Get.back(id: navKey?.index),
+                          ),
+                        ],
+                      )),
+                ],
+              )),
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum NavKeys { home, explore, notice, profile, login }
+enum NavKeys { home, explore, notice, profile, login, fullscreen }
 
 
 // Map<TabItem, BottomTabs> bottomTabConstant = {

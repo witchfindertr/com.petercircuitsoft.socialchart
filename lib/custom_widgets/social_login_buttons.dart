@@ -16,12 +16,18 @@ class SocialLoginButtons extends StatelessWidget {
       Container(
           width: 200,
           child: ElevatedButton(
-              onPressed: () => authController.signInWithGoogle(),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                authController.signInWithGoogle();
+              },
               child: Text("Continue with Google"))),
       Container(
           width: 200,
           child: ElevatedButton(
-              onPressed: () => authController.signInWithApple(),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                authController.signInWithApple();
+              },
               child: Text("Continue with Apple"))),
     ])));
   }

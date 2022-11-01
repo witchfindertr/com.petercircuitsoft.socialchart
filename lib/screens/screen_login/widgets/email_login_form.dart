@@ -7,44 +7,30 @@ import 'package:get/get.dart';
 import 'package:socialchart/controllers/authController.dart';
 import 'package:socialchart/controllers/isLoadingController.dart';
 import 'package:socialchart/custom_widgets/email_text_formfield.dart';
+import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/screens/screen_login/screen_login_controller.dart';
 
-class EmailLoginForm extends StatefulWidget {
-  const EmailLoginForm({super.key});
+class EmailLoginForm extends StatelessWidget {
+  var controller = Get.find<ScreenLoginController>(tag: NavKeys.login.name);
 
-  @override
-  State<EmailLoginForm> createState() => _EmailLoginFormState();
-}
-
-class _EmailLoginFormState extends State<EmailLoginForm> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
       child: Form(
-          key: _formKey,
+          key: controller.key,
           child: Column(
             children: [
-              EmailTextFormField(emailController: _emailController),
-              // PwdTextFormField(passwordController: _passwordController),
-              // TextAndLink(
-              //     text: "비밀번호가 생각나지 않으세요?",
-              //     linkText: "👉비밀번호 초기화",
-              //     linkFunction: () =>
-              //         Navigator.pushNamed(context, "/ScreenResetPassword")),
+              EmailTextFormField(emailController: controller.emailController),
               Container(
-                  // width: double.infinity,
-                  // color: Colors.amber,
-                  // margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: ElevatedButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
+                        FocusScope.of(context).unfocus();
+                        if (controller.key.currentState!.validate()) {
                           IsLoadingController.to.setIsLoading(true);
                           AuthController.to
                               .sendCreateAccountLink(
-                                  _emailController.text.trim())
+                                  controller.emailController.text.trim())
                               .then((value) {
                             //todo: email local storage에 저장
                             IsLoadingController.to.setIsLoading(false);

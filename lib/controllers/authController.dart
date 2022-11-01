@@ -24,6 +24,13 @@ class AuthController extends GetxController {
     super.onReady();
     // firebaseUser = Rxn<User?>(auth.currentUser);
     firebaseUser.bindStream(auth.userChanges());
+    // ever(firebaseUser, (_) {
+    //   if (firebaseUser.value != null) {
+    //     Get.toNamed("/Main");
+    //   } else {
+    //     Get.toNamed("/Login");
+    //   }
+    // });
   }
 
   Future<UserCredential?> loginWithEmailAndPassword(

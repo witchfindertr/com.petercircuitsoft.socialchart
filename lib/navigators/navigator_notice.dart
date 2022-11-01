@@ -14,14 +14,10 @@ class NoticeNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Navigator(
       key: Get.nestedKey(NavKeys.notice.index),
-      initialRoute: '/',
+      initialRoute: ScreenNotice.routeName,
       onGenerateRoute: ((settings) {
         // return MaterialPageRoute(builder: (context) {
         switch (settings.name) {
-          case '/':
-            return GetPageRoute(
-                page: () => ScreenNotice(navKey: NavKeys.notice));
-            break;
           case ScreenNotice.routeName:
             return GetPageRoute(
                 page: () => ScreenNotice(navKey: NavKeys.notice));
@@ -31,8 +27,7 @@ class NoticeNavigator extends StatelessWidget {
                 page: () => ScreenInsightCard(navKey: NavKeys.notice));
             break;
           default:
-            return GetPageRoute(
-                page: () => ScreenNotice(navKey: NavKeys.notice));
+            return null;
         }
         // });
       }),
