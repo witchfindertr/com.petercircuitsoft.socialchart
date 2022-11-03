@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:socialchart/navigators/navigator_constant.dart';
-import './ScreenProfileController.dart';
+import 'screen_profile_controller.dart';
 
 class ScreenProfileBinding extends Bindings {
   ScreenProfileBinding({required this.navKey});

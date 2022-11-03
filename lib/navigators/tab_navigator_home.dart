@@ -5,14 +5,16 @@ import 'package:socialchart/screens/screen_chart/screen_chart.dart';
 import 'package:socialchart/screens/screen_chart/screen_chart_binding.dart';
 import 'package:socialchart/screens/screen_home/screen_home.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard.dart';
-import 'package:socialchart/screens/screen_profile/ScreenProfile.dart';
+import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/screens/screen_profile/ScreenProfileBinding.dart';
+import 'package:socialchart/screens/screen_profile/screen_profile_binding.dart';
+import 'package:socialchart/screens/screen_test/page_test.dart';
+import 'package:socialchart/screens/screen_test/page_test_binding.dart';
 import 'package:socialchart/screens/screen_write/screen_write.dart';
 import 'package:socialchart/screens/screen_write/screen_write_binding.dart';
 
-class HomeNavigator extends StatelessWidget {
-  const HomeNavigator({super.key});
+class TabNavigatorHome extends StatelessWidget {
+  const TabNavigatorHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,11 @@ class HomeNavigator extends StatelessWidget {
               page: () => ScreenWrite(navKey: NavKeys.home),
               binding: ScreenWriteBinding(navKey: NavKeys.home),
             );
+          // case PageTest.routeName:
+          //   return GetPageRoute(
+          //     page: () => PageTest(controllerTag: "홈"),
+          //     binding: PageTestBinding(controllerTag: "홈"),
+          //   );
           default:
             return null;
         }

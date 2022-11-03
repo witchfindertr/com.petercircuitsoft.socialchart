@@ -5,7 +5,7 @@ import 'package:socialchart/navigators/navigator_constant.dart';
 import 'package:socialchart/screens/screen_insightcard/widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/custom_widgets/user_profile.dart';
-import 'package:socialchart/screens/screen_profile/ScreenProfileController.dart';
+import 'package:socialchart/screens/screen_profile/screen_profile_controller.dart';
 
 List<int> test = [1, 2, 3, 4, 5, 6, 7];
 

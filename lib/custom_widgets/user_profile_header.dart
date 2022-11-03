@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
+import 'package:socialchart/controllers/authController.dart';
 //todo for the test
 import 'package:socialchart/utils/developmentHelp.dart';
 
@@ -56,7 +57,7 @@ class UserProfileHeader extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                        onPressed: () => FirebaseAuth.instance.signOut(),
+                        onPressed: () => AuthController.to.signOut(),
                         child: Text("프로필 수정"),
                         style: ButtonStyle(
                           alignment: Alignment.bottomCenter,

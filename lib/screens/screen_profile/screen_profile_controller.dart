@@ -39,15 +39,6 @@ class ScreenProfileController extends GetxController {
     });
 
     super.onInit();
-    // ever(_authUserId, (_) async {
-    //   print("ever auth data: ${authUserData.value}");
-    //   isLoading.value = true;
-    //   var _userData = await getUserData(_userId.value);
-    //   userData = Rxn<UserData?>(_userData.data());
-    //   isLoading.value = false;
-    // });
-
-    // _authUserId.value = FirebaseAuth.instance.currentUser!.uid;
   }
 
   Future<void> updateUser(String userId) async {

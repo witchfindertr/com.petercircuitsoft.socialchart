@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchart/navigators/navigator_constant.dart';
-import 'package:socialchart/screens/screen_profile/ScreenProfile.dart';
+import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/screens/screen_profile/ScreenProfileBinding.dart';
+import 'package:socialchart/screens/screen_profile/screen_profile_binding.dart';
+import 'package:socialchart/screens/screen_test/page_test.dart';
+import 'package:socialchart/screens/screen_test/page_test_binding.dart';
 
-class ProfileNavigator extends StatelessWidget {
-  const ProfileNavigator({super.key});
+class TabNavigatorProfile extends StatelessWidget {
+  const TabNavigatorProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,12 @@ class ProfileNavigator extends StatelessWidget {
                 navKey: NavKeys.profile,
               ),
               binding: ScreenProfileBinding(navKey: NavKeys.profile),
+            );
+            break;
+          case PageTest.routeName:
+            return GetPageRoute(
+              page: () => PageTest(controllerTag: "내정보"),
+              binding: PageTestBinding(controllerTag: "내정보"),
             );
             break;
           default:

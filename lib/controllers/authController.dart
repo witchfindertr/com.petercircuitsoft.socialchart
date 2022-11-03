@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:socialchart/controllers/isLoadingController.dart';
+import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/screens/screen_home/screen_home.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -104,7 +107,9 @@ class AuthController extends GetxController {
   }
 
   void signOut() async {
+    MainNavigatorController.to.currentIndex = NavKeys.home;
     await auth.signOut();
+    Get.snackbar("로그아웃", "로그아웃되었습니다.");
   }
 
   Future<bool> sendPasswordReset(String email) async {

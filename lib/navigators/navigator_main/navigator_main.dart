@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:socialchart/navigators/navigator_explore.dart';
-import 'package:socialchart/navigators/navigator_home.dart';
+import 'package:socialchart/navigators/tab_navigator_explore.dart';
+import 'package:socialchart/navigators/tab_navigator_home.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
-import 'package:socialchart/navigators/navigator_notice.dart';
-import 'package:socialchart/navigators/navigator_profile.dart';
+import 'package:socialchart/navigators/tab_navigator_notice.dart';
+import 'package:socialchart/navigators/tab_navigator_profile.dart';
 // import 'package:cupertino_icons/cupertino_icons.dart';
 
 import 'package:get/get.dart';
@@ -21,10 +21,10 @@ class NavigatorMain extends GetView<MainNavigatorController> {
         () => IndexedStack(
           index: controller.currentIndex.index,
           children: const [
-            HomeNavigator(),
-            ExploreNavigator(),
-            NoticeNavigator(),
-            ProfileNavigator(),
+            TabNavigatorHome(),
+            TabNavigatorExplore(),
+            TabNavigatorNotice(),
+            TabNavigatorProfile(),
           ],
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:socialchart/navigators/navigator_constant.dart';
 
 class MainNavigatorController extends GetxController {
-  MainNavigatorController get to => Get.find();
+  static MainNavigatorController get to => Get.find();
   var _currentIndex = NavKeys.home.obs;
   var _isBottomTabVisible = true.obs;
 
