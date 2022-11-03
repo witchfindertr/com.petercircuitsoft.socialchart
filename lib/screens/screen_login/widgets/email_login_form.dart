@@ -4,8 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/controllers/authController.dart';
-import 'package:socialchart/controllers/isLoadingController.dart';
+import 'package:socialchart/controllers/auth_controller.dart';
+import 'package:socialchart/controllers/isloading_controller.dart';
 import 'package:socialchart/custom_widgets/email_text_formfield.dart';
 import 'package:socialchart/navigators/navigator_constant.dart';
 import 'package:socialchart/screens/screen_login/screen_login_controller.dart';

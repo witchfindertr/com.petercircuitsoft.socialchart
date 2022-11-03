@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/controllers/authController.dart';
+import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/custom_widgets/reset_password_form.dart';
 import 'package:socialchart/custom_widgets/text_and_link.dart';
 

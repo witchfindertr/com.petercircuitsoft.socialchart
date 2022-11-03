@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 //for firebase
 import 'package:firebase_core/firebase_core.dart';
-import 'package:socialchart/controllers/authController.dart';
-import 'package:socialchart/controllers/dynamicLinkController.dart';
-import 'package:socialchart/controllers/isLoadingController.dart';
+import 'package:socialchart/controllers/auth_controller.dart';
+import 'package:socialchart/controllers/dynamic_link_controller.dart';
+import 'package:socialchart/controllers/isloading_controller.dart';
 
 import 'package:socialchart/navigators/navigator_login/navigator_login.dart';
 import 'package:socialchart/navigators/navigator_login/navigator_login_controller.dart';
@@ -23,8 +23,8 @@ void main() async {
   Get.put(AuthController());
   Get.put(DynamicLinkController());
   Get.put(IsLoadingController());
-  Get.lazyPut(() => MainNavigatorController());
-  Get.lazyPut(() => LoginNavigatorController());
+  Get.put(MainNavigatorController());
+  Get.put(LoginNavigatorController());
   runApp(
     GetMaterialApp(
       title: 'SocialChart',

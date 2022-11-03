@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:socialchart/controllers/authController.dart';
-import 'package:socialchart/controllers/isLoadingController.dart';
+import 'package:socialchart/controllers/auth_controller.dart';
+import 'package:socialchart/controllers/isloading_controller.dart';
 
 FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 

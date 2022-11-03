@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/controllers/isLoadingController.dart';
+import 'package:socialchart/controllers/isloading_controller.dart';
 import 'package:socialchart/custom_widgets/email_text_formfield.dart';
 import 'package:socialchart/navigators/navigator_constant.dart';
 import 'package:socialchart/screens/screen_report/widgets/report_text_formfield.dart';

@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:socialchart/controllers/isLoadingController.dart';
+import 'package:socialchart/controllers/isloading_controller.dart';
 import 'package:socialchart/navigators/navigator_constant.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
-import 'package:socialchart/screens/screen_home/screen_home.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -51,12 +49,12 @@ class AuthController extends GetxController {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser != null) {
-        final GoogleSignInAuthentication? googleAuth =
-            await googleUser?.authentication;
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
 
         final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth?.accessToken,
-          idToken: googleAuth?.idToken,
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
         );
         IsLoadingController.to.isLoading = true;
         return await auth.signInWithCredential(credential).then((value) {

@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
-import 'package:socialchart/controllers/authController.dart';
+import 'package:socialchart/controllers/auth_controller.dart';
 //todo for the test
 import 'package:socialchart/utils/developmentHelp.dart';
 

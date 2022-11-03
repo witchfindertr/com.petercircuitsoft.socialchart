@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:socialchart/controllers/authController.dart';
+import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class SocialLoginButtons extends StatelessWidget {
@@ -13,7 +11,7 @@ class SocialLoginButtons extends StatelessWidget {
         child: Center(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Container(
+      SizedBox(
           width: 200,
           child: ElevatedButton(
               onPressed: () {
@@ -21,7 +19,7 @@ class SocialLoginButtons extends StatelessWidget {
                 authController.signInWithGoogle();
               },
               child: Text("Continue with Google"))),
-      Container(
+      SizedBox(
           width: 200,
           child: ElevatedButton(
               onPressed: () {

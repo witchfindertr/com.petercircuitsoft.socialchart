@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/controllers/authController.dart';
+import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/custom_widgets/email_text_formfield.dart';
 
 class ResetPasswordForm extends StatefulWidget {
