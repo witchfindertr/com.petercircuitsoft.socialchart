@@ -18,7 +18,8 @@ class ScreenChart extends StatelessWidget {
       body: Container(color: Colors.black12),
       floatingActionButton: ElevatedButton(
         onPressed: () {
-          Get.toNamed(ScreenWrite.routeName, id: NavKeys.home.index);
+          Get.toNamed(ScreenWrite.routeName,
+              id: NavKeys.home.index, arguments: "TestChart");
         },
         child: Icon(Icons.add),
         style: ButtonStyle(

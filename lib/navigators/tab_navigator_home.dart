@@ -43,8 +43,12 @@ class TabNavigatorHome extends StatelessWidget {
               binding: ScreenChartBinding(navKey: NavKeys.home),
             );
           case ScreenWrite.routeName:
+            var chartId = settings.arguments as String;
             return GetPageRoute(
-              page: () => ScreenWrite(navKey: NavKeys.home),
+              page: () => ScreenWrite(
+                navKey: NavKeys.home,
+                chartId: chartId,
+              ),
               binding: ScreenWriteBinding(navKey: NavKeys.home),
             );
           // case PageTest.routeName:

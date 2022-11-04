@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
 
@@ -11,7 +12,16 @@ class MyWidget extends StatelessWidget {
 }
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MainAppBar({required this.title, required this.appBar, required});
+  MainAppBar({
+    required this.title,
+    required this.appBar,
+    this.searchButtonVisible = true,
+    this.sendButtonVisible = false,
+    this.sendButtonOnPressed,
+  });
+  final bool searchButtonVisible;
+  final bool sendButtonVisible;
+  final VoidCallback? sendButtonOnPressed;
   final String title;
   final AppBar appBar;
 
@@ -33,12 +43,23 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             fontWeight: FontWeight.w700),
       )),
       actions: [
-        TextButton(
-          onPressed: () => {},
-          child: LinearGradientMask(
-            child: Icon(Icons.search, size: 30),
-          ),
-        ),
+        searchButtonVisible
+            ? CupertinoButton(
+                onPressed: () => {},
+                child: LinearGradientMask(
+                  child: Icon(CupertinoIcons.search, size: 26),
+                ),
+              )
+            : SizedBox(),
+        sendButtonVisible
+            ? CupertinoButton(
+                disabledColor: Colors.black12,
+                onPressed: sendButtonOnPressed ?? null,
+                child: LinearGradientMask(
+                  child: Icon(CupertinoIcons.paperplane, size: 26),
+                ),
+              )
+            : SizedBox(),
       ],
     );
   }
