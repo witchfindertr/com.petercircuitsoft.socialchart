@@ -6,7 +6,7 @@ class InsightCardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EventCardHeader(eventName: "바이든 지지율");
+    return EventCardHeader(eventName: "이순신 장군");
     // return AssetCardHeader();
   }
 }
@@ -79,7 +79,7 @@ class EventCardHeader extends StatelessWidget {
                 Container(
                   child: arrayToRichText(
                     [
-                      "📈",
+                      "👤",
                       "${eventName}",
                       "",
                     ],

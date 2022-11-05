@@ -8,7 +8,7 @@ class InsightCardListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return InsightCard();
+        return Text("");
       },
     );
   }

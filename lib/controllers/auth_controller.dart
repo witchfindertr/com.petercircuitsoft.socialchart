@@ -3,10 +3,8 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:socialchart/controllers/isloading_controller.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
-
-FirebaseAuth auth = FirebaseAuth.instance;
 // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
 class AuthController extends GetxController {
@@ -15,7 +13,7 @@ class AuthController extends GetxController {
   var isNewUser = false.obs;
   var userEmail = "".obs;
 
-  late Rxn<User?> firebaseUser = Rxn<User?>(auth.currentUser);
+  late Rxn<User?> firebaseUser = Rxn<User?>(firebaseAuth.currentUser);
 
   // @override
   // void onInit() {}
@@ -24,7 +22,7 @@ class AuthController extends GetxController {
   void onInit() {
     super.onReady();
     // firebaseUser = Rxn<User?>(auth.currentUser);
-    firebaseUser.bindStream(auth.userChanges());
+    firebaseUser.bindStream(firebaseAuth.userChanges());
     // ever(firebaseUser, (_) {
     //   if (firebaseUser.value != null) {
     //     Get.toNamed("/Main");
@@ -37,7 +35,7 @@ class AuthController extends GetxController {
   Future<UserCredential?> loginWithEmailAndPassword(
       String email, password) async {
     try {
-      return await auth
+      return await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password)
           .catchError((error) => errorString.value = error.message);
     } catch (e) {
@@ -57,7 +55,9 @@ class AuthController extends GetxController {
           idToken: googleAuth.idToken,
         );
         IsLoadingController.to.isLoading = true;
-        return await auth.signInWithCredential(credential).then((value) {
+        return await firebaseAuth
+            .signInWithCredential(credential)
+            .then((value) {
           IsLoadingController.to.isLoading = false;
           return value;
         });
@@ -81,7 +81,7 @@ class AuthController extends GetxController {
         accessToken: appleCredential.authorizationCode,
       );
       IsLoadingController.to.isLoading = true;
-      return await auth.signInWithCredential(oauthCredential).then(
+      return await firebaseAuth.signInWithCredential(oauthCredential).then(
         (value) {
           IsLoadingController.to.isLoading = false;
           return value;
@@ -97,7 +97,7 @@ class AuthController extends GetxController {
       String email, password) async {
     UserCredential userCredential;
     try {
-      return await auth.createUserWithEmailAndPassword(
+      return await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
     } catch (e) {
       rethrow;
@@ -106,12 +106,12 @@ class AuthController extends GetxController {
 
   void signOut() async {
     MainNavigatorController.to.currentIndex = NavKeys.home;
-    await auth.signOut();
+    await firebaseAuth.signOut();
     Get.snackbar("로그아웃", "로그아웃되었습니다.");
   }
 
   Future<bool> sendPasswordReset(String email) async {
-    return await FirebaseAuth.instance
+    return await firebaseAuth
         .sendPasswordResetEmail(email: email)
         .then(((value) => true))
         .catchError((onError) => false);
@@ -128,7 +128,7 @@ class AuthController extends GetxController {
         androidMinimumVersion: '12');
     userEmail.value = email;
     try {
-      return await auth.sendSignInLinkToEmail(
+      return await firebaseAuth.sendSignInLinkToEmail(
           email: email, actionCodeSettings: acs);
     } catch (e) {
       rethrow;

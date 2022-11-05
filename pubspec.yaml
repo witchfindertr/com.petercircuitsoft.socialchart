@@ -50,6 +50,8 @@ dependencies:
   hashtagable: ^2.1.0
   detectable_text_field: ^2.0.4
   any_link_preview: ^2.0.9
+  ogp_data_extract: ^0.1.2
+  cached_network_image: ^3.2.2
 
 dev_dependencies:
   flutter_test:

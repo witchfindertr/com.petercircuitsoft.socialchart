@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/screen_write/screen_write.dart';
 

@@ -8,7 +8,7 @@ import 'package:socialchart/navigators/tab_navigator_profile.dart';
 // import 'package:cupertino_icons/cupertino_icons.dart';
 
 import 'package:get/get.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 
 class NavigatorMain extends GetView<MainNavigatorController> {
   const NavigatorMain({super.key});

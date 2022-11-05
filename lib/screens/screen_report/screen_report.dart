@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/screens/screen_report/widgets/report_form.dart';
 import 'package:socialchart/custom_widgets/text_and_link.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_report/screen_report_controller.dart';
 
 class ScreenReport extends GetView<ScreenReportController> {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard_controller.dart';
 
 class ScreenInsightCard extends GetView<ScreenInsightCardController> {

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_login/screen_login_controller.dart';
 
 class ScreenLoginBinding extends Bindings {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 
 class ScreenNotice extends StatelessWidget {
   const ScreenNotice({super.key, this.navKey});
@@ -24,7 +24,7 @@ class ScreenNotice extends StatelessWidget {
                 ),
                 title: Text("Title"),
                 subtitle: Text("subtitle"),
-                onTap: () => {print("pressed")},
+                onTap: () => {print("???pressed")},
               ),
             );
           },

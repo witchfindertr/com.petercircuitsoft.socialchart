@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_explore/screen_explore.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard.dart';
 import 'package:socialchart/screens/screen_notice/screen_notice.dart';

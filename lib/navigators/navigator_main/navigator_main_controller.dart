@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 
 class MainNavigatorController extends GetxController {
   static MainNavigatorController get to => Get.find();

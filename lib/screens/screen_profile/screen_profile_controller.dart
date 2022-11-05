@@ -9,13 +9,13 @@ class ScreenProfileController extends GetxController {
   final userDataColRef = firestore.collection("userData").withConverter(
         fromFirestore: (snapshot, options) {
           // print("Snapshot: ${snapshot.data()}");
-          return UserData.fromJson(snapshot.data()!);
+          return UserDataModel.fromJson(snapshot.data()!);
         },
         toFirestore: (value, options) => value.toJson(),
       );
   var _userId = "".obs;
   var isloading = true.obs;
-  late Rxn<UserData?> userData = Rxn<UserData?>();
+  late Rxn<UserDataModel?> userData = Rxn<UserDataModel?>();
 
   bool get isLoading => isloading.value;
   void set isLoading(bool value) => isloading.value = value;
@@ -44,7 +44,7 @@ class ScreenProfileController extends GetxController {
   Future<void> updateUser(String userId) async {
     try {
       userDataColRef.doc(userId).get().then((value) {
-        userData = Rxn<UserData?>(value.data());
+        userData = Rxn<UserDataModel?>(value.data());
         _userId.value = userId;
       });
     } catch (error) {
@@ -52,7 +52,7 @@ class ScreenProfileController extends GetxController {
     }
   }
 
-  Future<DocumentSnapshot<UserData>> getUserData(String userId) {
+  Future<DocumentSnapshot<UserDataModel>> getUserData(String userId) {
     try {
       return userDataColRef.doc(userId).get();
     } catch (error) {

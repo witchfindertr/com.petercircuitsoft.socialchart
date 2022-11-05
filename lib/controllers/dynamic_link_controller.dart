@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/controllers/isloading_controller.dart';
 
@@ -20,9 +20,10 @@ class DynamicLinkController extends GetxController {
     super.onInit();
 
     ever(deepLink, (_) {
-      if (auth.isSignInWithEmailLink(deepLink.value!.link.toString().trim())) {
+      if (firebaseAuth
+          .isSignInWithEmailLink(deepLink.value!.link.toString().trim())) {
         IsLoadingController.to.isLoading = true;
-        auth
+        firebaseAuth
             .signInWithEmailLink(
                 email: AuthController.to.userEmail.value,
                 emailLink: deepLink.value!.link.toString().trim())

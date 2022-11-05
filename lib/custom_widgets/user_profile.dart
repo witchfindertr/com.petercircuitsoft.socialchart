@@ -9,7 +9,7 @@ import 'package:socialchart/models/model_user_data.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({super.key, this.userData});
-  final UserData? userData;
+  final UserDataModel? userData;
   @override
   Widget build(BuildContext context) {
     return Card(

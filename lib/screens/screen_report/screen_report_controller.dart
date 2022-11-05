@@ -14,7 +14,7 @@ class ScreenReportController extends GetxController {
       .collection("userReports")
       .withConverter(
           fromFirestore: (snapshot, options) =>
-              UserReport.fromJson(snapshot.data()!),
+              UserReportModel.fromJson(snapshot.data()!),
           toFirestore: ((value, options) => value.toJson()));
 
   @override
@@ -38,7 +38,7 @@ class ScreenReportController extends GetxController {
 
   Future<void> sendReport(String userEmail, userMessage) {
     return userReportColRef
-        .add(UserReport(
+        .add(UserReportModel(
             userEmail: userEmail,
             userMessage: userMessage,
             createdAt: Timestamp.now(),

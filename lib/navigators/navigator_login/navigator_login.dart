@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_login/screen_login.dart';
 import 'package:socialchart/screens/screen_create_account.dart';
 import 'package:socialchart/screens/screen_login/screen_login_binding.dart';

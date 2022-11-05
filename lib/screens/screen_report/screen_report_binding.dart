@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_notice/screen_notice_controller.dart';
 import 'package:socialchart/screens/screen_report/screen_report_controller.dart';
 

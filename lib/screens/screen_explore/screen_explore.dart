@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 
 class ScreenExplore extends StatelessWidget {
   const ScreenExplore({super.key, this.navKey});

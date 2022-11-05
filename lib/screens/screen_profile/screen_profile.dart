@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_insightcard/widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/custom_widgets/user_profile.dart';
@@ -42,7 +42,7 @@ class ScreenProfile extends GetView<ScreenProfileController> {
                 break;
 
               default:
-                return InsightCard(navKey: navKey);
+                return Text("Auth's insight card");
                 break;
             }
           }),

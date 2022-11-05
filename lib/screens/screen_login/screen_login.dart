@@ -5,7 +5,7 @@ import 'package:socialchart/screens/screen_login/widgets/email_login_form.dart';
 import 'package:socialchart/custom_widgets/social_login_buttons.dart';
 import 'package:socialchart/custom_widgets/terms_of_service_text.dart';
 
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_login/screen_login_controller.dart';
 import 'package:socialchart/screens/screen_report/screen_report.dart';
 

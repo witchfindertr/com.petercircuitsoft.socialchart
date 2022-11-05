@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:socialchart/navigators/navigator_constant.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/screen_chart/screen_chart.dart';
 import 'package:socialchart/screens/screen_chart/screen_chart_binding.dart';
 import 'package:socialchart/screens/screen_home/screen_home.dart';
+import 'package:socialchart/screens/screen_home/screen_home_binding.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,7 @@ class TabNavigatorHome extends StatelessWidget {
           case ScreenHome.routeName:
             return GetPageRoute(
               page: () => ScreenHome(navKey: NavKeys.home),
+              binding: ScreenHomeBinding(),
             );
           case ScreenInsightCard.routeName:
             return GetPageRoute(
@@ -47,9 +49,9 @@ class TabNavigatorHome extends StatelessWidget {
             return GetPageRoute(
               page: () => ScreenWrite(
                 navKey: NavKeys.home,
-                chartId: chartId,
               ),
-              binding: ScreenWriteBinding(navKey: NavKeys.home),
+              binding:
+                  ScreenWriteBinding(navKey: NavKeys.home, chartId: chartId),
             );
           // case PageTest.routeName:
           //   return GetPageRoute(
