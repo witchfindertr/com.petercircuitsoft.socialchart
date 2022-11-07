@@ -27,7 +27,7 @@ class TabNavigatorHome extends StatelessWidget {
           case ScreenHome.routeName:
             return GetPageRoute(
               page: () => ScreenHome(navKey: NavKeys.home),
-              binding: ScreenHomeBinding(),
+              binding: ScreenHomeBinding(navKey: NavKeys.home),
             );
           case ScreenInsightCard.routeName:
             return GetPageRoute(

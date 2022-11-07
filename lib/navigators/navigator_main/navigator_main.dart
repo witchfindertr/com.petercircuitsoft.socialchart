@@ -9,6 +9,7 @@ import 'package:socialchart/navigators/tab_navigator_profile.dart';
 
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/screens/screen_home/screen_home_controller.dart';
 
 class NavigatorMain extends GetView<MainNavigatorController> {
   const NavigatorMain({super.key});
@@ -50,7 +51,31 @@ class NavigatorMain extends GetView<MainNavigatorController> {
                 ),
               ],
               currentIndex: controller.currentIndex.index,
-              onTap: (index) => controller.currentIndex = NavKeys.values[index],
+              onTap: (index) {
+                final result = Get.nestedKey(NavKeys.home.index)!
+                    .currentContext!
+                    .dependOnInheritedWidgetOfExactType<
+                        PrimaryScrollController>();
+                print(result.toString());
+                if (controller.currentIndex.index == index) {
+                  switch (index) {
+                    case 0: //Home
+                      ScreenHomeController.to.scrollController.animateTo(0,
+                          duration: Duration(seconds: 1), curve: Curves.ease);
+                      break;
+                    case 1:
+                      break;
+                    case 2:
+                      break;
+                    case 3:
+                      break;
+                    default:
+                      break;
+                  }
+                  ;
+                }
+                controller.currentIndex = NavKeys.values[index];
+              },
             )
           : Container(height: 0)),
     );

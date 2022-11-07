@@ -40,7 +40,7 @@ class InsightCardBody extends StatelessWidget {
                     tapCallback: () =>
                         launchUrl(Uri.parse(cardInfo.linkPreviewData!.url!)),
                   ))
-              : SizedBox(),
+              : const SizedBox(),
         ],
       ),
     );

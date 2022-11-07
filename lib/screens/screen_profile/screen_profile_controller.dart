@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/models/model_user_data.dart';
 
@@ -6,6 +7,7 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 class ScreenProfileController extends GetxController {
   static ScreenProfileController get to => Get.find();
+  var scrollController = ScrollController();
   final userDataColRef = firestore.collection("userData").withConverter(
         fromFirestore: (snapshot, options) {
           // print("Snapshot: ${snapshot.data()}");

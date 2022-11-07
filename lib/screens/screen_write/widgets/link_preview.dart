@@ -27,9 +27,9 @@ class LinkPreview extends StatelessWidget {
               imageUrl: imageUrl,
               width: 50,
               imageBuilder: (context, imageProvider) {
-                Completer<ui.Image> completer = new Completer<ui.Image>();
+                Completer<ui.Image> completer = Completer<ui.Image>();
                 imageProvider
-                    .resolve(new ImageConfiguration())
+                    .resolve(const ImageConfiguration())
                     .addListener(ImageStreamListener((ImageInfo info, bool _) {
                   completer.complete(info.image);
                 }));
@@ -46,7 +46,6 @@ class LinkPreview extends StatelessWidget {
                               image: imageProvider,
                               height: MediaQuery.of(context).size.height * 0.2,
                               fit: BoxFit.fitWidth,
-                              semanticLabel: "${image.width} X ${image.height}",
                             ),
                             Text(
                               title,
@@ -60,7 +59,6 @@ class LinkPreview extends StatelessWidget {
                                   fontWeight: FontWeight.w300,
                                   color: Colors.black.withOpacity(0.5)),
                             ),
-                            Text("${image.width} X ${image.height}"),
                           ],
                         );
                       }

@@ -90,13 +90,6 @@ class ScreenWrite extends GetView<ScreenWriteController> {
                             title: controller.linkData!.title!,
                             description: controller.linkData!.description!,
                           ),
-                          // AnyLinkPreview(
-                          //   displayDirection: UIDirection.uiDirectionHorizontal,
-                          //   link: controller.previewLink!,
-                          //   bodyMaxLines: 3,
-                          //   placeholderWidget: const Center(child: Text("로딩중")),
-                          //   errorImage: "Error loding image",
-                          // ),
                           Positioned(
                             top: 0,
                             right: 0,

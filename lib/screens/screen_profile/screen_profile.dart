@@ -27,6 +27,7 @@ class ScreenProfile extends GetView<ScreenProfileController> {
       body: Container(
         color: Colors.black12,
         child: ListView.builder(
+          controller: controller.scrollController,
           shrinkWrap: true,
           itemCount: test.length + 1,
           itemBuilder: ((context, index) {
@@ -48,6 +49,17 @@ class ScreenProfile extends GetView<ScreenProfileController> {
           }),
         ),
       ),
+      // floatingActionButton: TextButton(
+      //   onPressed: () {
+      //     // controller.scrollController
+      //     //     .animateTo(0, duration: Duration(seconds: 1), curve: Curves.ease);
+      //     // print(ModalRoute.of(context)?.);
+      //     // var controller = PrimaryScrollController.of(
+      //     //     ModalRoute.of(context).settings.name.context);
+      //     // controller?.jumpTo(0);
+      //   },
+      //   child: Text("Text"),
+      // ),
     );
   }
 }
