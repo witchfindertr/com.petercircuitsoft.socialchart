@@ -1,19 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 
-class ScreenHomeController extends GetxController {
-  static ScreenHomeController get to => Get.find(tag: NavKeys.home.name);
+class InsightCardListController extends GetxController {
   PagingController<DocumentSnapshot<Object?>?,
           QueryDocumentSnapshot<InsightCardModel>> pageController =
       PagingController(firstPageKey: null);
-
-  var scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
   var _scrollOffset = 0.0.obs;
-
   final _pageSize = 10;
 
   double get scrollOffset => _scrollOffset.value;
@@ -54,7 +51,7 @@ class ScreenHomeController extends GetxController {
   }
 
   @override
-  void onInit() async {
+  void onInit() {
     // TODO: implement onInit
     super.onInit();
     scrollController.addListener(() {
@@ -63,17 +60,5 @@ class ScreenHomeController extends GetxController {
     pageController.addPageRequestListener((pageKey) {
       fetchInsightCard(pageKey);
     });
-  }
-
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
   }
 }

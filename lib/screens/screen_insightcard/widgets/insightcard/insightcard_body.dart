@@ -15,7 +15,7 @@ class InsightCardBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    inspect(cardInfo);
+    // inspect(cardInfo);
     return Container(
       padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
       child: Column(
