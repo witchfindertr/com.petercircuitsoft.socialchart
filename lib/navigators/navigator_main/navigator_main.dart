@@ -54,26 +54,8 @@ class NavigatorMain extends GetView<MainNavigatorController> {
               ],
               currentIndex: controller.currentIndex.index,
               onTap: (index) {
-                final psController1 = PrimaryScrollController.of(Get.context!);
-
-                print(psController1.toString());
-                print(psController2.toString());
                 if (controller.currentIndex.index == index) {
-                  switch (index) {
-                    case 0: //Home
-                      ScreenHomeController.to.scrollController.animateTo(0,
-                          duration: Duration(seconds: 1), curve: Curves.ease);
-                      break;
-                    case 1:
-                      break;
-                    case 2:
-                      break;
-                    case 3:
-                      break;
-                    default:
-                      break;
-                  }
-                  ;
+                  Get.back(id: index);
                 }
                 controller.currentIndex = NavKeys.values[index];
               },

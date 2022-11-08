@@ -25,21 +25,28 @@ class InsightCardList extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder(
       init: InsightCardListController(chartId: chartId, userId: userId),
-      tag: navKey?.name,
+      tag: "${navKey?.name}${userId ?? ""}${chartId ?? ""}",
       builder: (controller) {
         return Scaffold(
-          body: PagedListView(
-            scrollController: controller.scrollController,
-            pagingController: controller.pageController,
-            builderDelegate: PagedChildBuilderDelegate<
-                QueryDocumentSnapshot<InsightCardModel>>(
-              itemBuilder: ((context, item, index) {
-                if (header != null && index == 0) {
-                  return header!;
-                }
-                return InsightCard(navKey: navKey, cardInfo: item.data());
-              }),
-            ),
+          body: CustomScrollView(
+            controller: controller.scrollController,
+            slivers: [
+              SliverToBoxAdapter(
+                child: header ?? SizedBox(),
+              ),
+              PagedSliverList(
+                pagingController: controller.pageController,
+                builderDelegate: PagedChildBuilderDelegate<
+                    QueryDocumentSnapshot<InsightCardModel>>(
+                  itemBuilder: ((context, item, index) {
+                    if (header != null && index == 0) {
+                      return header!;
+                    }
+                    return InsightCard(navKey: navKey, cardInfo: item.data());
+                  }),
+                ),
+              ),
+            ],
           ),
           floatingActionButton: Obx(
             () => controller.scrollOffset > 0 && scrollToTopEnable
@@ -59,4 +66,25 @@ class InsightCardList extends StatelessWidget {
       },
     );
   }
+}
+
+class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
+  MyHeaderDelegate({this.header});
+  final Widget? header;
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    // TODO: implement build
+    return header ?? SizedBox();
+  }
+
+  @override
+  double get maxExtent => 264;
+
+  @override
+  double get minExtent => 84;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      true;
 }

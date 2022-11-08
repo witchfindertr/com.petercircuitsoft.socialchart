@@ -68,4 +68,12 @@ class InsightCardListController extends GetxController {
       fetchInsightCard(pageKey);
     });
   }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    scrollController.dispose();
+    pageController.dispose();
+  }
 }

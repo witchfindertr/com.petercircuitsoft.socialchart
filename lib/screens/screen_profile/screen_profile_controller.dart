@@ -9,7 +9,6 @@ class ScreenProfileController extends GetxController {
   ScreenProfileController({required this.userId});
   final String userId;
   static ScreenProfileController get to => Get.find();
-  var scrollController = ScrollController();
   final userDataColRef = firestore.collection("userData").withConverter(
         fromFirestore: (snapshot, options) {
           // print("Snapshot: ${snapshot.data()}");

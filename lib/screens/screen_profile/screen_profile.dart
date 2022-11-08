@@ -26,6 +26,8 @@ class ScreenProfile extends GetView<ScreenProfileController> {
       body: Container(
         color: Colors.black12,
         child: InsightCardList(
+          navKey: navKey,
+          userId: controller.userId,
           header: UserProfile(
             userData: controller.userData.value,
           ),
