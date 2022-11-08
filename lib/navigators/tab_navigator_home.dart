@@ -35,9 +35,9 @@ class TabNavigatorHome extends StatelessWidget {
           case ScreenProfile.routeName:
             var args = settings.arguments;
             return GetPageRoute(
-              page: () =>
-                  ScreenProfile(userId: args.toString(), navKey: NavKeys.home),
-              binding: ScreenProfileBinding(navKey: NavKeys.home),
+              page: () => ScreenProfile(navKey: NavKeys.home),
+              binding: ScreenProfileBinding(
+                  navKey: NavKeys.home, userId: args.toString()),
             );
           case ScreenChart.routeName:
             return GetPageRoute(

@@ -6,14 +6,17 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 
 class InsightCardListController extends GetxController {
+  InsightCardListController({this.chartId, this.userId});
   PagingController<DocumentSnapshot<Object?>?,
           QueryDocumentSnapshot<InsightCardModel>> pageController =
       PagingController(firstPageKey: null);
   ScrollController scrollController = ScrollController();
   var _scrollOffset = 0.0.obs;
   final _pageSize = 10;
-
   double get scrollOffset => _scrollOffset.value;
+
+  String? userId;
+  String? chartId;
 
   var userInsightCardColRef =
       firestore.collection("userInsightCard").withConverter(
@@ -31,12 +34,16 @@ class InsightCardListController extends GetxController {
     QuerySnapshot<InsightCardModel> loadedInsightCard;
     if (pageKey != null) {
       loadedInsightCard = await userInsightCardColRef
+          .where("author", isEqualTo: userId)
+          .where("chartId", isEqualTo: chartId)
           .orderBy("createdAt", descending: true)
           .startAfterDocument(pageKey)
           .limit(_pageSize)
           .get();
     } else {
       loadedInsightCard = await userInsightCardColRef
+          .where("author", isEqualTo: userId)
+          .where("chartId", isEqualTo: chartId)
           .orderBy("createdAt", descending: true)
           .limit(_pageSize)
           .get();

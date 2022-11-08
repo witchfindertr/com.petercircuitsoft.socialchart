@@ -12,11 +12,7 @@ class ScreenHomeController extends GetxController {
       PagingController(firstPageKey: null);
 
   var scrollController = ScrollController();
-  var _scrollOffset = 0.0.obs;
-
   final _pageSize = 10;
-
-  double get scrollOffset => _scrollOffset.value;
 
   var userInsightCardColRef =
       firestore.collection("userInsightCard").withConverter(
@@ -57,9 +53,6 @@ class ScreenHomeController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    scrollController.addListener(() {
-      _scrollOffset.value = scrollController.offset;
-    });
     pageController.addPageRequestListener((pageKey) {
       fetchInsightCard(pageKey);
     });

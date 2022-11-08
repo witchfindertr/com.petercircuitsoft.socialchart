@@ -23,7 +23,7 @@ class ScreenHome extends GetView<ScreenHomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MainAppBar(appBar: AppBar(), title: "Social Chart"),
-      body: InsightCardList(navKey: navKey),
+      body: InsightCardList(navKey: navKey, scrollToTopEnable: true),
     );
   }
 }

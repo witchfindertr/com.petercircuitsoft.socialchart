@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchart/navigators/tab_navigator_explore.dart';
@@ -11,22 +9,15 @@ import 'package:socialchart/navigators/tab_navigator_profile.dart';
 
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
-import 'package:socialchart/screens/screen_chart/screen_chart.dart';
-import 'package:socialchart/screens/screen_chart/screen_chart_binding.dart';
-import 'package:socialchart/screens/screen_home/screen_home.dart';
-import 'package:socialchart/screens/screen_home/screen_home_binding.dart';
 import 'package:socialchart/screens/screen_home/screen_home_controller.dart';
-import 'package:socialchart/screens/screen_insightcard/screen_insightcard.dart';
-import 'package:socialchart/screens/screen_profile/screen_profile.dart';
-import 'package:socialchart/screens/screen_profile/screen_profile_binding.dart';
-import 'package:socialchart/screens/screen_write/screen_write.dart';
-import 'package:socialchart/screens/screen_write/screen_write_binding.dart';
 
 class NavigatorMain extends GetView<MainNavigatorController> {
   const NavigatorMain({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final psController2 =
+        Get.context!.findAncestorWidgetOfExactType<PrimaryScrollController>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Obx(
@@ -63,10 +54,27 @@ class NavigatorMain extends GetView<MainNavigatorController> {
               ],
               currentIndex: controller.currentIndex.index,
               onTap: (index) {
-                if (controller.currentIndex.index == index) {
-                  Get.back(id: index);
-                }
+                final psController1 = PrimaryScrollController.of(Get.context!);
 
+                print(psController1.toString());
+                print(psController2.toString());
+                if (controller.currentIndex.index == index) {
+                  switch (index) {
+                    case 0: //Home
+                      ScreenHomeController.to.scrollController.animateTo(0,
+                          duration: Duration(seconds: 1), curve: Curves.ease);
+                      break;
+                    case 1:
+                      break;
+                    case 2:
+                      break;
+                    case 3:
+                      break;
+                    default:
+                      break;
+                  }
+                  ;
+                }
                 controller.currentIndex = NavKeys.values[index];
               },
             )

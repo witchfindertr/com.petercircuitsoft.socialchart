@@ -10,13 +10,22 @@ import './insightcard.dart';
 class InsightCardList extends StatelessWidget {
   const InsightCardList({
     super.key,
+    this.scrollToTopEnable = false,
     this.navKey,
+    this.userId,
+    this.chartId,
+    this.header,
   });
   final NavKeys? navKey;
+  final bool scrollToTopEnable;
+  final String? userId;
+  final String? chartId;
+  final Widget? header;
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: InsightCardListController(),
+      init: InsightCardListController(chartId: chartId, userId: userId),
+      tag: navKey?.name,
       builder: (controller) {
         return Scaffold(
           body: PagedListView(
@@ -25,12 +34,15 @@ class InsightCardList extends StatelessWidget {
             builderDelegate: PagedChildBuilderDelegate<
                 QueryDocumentSnapshot<InsightCardModel>>(
               itemBuilder: ((context, item, index) {
+                if (header != null && index == 0) {
+                  return header!;
+                }
                 return InsightCard(navKey: navKey, cardInfo: item.data());
               }),
             ),
           ),
           floatingActionButton: Obx(
-            () => controller.scrollOffset > 0
+            () => controller.scrollOffset > 0 && scrollToTopEnable
                 ? TextButton(
                     onPressed: () {
                       controller.scrollController.animateTo(

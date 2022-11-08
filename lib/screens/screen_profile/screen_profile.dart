@@ -5,13 +5,13 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_insightcard/widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/custom_widgets/user_profile.dart';
+import 'package:socialchart/screens/screen_insightcard/widgets/insightcard/insightcard_list.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile_controller.dart';
 
 List<int> test = [1, 2, 3, 4, 5, 6, 7];
 
 class ScreenProfile extends GetView<ScreenProfileController> {
-  ScreenProfile({super.key, this.userId, this.navKey});
-  String? userId;
+  ScreenProfile({super.key, this.navKey});
   final NavKeys? navKey;
   static const routeName = "/ScreenProfile";
 
@@ -21,45 +21,38 @@ class ScreenProfile extends GetView<ScreenProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.userId = userId;
     return Scaffold(
       appBar: MainAppBar(appBar: AppBar(), title: "Profile"),
       body: Container(
         color: Colors.black12,
-        child: ListView.builder(
-          controller: controller.scrollController,
-          shrinkWrap: true,
-          itemCount: test.length + 1,
-          itemBuilder: ((context, index) {
-            switch (index) {
-              case 0:
-                return Column(children: [
-                  Obx(() {
-                    return UserProfile(
-                      userData: controller.userData.value,
-                    );
-                  }),
-                ]);
-                break;
-
-              default:
-                return Text("Auth's insight card");
-                break;
-            }
-          }),
+        child: InsightCardList(
+          header: UserProfile(
+            userData: controller.userData.value,
+          ),
         ),
+        // ListView.builder(
+        //   controller: controller.scrollController,
+        //   shrinkWrap: true,
+        //   itemCount: test.length + 1,
+        //   itemBuilder: ((context, index) {
+        //     switch (index) {
+        //       case 0:
+        //         return Column(children: [
+        //           Obx(() {
+        //             return UserProfile(
+        //               userData: controller.userData.value,
+        //             );
+        //           }),
+        //         ]);
+        //         break;
+
+        //       default:
+        //         return Text("Auth's insight card");
+        //         break;
+        //     }
+        //   }),
+        // ),
       ),
-      // floatingActionButton: TextButton(
-      //   onPressed: () {
-      //     // controller.scrollController
-      //     //     .animateTo(0, duration: Duration(seconds: 1), curve: Curves.ease);
-      //     // print(ModalRoute.of(context)?.);
-      //     // var controller = PrimaryScrollController.of(
-      //     //     ModalRoute.of(context).settings.name.context);
-      //     // controller?.jumpTo(0);
-      //   },
-      //   child: Text("Text"),
-      // ),
     );
   }
 }
