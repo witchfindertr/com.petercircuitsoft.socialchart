@@ -66,7 +66,7 @@ class ScreenWriteController extends GetxController
                     .where((element) => !_deletedLink.value.contains(element));
         if (extractedLink.isEmpty) return;
         OgpDataExtract.execute(extractedLink.first).then((value) {
-          if (value != null) {
+          if (value?.title != null && value?.description != null) {
             _linkData.value = value;
             previewLink = extractedLink.first;
           } else {

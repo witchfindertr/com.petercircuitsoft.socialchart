@@ -28,25 +28,30 @@ class InsightCardList extends StatelessWidget {
       tag: "${navKey?.name}${userId ?? ""}${chartId ?? ""}",
       builder: (controller) {
         return Scaffold(
-          body: CustomScrollView(
-            controller: controller.scrollController,
-            slivers: [
-              SliverToBoxAdapter(
-                child: header ?? SizedBox(),
-              ),
-              PagedSliverList(
-                pagingController: controller.pageController,
-                builderDelegate: PagedChildBuilderDelegate<
-                    QueryDocumentSnapshot<InsightCardModel>>(
-                  itemBuilder: ((context, item, index) {
-                    if (header != null && index == 0) {
-                      return header!;
-                    }
-                    return InsightCard(navKey: navKey, cardInfo: item.data());
-                  }),
+          body: RefreshIndicator(
+            onRefresh: () => Future.sync(
+              () => controller.pageController.refresh(),
+            ),
+            child: CustomScrollView(
+              controller: controller.scrollController,
+              slivers: [
+                SliverToBoxAdapter(
+                  child: header ?? SizedBox(),
                 ),
-              ),
-            ],
+                PagedSliverList(
+                  pagingController: controller.pageController,
+                  builderDelegate: PagedChildBuilderDelegate<
+                      QueryDocumentSnapshot<InsightCardModel>>(
+                    itemBuilder: ((context, item, index) {
+                      return InsightCard(
+                          navKey: navKey,
+                          cardId: item.id,
+                          cardInfo: item.data());
+                    }),
+                  ),
+                ),
+              ],
+            ),
           ),
           floatingActionButton: Obx(
             () => controller.scrollOffset > 0 && scrollToTopEnable
@@ -66,25 +71,4 @@ class InsightCardList extends StatelessWidget {
       },
     );
   }
-}
-
-class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
-  MyHeaderDelegate({this.header});
-  final Widget? header;
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    // TODO: implement build
-    return header ?? SizedBox();
-  }
-
-  @override
-  double get maxExtent => 264;
-
-  @override
-  double get minExtent => 84;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-      true;
 }

@@ -35,7 +35,7 @@ class ScreenProfileController extends GetxController {
   @override
   void onInit() async {
     isLoading = true;
-    var _userData = await getUserData(userId!);
+    var _userData = await getUserData(userId);
     userData.value = _userData.data();
     isLoading = false;
 

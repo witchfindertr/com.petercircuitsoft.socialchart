@@ -11,7 +11,7 @@ import 'package:socialchart/screens/screen_profile/screen_profile_controller.dar
 List<int> test = [1, 2, 3, 4, 5, 6, 7];
 
 class ScreenProfile extends GetView<ScreenProfileController> {
-  ScreenProfile({super.key, this.navKey});
+  const ScreenProfile({super.key, this.navKey});
   final NavKeys? navKey;
   static const routeName = "/ScreenProfile";
 
@@ -22,38 +22,26 @@ class ScreenProfile extends GetView<ScreenProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(appBar: AppBar(), title: "Profile"),
+      appBar: AppBar(
+          title: Obx(
+            () => Text(controller.userData.value != null
+                ? (controller.userId == firebaseAuth.currentUser!.uid
+                    ? '내 프로필'
+                    : '${controller.userData.value?.displayName}님 프로필')
+                : 'Undefined'),
+          ),
+          centerTitle: false),
       body: Container(
         color: Colors.black12,
         child: InsightCardList(
-          navKey: navKey,
-          userId: controller.userId,
-          header: UserProfile(
-            userData: controller.userData.value,
-          ),
-        ),
-        // ListView.builder(
-        //   controller: controller.scrollController,
-        //   shrinkWrap: true,
-        //   itemCount: test.length + 1,
-        //   itemBuilder: ((context, index) {
-        //     switch (index) {
-        //       case 0:
-        //         return Column(children: [
-        //           Obx(() {
-        //             return UserProfile(
-        //               userData: controller.userData.value,
-        //             );
-        //           }),
-        //         ]);
-        //         break;
-
-        //       default:
-        //         return Text("Auth's insight card");
-        //         break;
-        //     }
-        //   }),
-        // ),
+            scrollToTopEnable: true,
+            navKey: navKey,
+            userId: controller.userId,
+            header: Obx(
+              () => UserProfile(
+                userData: controller.userData.value,
+              ),
+            )),
       ),
     );
   }

@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
 //todo for the test
 import 'package:socialchart/utils/developmentHelp.dart';
@@ -21,14 +23,39 @@ class UserProfileHeader extends StatelessWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.2,
-              child: Image.network(
-                developmentHelper.randomPictureUrl(),
-                fit: BoxFit.fitWidth,
-              ),
-            ),
+            //userBackgroundImage
+            child: GestureDetector(
+                child: Hero(
+                  tag: "userBackgroundImage",
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          "https://i.picsum.photos/id/274/300/300.jpg?hmac=ONC6yV48qfvyeyXwAe7QE7b08QXABIQJjwT5chzImAg",
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  Get.to(
+                    () => GestureDetector(
+                      child: Hero(
+                        tag: "userBackgroundImage",
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "https://i.picsum.photos/id/274/300/300.jpg?hmac=ONC6yV48qfvyeyXwAe7QE7b08QXABIQJjwT5chzImAg",
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                      onTap: () => Get.back(),
+                    ),
+                  );
+                }),
           ),
           Positioned(
             top: MediaQuery.of(context).size.height * 0.15,
@@ -47,9 +74,41 @@ class UserProfileHeader extends StatelessWidget {
                   width: MediaQuery.of(context).size.height * 0.1,
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child:
-                          Image.network(developmentHelper.randomPictureUrl())),
+                    borderRadius: BorderRadius.circular(10),
+                    child: GestureDetector(
+                        child: Hero(
+                          tag: "userImage",
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "https://i.picsum.photos/id/274/300/300.jpg?hmac=ONC6yV48qfvyeyXwAe7QE7b08QXABIQJjwT5chzImAg",
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Get.to(
+                            () => GestureDetector(
+                              child: Hero(
+                                tag: "userImage",
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.2,
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        "https://i.picsum.photos/id/274/300/300.jpg?hmac=ONC6yV48qfvyeyXwAe7QE7b08QXABIQJjwT5chzImAg",
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                ),
+                              ),
+                              onTap: () => Get.back(),
+                            ),
+                          );
+                        }),
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
