@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
@@ -17,7 +19,7 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
 
   @override
   Widget build(BuildContext context) {
-    print(ModalRoute.of(context)!.settings.name);
+    inspect(ModalRoute.of(context)!.settings);
     return Scaffold(
       appBar: AppBar(title: Text("InsightCard Screen")),
       body: SingleChildScrollView(

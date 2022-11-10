@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 
 class InsightCardAuthor extends StatelessWidget {
   const InsightCardAuthor({
@@ -39,14 +40,19 @@ class InsightCardAuthor extends StatelessWidget {
             child: const CircleAvatar(radius: 30),
           ),
           onTap: () {
+            print(Get.routing.current);
+            if (ModalRoute.of(context)!.settings.name ==
+                ScreenProfile.routeName) {
+              return;
+            }
             if (userId != firebaseAuth.currentUser!.uid) {
               Get.toNamed(
-                "/ScreenProfile",
+                ScreenProfile.routeName,
                 id: navKey?.index,
                 arguments: userId,
               );
             } else {
-              MainNavigatorController.to.currentIndex = NavKeys.profile;
+              NavigatorMainController.to.currentIndex = NavKeys.profile;
               Get.toNamed('/', id: NavKeys.profile.index);
             }
           },

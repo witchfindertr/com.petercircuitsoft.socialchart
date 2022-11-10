@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/navigators/navigator_login/navigator_login_controller.dart';
 import 'package:socialchart/screens/screen_login/screen_login.dart';
-import 'package:socialchart/screens/screen_create_account.dart';
 import 'package:socialchart/screens/screen_login/screen_login_binding.dart';
 import 'package:socialchart/screens/screen_report/screen_report.dart';
 import 'package:socialchart/screens/screen_report/screen_report_binding.dart';
 
-class NavigatorLogin extends StatelessWidget {
+class NavigatorLogin extends GetView<NavigatorLoginController> {
   const NavigatorLogin({super.key});
 
   @override

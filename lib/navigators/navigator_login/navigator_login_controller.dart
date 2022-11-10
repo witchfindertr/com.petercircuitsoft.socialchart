@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class LoginNavigatorController extends GetxController {
+class NavigatorLoginController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit

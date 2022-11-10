@@ -4,6 +4,7 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_author.dart';
+import 'package:socialchart/screens/screen_chart/screen_chart.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard.dart';
 import './insightcard_body.dart';
 import './insightcard_bottom.dart';
@@ -73,7 +74,8 @@ class InsightCard extends StatelessWidget {
               GestureDetector(
                 child: InsightCardHeader(),
                 behavior: HitTestBehavior.opaque,
-                onTap: () => Get.toNamed("/ScreenChart", id: navKey?.index),
+                onTap: () =>
+                    Get.toNamed(ScreenChart.routeName, id: navKey?.index),
               ),
               Divider(
                 height: 0,

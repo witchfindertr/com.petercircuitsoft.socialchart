@@ -5,13 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
-import 'package:socialchart/controllers/isloading_controller.dart';
+import 'package:socialchart/main.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 
 import 'package:ogp_data_extract/ogp_data_extract.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:socialchart/socialchart/socialchart_controller.dart';
 
 class ScreenWriteController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -91,7 +92,7 @@ class ScreenWriteController extends GetxController
     // TODO: implement onReady
     super.onReady();
     //hide main navigation bar
-    Get.find<MainNavigatorController>().isBottomTabVisible = false;
+    Get.find<NavigatorMainController>().isBottomTabVisible = false;
   }
 
   @override
@@ -99,11 +100,12 @@ class ScreenWriteController extends GetxController
     // TODO: implement onClose
     super.onClose();
     //show the main navigation bar again
-    Get.find<MainNavigatorController>().isBottomTabVisible = true;
+    Get.find<NavigatorMainController>().isBottomTabVisible = true;
   }
 
   Future<void> addInsightCard() async {
-    IsLoadingController.to.isLoading = true;
+    var loading = SocialChartController.to;
+    loading.showFullScreenLoadingIndicator = true;
     try {
       await insightCardCollectionRef.add(
         InsightCardModel(
@@ -124,10 +126,10 @@ class ScreenWriteController extends GetxController
               : null,
         ),
       );
-      IsLoadingController.to.isLoading = false;
+      loading.showFullScreenLoadingIndicator = false;
     } catch (e) {
       print(e.toString());
-      IsLoadingController.to.isLoading = false;
+      loading.showFullScreenLoadingIndicator = false;
       rethrow;
     }
   }

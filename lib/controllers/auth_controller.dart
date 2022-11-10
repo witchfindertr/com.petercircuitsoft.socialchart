@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:socialchart/controllers/isloading_controller.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/main.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/socialchart/socialchart_controller.dart';
 // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
 class AuthController extends GetxController {
@@ -44,6 +45,7 @@ class AuthController extends GetxController {
   }
 
   Future<UserCredential?> signInWithGoogle() async {
+    var loading = SocialChartController.to;
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser != null) {
@@ -54,24 +56,25 @@ class AuthController extends GetxController {
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
-        IsLoadingController.to.isLoading = true;
+        loading.showFullScreenLoadingIndicator = true;
         return await firebaseAuth
             .signInWithCredential(credential)
             .then((value) {
-          IsLoadingController.to.isLoading = false;
+          loading.showFullScreenLoadingIndicator = false;
           return value;
         });
       } else {
-        IsLoadingController.to.isLoading = false;
+        loading.showFullScreenLoadingIndicator = false;
         return null;
       }
     } catch (error) {
-      IsLoadingController.to.isLoading = false;
+      loading.showFullScreenLoadingIndicator = false;
       rethrow;
     }
   }
 
   Future<UserCredential?> signInWithApple() async {
+    var loading = SocialChartController.to;
     try {
       final appleCredential = await SignInWithApple.getAppleIDCredential(
         scopes: [AppleIDAuthorizationScopes.email],
@@ -80,15 +83,15 @@ class AuthController extends GetxController {
         idToken: appleCredential.identityToken,
         accessToken: appleCredential.authorizationCode,
       );
-      IsLoadingController.to.isLoading = true;
+      loading.showFullScreenLoadingIndicator = true;
       return await firebaseAuth.signInWithCredential(oauthCredential).then(
         (value) {
-          IsLoadingController.to.isLoading = false;
+          loading.showFullScreenLoadingIndicator = false;
           return value;
         },
       );
     } catch (error) {
-      IsLoadingController.to.isLoading = false;
+      loading.showFullScreenLoadingIndicator = false;
       rethrow;
     }
   }
@@ -105,7 +108,7 @@ class AuthController extends GetxController {
   }
 
   void signOut() async {
-    MainNavigatorController.to.currentIndex = NavKeys.home;
+    NavigatorMainController.to.currentIndex = NavKeys.home;
     await firebaseAuth.signOut();
     Get.snackbar("로그아웃", "로그아웃되었습니다.");
   }

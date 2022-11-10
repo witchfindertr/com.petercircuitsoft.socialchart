@@ -54,6 +54,6 @@ class ScreenInsightCardController extends GetxController {
   }
 
   void _onFocusChange() {
-    MainNavigatorController.to.isBottomTabVisible = !focus.hasFocus;
+    NavigatorMainController.to.isBottomTabVisible = !focus.hasFocus;
   }
 }

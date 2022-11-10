@@ -5,6 +5,6 @@ class MainNavigatorBinding extends Bindings {
   @override
   void dependencies() {
     // TODO: implement dependencies
-    Get.lazyPut<MainNavigatorController>(() => MainNavigatorController());
+    Get.lazyPut<NavigatorMainController>(() => NavigatorMainController());
   }
 }

@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:socialchart/main.dart';
+import 'package:socialchart/socialchart/socialchart.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

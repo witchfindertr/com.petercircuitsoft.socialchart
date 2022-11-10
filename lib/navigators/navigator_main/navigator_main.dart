@@ -11,12 +11,11 @@ import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_home/screen_home_controller.dart';
 
-class NavigatorMain extends GetView<MainNavigatorController> {
+class NavigatorMain extends GetView<NavigatorMainController> {
   const NavigatorMain({super.key});
 
   @override
   Widget build(BuildContext context) {
-    print(ModalRoute.of(context)!.settings.name);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Obx(
