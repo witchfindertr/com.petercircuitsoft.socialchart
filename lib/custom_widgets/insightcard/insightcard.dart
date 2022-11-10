@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
-import 'package:socialchart/screens/screen_insightcard/widgets/insightcard/insightcard_author.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_author.dart';
 import './insightcard_body.dart';
 import './insightcard_bottom.dart';
 import './insightcard_header.dart';
@@ -44,11 +44,13 @@ class InsightCard extends StatelessWidget {
     this.navKey,
     required this.cardId,
     required this.cardInfo,
+    this.trimLine,
   });
 
   final NavKeys? navKey;
   final String cardId;
   final InsightCardModel cardInfo;
+  final int? trimLine;
 
   @override
   Widget build(BuildContext context) {
@@ -63,38 +65,49 @@ class InsightCard extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
       semanticContainer: true,
       child: Padding(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-          child: Obx(
-            () => Column(
-              children: <Widget>[
-                GestureDetector(
-                    child: Container(child: InsightCardHeader()),
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () =>
-                        Get.toNamed("/ScreenChart", id: navKey?.index)),
-                Divider(
-                  height: 0,
-                  indent: 10,
-                  endIndent: 10,
-                ),
-                InsightCardAuthor(
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Obx(
+          () => Column(
+            children: <Widget>[
+              GestureDetector(
+                  child: InsightCardHeader(),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => Get.toNamed("/ScreenChart", id: navKey?.index)),
+              Divider(
+                height: 0,
+                indent: 10,
+                endIndent: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  print("body!!!");
+                  Get.toNamed("/ScreenInsightCard",
+                      id: navKey?.index, arguments: cardId);
+                },
+                child: InsightCardAuthor(
                     navKey: navKey,
+                    cardId: cardId,
                     userId: cardInfo.author.id,
                     userData: controller.userData.value,
                     elapsed: "10w ago"),
-                InsightCardBody(cardInfo: cardInfo),
-                Divider(
-                  height: 0,
-                  indent: 10,
-                  endIndent: 10,
-                ),
-                InsightCardBottom(
-                  cardId: cardId,
-                  cardInfo: cardInfo,
-                )
-              ],
-            ),
-          )),
+              ),
+              InsightCardBody(
+                cardInfo: cardInfo,
+                trimLine: trimLine,
+              ),
+              Divider(
+                height: 0,
+                indent: 10,
+                endIndent: 10,
+              ),
+              InsightCardBottom(
+                cardId: cardId,
+                cardInfo: cardInfo,
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

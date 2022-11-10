@@ -1,4 +1,3 @@
-import 'package:any_link_preview/any_link_preview.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +11,16 @@ import './insightcard_author.dart';
 import 'dart:developer';
 
 class InsightCardBody extends StatelessWidget {
-  const InsightCardBody({super.key, required this.cardInfo});
+  const InsightCardBody({super.key, required this.cardInfo, this.trimLine});
   final InsightCardModel cardInfo;
+  final int? trimLine;
 
   @override
   Widget build(BuildContext context) {
     // inspect(cardInfo);
     return Container(
-      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+      width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -38,9 +39,8 @@ class InsightCardBody extends StatelessWidget {
             softWrap: true,
             trimExpandedText: "\n\n덜보기",
             trimMode: TrimMode.Line,
-            trimLines: 8,
+            trimLines: trimLine ?? 8,
             trimCollapsedText: "더보기",
-            // overflow: TextOverflow.ellipsis,
             moreStyle: TextStyle(color: Colors.blue, fontSize: 13),
             lessStyle: TextStyle(color: Colors.blue),
           ),
@@ -60,7 +60,8 @@ class InsightCardBody extends StatelessWidget {
                     description: cardInfo.linkPreviewData?.description,
                     tapCallback: () =>
                         launchUrl(Uri.parse(cardInfo.linkPreviewData!.url!)),
-                  ))
+                  ),
+                )
               : const SizedBox(),
         ],
       ),

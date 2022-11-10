@@ -7,8 +7,8 @@ import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/screens/screen_home/screen_home_controller.dart';
-import 'package:socialchart/screens/screen_insightcard/widgets/insightcard/insightcard.dart';
-import 'package:socialchart/screens/screen_insightcard/widgets/insightcard/insightcard_list.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
 
 class ScreenHome extends GetView<ScreenHomeController> {
   const ScreenHome({super.key, this.navKey});

@@ -6,6 +6,7 @@ import 'package:socialchart/screens/screen_chart/screen_chart_binding.dart';
 import 'package:socialchart/screens/screen_home/screen_home.dart';
 import 'package:socialchart/screens/screen_home/screen_home_binding.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard.dart';
+import 'package:socialchart/screens/screen_insightcard/screen_insightcard_binding.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile_binding.dart';
@@ -30,8 +31,12 @@ class TabNavigatorHome extends StatelessWidget {
               binding: ScreenHomeBinding(navKey: NavKeys.home),
             );
           case ScreenInsightCard.routeName:
+            var args = settings.arguments;
             return GetPageRoute(
-                page: () => ScreenInsightCard(navKey: NavKeys.home));
+              page: () => ScreenInsightCard(navKey: NavKeys.home),
+              binding: ScreenInsightCardBinding(
+                  cardId: args.toString(), navKey: NavKeys.home),
+            );
           case ScreenProfile.routeName:
             var args = settings.arguments;
             return GetPageRoute(

@@ -1,15 +1,17 @@
 import 'package:get/get.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard_controller.dart';
 
 class ScreenInsightCardBinding extends Bindings {
-  final String tag;
+  final String cardId;
+  final NavKeys? navKey;
   @override
   void dependencies() {
     // TODO: implement dependencies
     Get.lazyPut<ScreenInsightCardController>(
-        () => ScreenInsightCardController(),
-        tag: tag);
+        () => ScreenInsightCardController(cardId: cardId),
+        tag: navKey?.name);
   }
 
-  ScreenInsightCardBinding({required this.tag});
+  ScreenInsightCardBinding({required this.navKey, required this.cardId});
 }

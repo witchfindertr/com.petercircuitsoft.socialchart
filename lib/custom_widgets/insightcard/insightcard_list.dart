@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
-import 'package:socialchart/screens/screen_insightcard/widgets/insightcard/insightcard_list_controller.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
 import './insightcard.dart';
 
 class InsightCardList extends StatelessWidget {

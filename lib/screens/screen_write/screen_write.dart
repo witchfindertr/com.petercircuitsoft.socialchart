@@ -8,7 +8,6 @@ import 'package:socialchart/screens/screen_write/screen_write_controller.dart';
 
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:detectable_text_field/widgets/detectable_text_field.dart';
-import 'package:any_link_preview/any_link_preview.dart';
 import 'package:socialchart/screens/screen_write/widgets/link_preview.dart';
 
 class ScreenWrite extends GetView<ScreenWriteController> {

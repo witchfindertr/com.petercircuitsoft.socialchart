@@ -6,6 +6,7 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 
 class ScreenHomeController extends GetxController {
+  //todo....: is this okay? to.. put tag here??
   static ScreenHomeController get to => Get.find(tag: NavKeys.home.name);
   PagingController<DocumentSnapshot<Object?>?,
           QueryDocumentSnapshot<InsightCardModel>> pageController =

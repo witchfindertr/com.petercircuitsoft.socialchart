@@ -6,11 +6,21 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
+import 'package:socialchart/models/model_user_data.dart';
 //todo for the test
 import 'package:socialchart/utils/developmentHelp.dart';
 
-class UserProfileHeader extends StatelessWidget {
-  const UserProfileHeader({super.key});
+class UserProfileImages extends StatelessWidget {
+  const UserProfileImages({
+    super.key,
+    this.userData,
+    required this.userId,
+    this.isCurrentUser = false,
+  });
+
+  final UserDataModel? userData;
+  final String userId;
+  final bool isCurrentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +36,7 @@ class UserProfileHeader extends StatelessWidget {
             //userBackgroundImage
             child: GestureDetector(
                 child: Hero(
-                  tag: "userBackgroundImage",
+                  tag: userId + "background",
                   child: SizedBox(
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.2,
@@ -41,7 +51,7 @@ class UserProfileHeader extends StatelessWidget {
                   Get.to(
                     () => GestureDetector(
                       child: Hero(
-                        tag: "userBackgroundImage",
+                        tag: userId + "background",
                         child: SizedBox(
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.2,
@@ -77,13 +87,13 @@ class UserProfileHeader extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     child: GestureDetector(
                         child: Hero(
-                          tag: "userImage",
+                          tag: userId + "image",
                           child: SizedBox(
                             width: double.infinity,
                             height: MediaQuery.of(context).size.height * 0.2,
                             child: CachedNetworkImage(
                               imageUrl:
-                                  "https://i.picsum.photos/id/274/300/300.jpg?hmac=ONC6yV48qfvyeyXwAe7QE7b08QXABIQJjwT5chzImAg",
+                                  "https://i.picsum.photos/id/442/200/200.jpg?hmac=S-yNCNr30GK97ulUYoey_Fh2-czIf7YnNgcKp7zrEoE",
                               fit: BoxFit.fitWidth,
                             ),
                           ),
@@ -92,14 +102,14 @@ class UserProfileHeader extends StatelessWidget {
                           Get.to(
                             () => GestureDetector(
                               child: Hero(
-                                tag: "userImage",
+                                tag: userId + "image",
                                 child: SizedBox(
                                   width: double.infinity,
                                   height:
                                       MediaQuery.of(context).size.height * 0.2,
                                   child: CachedNetworkImage(
                                     imageUrl:
-                                        "https://i.picsum.photos/id/274/300/300.jpg?hmac=ONC6yV48qfvyeyXwAe7QE7b08QXABIQJjwT5chzImAg",
+                                        "https://i.picsum.photos/id/442/200/200.jpg?hmac=S-yNCNr30GK97ulUYoey_Fh2-czIf7YnNgcKp7zrEoE",
                                     fit: BoxFit.fitWidth,
                                   ),
                                 ),
@@ -110,28 +120,30 @@ class UserProfileHeader extends StatelessWidget {
                         }),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () => AuthController.to.signOut(),
-                        child: Text("프로필 수정"),
-                        style: ButtonStyle(
-                          alignment: Alignment.bottomCenter,
+                isCurrentUser
+                    ? Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                              onPressed: () => AuthController.to.signOut(),
+                              child: Text("프로필 수정"),
+                              style: ButtonStyle(
+                                alignment: Alignment.bottomCenter,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => {},
+                              child: Text("계정 설정"),
+                              style: ButtonStyle(
+                                alignment: Alignment.bottomCenter,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () => {},
-                        child: Text("계정 설정"),
-                        style: ButtonStyle(
-                          alignment: Alignment.bottomCenter,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

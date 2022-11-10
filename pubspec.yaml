@@ -49,11 +49,11 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   hashtagable: ^2.1.0
   detectable_text_field: ^2.0.4
-  any_link_preview: ^2.0.9
   cached_network_image: ^3.2.2
   infinite_scroll_pagination: ^3.2.0
   share_plus: ^6.2.0
   ogp_data_extract: ^0.1.2
+  font_awesome_flutter: ^10.2.1
 
 dev_dependencies:
   flutter_test:

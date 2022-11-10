@@ -31,9 +31,10 @@ class LinkPreview extends StatelessWidget {
                 imageProvider
                     .resolve(const ImageConfiguration())
                     .addListener(ImageStreamListener((ImageInfo info, bool _) {
-                  //to prevent completer complete multiple times.
-                  if (completer.isCompleted == false)
+                  // to prevent completer complete multiple times.
+                  if (completer.isCompleted == false) {
                     completer.complete(info.image);
+                  }
                 }));
                 return FutureBuilder<ui.Image>(
                   future: completer.future,
