@@ -20,10 +20,12 @@ class TabNavigatorNotice extends StatelessWidget {
         switch (settings.name) {
           case ScreenNotice.routeName:
             return GetPageRoute(
+                settings: settings,
                 page: () => ScreenNotice(navKey: NavKeys.notice));
             break;
           case ScreenInsightCard.routeName:
             return GetPageRoute(
+                settings: settings,
                 page: () => ScreenInsightCard(navKey: NavKeys.notice));
             break;
           default:

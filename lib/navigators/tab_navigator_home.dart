@@ -27,36 +27,48 @@ class TabNavigatorHome extends StatelessWidget {
         switch (settings.name) {
           case ScreenHome.routeName:
             return GetPageRoute(
+              routeName: ScreenHome.routeName,
               page: () => ScreenHome(navKey: NavKeys.home),
               binding: ScreenHomeBinding(navKey: NavKeys.home),
+              settings: settings,
             );
           case ScreenInsightCard.routeName:
             var args = settings.arguments;
             return GetPageRoute(
+              routeName: ScreenInsightCard.routeName,
               page: () => ScreenInsightCard(navKey: NavKeys.home),
               binding: ScreenInsightCardBinding(
-                  cardId: args.toString(), navKey: NavKeys.home),
+                cardId: args.toString(),
+                navKey: NavKeys.home,
+              ),
+              settings: settings,
             );
           case ScreenProfile.routeName:
             var args = settings.arguments;
             return GetPageRoute(
+              routeName: ScreenProfile.routeName,
               page: () => ScreenProfile(navKey: NavKeys.home),
               binding: ScreenProfileBinding(
                   navKey: NavKeys.home, userId: args.toString()),
+              settings: settings,
             );
           case ScreenChart.routeName:
             return GetPageRoute(
+              routeName: ScreenChart.routeName,
               page: () => ScreenChart(navKey: NavKeys.home),
               binding: ScreenChartBinding(navKey: NavKeys.home),
+              settings: settings,
             );
           case ScreenWrite.routeName:
             var chartId = settings.arguments as String;
             return GetPageRoute(
+              routeName: ScreenWrite.routeName,
               page: () => ScreenWrite(
                 navKey: NavKeys.home,
               ),
               binding:
                   ScreenWriteBinding(navKey: NavKeys.home, chartId: chartId),
+              settings: settings,
             );
           // case PageTest.routeName:
           //   return GetPageRoute(

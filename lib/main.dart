@@ -10,6 +10,8 @@ import 'package:socialchart/navigators/navigator_login/navigator_login.dart';
 import 'package:socialchart/navigators/navigator_login/navigator_login_controller.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/navigators/tab_navigator_home.dart';
+import 'package:socialchart/screens/screen_home/screen_home.dart';
 import 'firebase_options.dart';
 import 'package:get/get.dart';
 
@@ -30,8 +32,27 @@ void main() async {
       title: 'SocialChart',
       theme: ThemeData(fontFamily: "NotoSansKR"),
       home: SocialChart(),
+      // initialRoute: "/ScreenHome",
+      // getPages: [
+      //   GetPage(
+      //     name: "/",
+      //     page: () => NavigatorMain(),
+      //     middlewares: [AuthGuard()],
+      //   ),
+      //   GetPage(name: "/login", page: () => NavigatorLogin()),
+      //   GetPage(name: ScreenHome.routeName, page: () => ScreenHome()),
+      // ],
     ),
   );
+}
+
+class AuthGuard extends GetMiddleware {
+  @override
+  RouteSettings? redirect(String? route) {
+    if (AuthController.to.firebaseUser.value == null)
+      return const RouteSettings(name: "/login");
+    return null;
+  }
 }
 
 class SocialChart extends GetMaterialApp {

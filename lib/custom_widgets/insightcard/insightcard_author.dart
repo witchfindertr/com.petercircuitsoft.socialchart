@@ -52,7 +52,7 @@ class InsightCardAuthor extends StatelessWidget {
           },
         ),
         title: Text(
-          userData.displayName.length > 10 ? '${userData.displayName.substring(0,8)}...'
+          userData != null ? userData!.displayName! : "Undefined",
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(

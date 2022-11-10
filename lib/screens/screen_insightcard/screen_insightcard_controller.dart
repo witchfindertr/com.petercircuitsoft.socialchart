@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 
 class ScreenInsightCardController extends GetxController {
   ScreenInsightCardController({required this.cardId});
@@ -13,7 +14,7 @@ class ScreenInsightCardController extends GetxController {
 
   var textController = TextEditingController();
 
-  FocusNode _focus = FocusNode();
+  FocusNode focus = FocusNode();
 
   final _cardInfo = Rxn<InsightCardModel>();
   InsightCardModel? get cardInfo => _cardInfo.value;
@@ -33,7 +34,7 @@ class ScreenInsightCardController extends GetxController {
     _isLoading.value = false;
 
     //textField on focus
-    _focus.addListener(_onFocusChange);
+    focus.addListener(_onFocusChange);
   }
 
   @override
@@ -48,11 +49,11 @@ class ScreenInsightCardController extends GetxController {
     super.onClose();
     textController.dispose();
 
-    _focus.removeListener(_onFocusChange);
-    _focus.dispose();
+    focus.removeListener(_onFocusChange);
+    focus.dispose();
   }
 
   void _onFocusChange() {
-    print("Focus: ${_focus.hasFocus.toString()}");
+    MainNavigatorController.to.isBottomTabVisible = !focus.hasFocus;
   }
 }

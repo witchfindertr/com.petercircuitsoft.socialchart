@@ -17,11 +17,15 @@ class TabNavigatorExplore extends StatelessWidget {
         switch (settings.name) {
           case ScreenNotice.routeName:
             return GetPageRoute(
-                page: () => ScreenExplore(navKey: NavKeys.explore));
+              page: () => ScreenExplore(navKey: NavKeys.explore),
+              settings: settings,
+            );
 
           case ScreenInsightCard.routeName:
             return GetPageRoute(
-                page: () => ScreenInsightCard(navKey: NavKeys.explore));
+              page: () => ScreenInsightCard(navKey: NavKeys.explore),
+              settings: settings,
+            );
 
           default:
             return null;

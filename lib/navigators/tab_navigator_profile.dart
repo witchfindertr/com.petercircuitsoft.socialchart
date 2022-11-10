@@ -25,12 +25,14 @@ class TabNavigatorProfile extends StatelessWidget {
                 navKey: NavKeys.profile,
               ),
               binding: ScreenProfileBinding(
-                  navKey: NavKeys.profile,
-                  userId: firebaseAuth.currentUser!.uid),
+                navKey: NavKeys.profile,
+                userId: firebaseAuth.currentUser!.uid,
+              ),
             );
             break;
           case PageTest.routeName:
             return GetPageRoute(
+              settings: settings,
               page: () => PageTest(controllerTag: "내정보"),
               binding: PageTestBinding(controllerTag: "내정보"),
             );

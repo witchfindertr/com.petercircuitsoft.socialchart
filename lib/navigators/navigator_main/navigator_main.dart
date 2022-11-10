@@ -16,8 +16,7 @@ class NavigatorMain extends GetView<MainNavigatorController> {
 
   @override
   Widget build(BuildContext context) {
-    final psController2 =
-        Get.context!.findAncestorWidgetOfExactType<PrimaryScrollController>();
+    print(ModalRoute.of(context)!.settings.name);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Obx(

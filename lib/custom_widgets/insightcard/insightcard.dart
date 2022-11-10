@@ -4,6 +4,7 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_author.dart';
+import 'package:socialchart/screens/screen_insightcard/screen_insightcard.dart';
 import './insightcard_body.dart';
 import './insightcard_bottom.dart';
 import './insightcard_header.dart';
@@ -70,9 +71,10 @@ class InsightCard extends StatelessWidget {
           () => Column(
             children: <Widget>[
               GestureDetector(
-                  child: InsightCardHeader(),
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => Get.toNamed("/ScreenChart", id: navKey?.index)),
+                child: InsightCardHeader(),
+                behavior: HitTestBehavior.opaque,
+                onTap: () => Get.toNamed("/ScreenChart", id: navKey?.index),
+              ),
               Divider(
                 height: 0,
                 indent: 10,
@@ -80,9 +82,14 @@ class InsightCard extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  print("body!!!");
-                  Get.toNamed("/ScreenInsightCard",
-                      id: navKey?.index, arguments: cardId);
+                  if (ModalRoute.of(context)!.settings.name !=
+                      ScreenInsightCard.routeName) {
+                    Get.toNamed(
+                      ScreenInsightCard.routeName,
+                      id: navKey?.index,
+                      arguments: cardId,
+                    );
+                  }
                 },
                 child: InsightCardAuthor(
                     navKey: navKey,

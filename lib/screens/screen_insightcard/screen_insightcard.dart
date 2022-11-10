@@ -17,6 +17,7 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
 
   @override
   Widget build(BuildContext context) {
+    print(ModalRoute.of(context)!.settings.name);
     return Scaffold(
       appBar: AppBar(title: Text("InsightCard Screen")),
       body: SingleChildScrollView(
@@ -33,6 +34,7 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
       bottomSheet: Container(
         decoration: BoxDecoration(color: Colors.transparent),
         child: TextField(
+          focusNode: controller.focus,
           onTap: () => {},
           controller: controller.textController,
           decoration: InputDecoration(
