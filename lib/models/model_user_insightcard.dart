@@ -10,7 +10,7 @@ class InsightCardModel {
     required this.author,
     required this.userText,
     this.linkPreviewData,
-    this.replyCount = 0,
+    this.commentCount = 0,
     this.pinCount = 0,
   });
   final Timestamp createdAt; //creation time
@@ -19,8 +19,8 @@ class InsightCardModel {
   final DocumentReference author; //userReference
   final String userText;
   final LinkPreviewData? linkPreviewData;
-  final int replyCount;
-  final int pinCount;
+  final int? commentCount;
+  final int? pinCount;
 
   InsightCardModel.fromJson(Map<String, dynamic?> json)
       : this(
@@ -32,8 +32,8 @@ class InsightCardModel {
           linkPreviewData: json['linkPreviewData'] != null
               ? LinkPreviewData.fromJson(json['linkPreviewData'])
               : null,
-          replyCount: json['replyCount'] as int,
-          pinCount: json['pinCount'] as int,
+          commentCount: json['commentCount'] as int?,
+          pinCount: json['pinCount'] as int?,
         );
   Map<String, dynamic?> toJson() {
     return {
@@ -43,7 +43,7 @@ class InsightCardModel {
       'author': author,
       'userText': userText,
       'linkPreviewData': linkPreviewData?.toJson(),
-      'replyCount': replyCount,
+      'commentCount': commentCount,
       'pinCount': pinCount,
     };
   }

@@ -92,7 +92,7 @@ class ScreenWriteController extends GetxController
     // TODO: implement onReady
     super.onReady();
     //hide main navigation bar
-    Get.find<NavigatorMainController>().isBottomTabVisible = false;
+    // Get.find<NavigatorMainController>().isBottomTabVisible = false;
   }
 
   @override
@@ -100,7 +100,7 @@ class ScreenWriteController extends GetxController
     // TODO: implement onClose
     super.onClose();
     //show the main navigation bar again
-    Get.find<NavigatorMainController>().isBottomTabVisible = true;
+    // Get.find<NavigatorMainController>().isBottomTabVisible = true;
   }
 
   Future<void> addInsightCard() async {

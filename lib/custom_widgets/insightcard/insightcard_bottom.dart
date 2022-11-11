@@ -29,8 +29,8 @@ class InsightCardBottomController extends GetxController {
 
     ever(_cardInfo, (cardInfo) {
       if (cardInfo != null) {
-        _replyCount.value = cardInfo.replyCount;
-        _pinCount.value = cardInfo.pinCount;
+        _replyCount.value = cardInfo.commentCount ?? 0;
+        _pinCount.value = cardInfo.pinCount ?? 0;
       }
     });
   }

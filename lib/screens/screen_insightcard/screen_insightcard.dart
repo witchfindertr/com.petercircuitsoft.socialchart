@@ -1,10 +1,13 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard_controller.dart';
+import 'package:socialchart/socialchart/socialchart_controller.dart';
 
 class ScreenInsightCard extends GetView<ScreenInsightCardController> {
   const ScreenInsightCard({super.key, required this.navKey});
@@ -19,10 +22,12 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
 
   @override
   Widget build(BuildContext context) {
-    inspect(ModalRoute.of(context)!.settings);
     return Scaffold(
-      appBar: AppBar(title: Text("InsightCard Screen")),
+      appBar: AppBar(title: const Text("InsightCard Screen")),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.only(
+            bottom: kMinInteractiveDimensionCupertino + 10),
+        controller: controller.scrollController,
         child: Obx(
           () => !controller.isLoading && controller.cardInfo != null
               ? InsightCard(
@@ -34,18 +39,35 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
         ),
       ),
       bottomSheet: Container(
-        decoration: BoxDecoration(color: Colors.transparent),
-        child: TextField(
-          focusNode: controller.focus,
-          onTap: () => {},
-          controller: controller.textController,
-          decoration: InputDecoration(
-            hintText: "댓글을 입력하세요.",
-            contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+        width: double.infinity,
+        height: kMinInteractiveDimensionCupertino + 10,
+        decoration: const BoxDecoration(
+            border: Border(top: BorderSide(color: Colors.black26))),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: TextField(
+                focusNode: controller.focusNode,
+                controller: controller.textController,
+                enabled: controller.textFieldEnabled,
+                onTap: controller.scrollToEnd,
+                decoration: InputDecoration(
+                  hintText: "댓글을 입력하세요.",
+                  contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
+              ),
             ),
-          ),
+            SizedBox(width: 10),
+            CupertinoButton(
+                padding: EdgeInsets.all(0),
+                child: Icon(CupertinoIcons.paperplane),
+                onPressed: () => {controller.addReply()})
+          ],
         ),
       ),
     );
