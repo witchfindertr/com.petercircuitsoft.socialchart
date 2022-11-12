@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_author.dart';
@@ -9,24 +11,36 @@ import 'package:socialchart/screens/screen_insightcard/screen_insightcard.dart';
 import './insightcard_body.dart';
 import './insightcard_bottom.dart';
 import './insightcard_header.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class InsightCardController extends GetxController {
   InsightCardController({required this.userId});
   final String userId;
 
-  var userDataDocColRef = firestore.collection("userData").withConverter(
-        fromFirestore: (snapshot, options) =>
-            UserDataModel.fromJson(snapshot.data()!),
-        toFirestore: (value, options) => value.toJson(),
-      );
-
   var userData = Rxn<UserDataModel>();
+
+  void onCommentButtonPress(String cardId, NavKeys? navKey) {
+    //move to the Screen InsightCard with some argument or parameter
+
+    Get.toNamed(ScreenInsightCard.routeName,
+        arguments: cardId, id: navKey?.index);
+  }
+
+  void onSharePress(String cardId) {
+    Share.share("Social chart", subject: "${cardId}");
+  }
+
+  void onScrapButtonPress() {
+    //server update
+    //increase the number of Scrap count
+    print("Scrap button pressed");
+  }
 
   @override
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    userDataDocColRef
+    userDataColRef()
         .doc(userId)
         .get()
         .then((value) => userData.value = value.data());
@@ -98,7 +112,8 @@ class InsightCard extends StatelessWidget {
                     cardId: cardId,
                     userId: cardInfo.author.id,
                     userData: controller.userData.value,
-                    elapsed: "10w ago"),
+                    elapsed: timeago.format(cardInfo.createdAt.toDate(),
+                        locale: "kr")),
               ),
               InsightCardBody(
                 cardInfo: cardInfo,
@@ -110,8 +125,17 @@ class InsightCard extends StatelessWidget {
                 endIndent: 10,
               ),
               InsightCardBottom(
-                cardId: cardId,
-                cardInfo: cardInfo,
+                commentCount: cardInfo.commentCount ?? 0,
+                scrapCount: cardInfo.pinCount ?? 0,
+                commentButtonPressed: () {
+                  if (ModalRoute.of(context)!.settings.name ==
+                      ScreenInsightCard.routeName) {
+                    return;
+                  }
+                  controller.onCommentButtonPress(cardId, navKey);
+                },
+                scrapButtonPressed: () => controller.onScrapButtonPress(),
+                shareButtonPressed: () => controller.onSharePress(cardId),
               )
             ],
           ),

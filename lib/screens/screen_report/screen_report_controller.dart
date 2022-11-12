@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_report.dart';
 
 class ScreenReportController extends GetxController {
@@ -9,13 +10,6 @@ class ScreenReportController extends GetxController {
   var key = GlobalKey<FormState>();
   var textController = TextEditingController();
   var emailController = TextEditingController();
-
-  final userReportColRef = FirebaseFirestore.instance
-      .collection("userReports")
-      .withConverter(
-          fromFirestore: (snapshot, options) =>
-              UserReportModel.fromJson(snapshot.data()!),
-          toFirestore: ((value, options) => value.toJson()));
 
   @override
   void onInit() {
@@ -37,7 +31,7 @@ class ScreenReportController extends GetxController {
   }
 
   Future<void> sendReport(String userEmail, userMessage) {
-    return userReportColRef
+    return userReportColRef()
         .add(UserReportModel(
             userEmail: userEmail,
             userMessage: userMessage,

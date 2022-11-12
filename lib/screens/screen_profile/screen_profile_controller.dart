@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_data.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -11,13 +12,6 @@ class ScreenProfileController extends GetxController {
   ScreenProfileController({required this.userId});
   final String userId;
   static ScreenProfileController get to => Get.find();
-  final userDataColRef = firestore.collection("userData").withConverter(
-        fromFirestore: (snapshot, options) {
-          // print("Snapshot: ${snapshot.data()}");
-          return UserDataModel.fromJson(snapshot.data()!);
-        },
-        toFirestore: (value, options) => value.toJson(),
-      );
 
   final _isCurrentUser = false.obs;
 
@@ -46,7 +40,7 @@ class ScreenProfileController extends GetxController {
 
   Future<DocumentSnapshot<UserDataModel>> getUserData(String userId) {
     try {
-      return userDataColRef.doc(userId).get();
+      return userDataColRef().doc(userId).get();
     } catch (error) {
       rethrow;
     }

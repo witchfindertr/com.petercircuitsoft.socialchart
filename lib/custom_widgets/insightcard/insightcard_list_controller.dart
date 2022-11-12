@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 
 class InsightCardListController extends GetxController {
   InsightCardListController({this.chartId, this.userId});
 
-  PagingController<DocumentSnapshot<Object?>?,
-          QueryDocumentSnapshot<InsightCardModel>> pageController =
+  PagingController<DocumentSnapshot<InsightCardModel?>?,
+          QueryDocumentSnapshot<InsightCardModel>> pagingController =
       PagingController(firstPageKey: null);
 
   ScrollController scrollController = ScrollController();
@@ -21,13 +22,6 @@ class InsightCardListController extends GetxController {
   String? userId;
   String? chartId;
 
-  var userInsightCardColRef =
-      firestore.collection("userInsightCard").withConverter(
-            fromFirestore: (snapshot, options) =>
-                InsightCardModel.fromJson(snapshot.data()!),
-            toFirestore: (value, options) => value.toJson(),
-          );
-
   final _insightCards = Rx<List<QueryDocumentSnapshot<InsightCardModel>>>([]);
 
   List<QueryDocumentSnapshot<InsightCardModel>> get insightCards =>
@@ -36,7 +30,7 @@ class InsightCardListController extends GetxController {
   void fetchInsightCard(DocumentSnapshot<Object?>? pageKey) async {
     QuerySnapshot<InsightCardModel> loadedInsightCard;
     if (pageKey != null) {
-      loadedInsightCard = await userInsightCardColRef
+      loadedInsightCard = await userInsightCardColRef()
           .where("author",
               isEqualTo:
                   userId != null ? firestore.doc("userData/${userId}") : null)
@@ -46,7 +40,7 @@ class InsightCardListController extends GetxController {
           .limit(_pageSize)
           .get();
     } else {
-      loadedInsightCard = await userInsightCardColRef
+      loadedInsightCard = await userInsightCardColRef()
           .where("author",
               isEqualTo:
                   userId != null ? firestore.doc("userData/${userId}") : null)
@@ -57,10 +51,10 @@ class InsightCardListController extends GetxController {
     }
     final isLastPage = loadedInsightCard.docs.length < _pageSize;
     if (isLastPage) {
-      pageController.appendLastPage(loadedInsightCard.docs);
+      pagingController.appendLastPage(loadedInsightCard.docs);
     } else {
       final nextPageKey = loadedInsightCard.docs.last;
-      pageController.appendPage(loadedInsightCard.docs, nextPageKey);
+      pagingController.appendPage(loadedInsightCard.docs, nextPageKey);
     }
   }
 
@@ -71,7 +65,7 @@ class InsightCardListController extends GetxController {
     scrollController.addListener(() {
       _scrollOffset.value = scrollController.offset;
     });
-    pageController.addPageRequestListener((pageKey) {
+    pagingController.addPageRequestListener((pageKey) {
       fetchInsightCard(pageKey);
     });
   }
@@ -81,6 +75,6 @@ class InsightCardListController extends GetxController {
     // TODO: implement onClose
     super.onClose();
     scrollController.dispose();
-    pageController.dispose();
+    pagingController.dispose();
   }
 }

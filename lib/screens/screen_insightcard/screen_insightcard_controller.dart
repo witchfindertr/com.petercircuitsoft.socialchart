@@ -2,29 +2,60 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_comment.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
-import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/socialchart/socialchart_controller.dart';
 
 class ScreenInsightCardController extends GetxController {
   ScreenInsightCardController({required this.cardId});
   final String cardId;
-  var InsightCardColRef = firestore.collection("userInsightCard").withConverter(
-      fromFirestore: (snapshot, options) =>
-          InsightCardModel.fromJson(snapshot.data()!),
-      toFirestore: (value, options) => value.toJson());
 
-  // var UserCommentColRef =
-  //     firestore.collection("userInsightCard/${_cardId.value}/comments").withConverter(
-  //           fromFirestore: (snapshot, options) => {},
-  //           toFirestore: (value, options) => {},
-  //         );
+  // Controllers
   var textController = TextEditingController();
   var scrollController = ScrollController();
+
+  PagingController<DocumentSnapshot<ModelUserComment?>?,
+          QueryDocumentSnapshot<ModelUserComment>> pagingController =
+      PagingController(firstPageKey: null);
+
+  //for scroll controll
+  final _scrollOffset = 0.0.obs;
+  final _pageSize = 10;
+  double get scrollOffset => _scrollOffset.value;
+
+  final _userComments = Rx<List<QueryDocumentSnapshot<ModelUserComment>>>([]);
+
+  List<QueryDocumentSnapshot<ModelUserComment>> get userComments =>
+      _userComments.value;
+
+  void fetchUserComment(DocumentSnapshot<ModelUserComment?>? pageKey) async {
+    QuerySnapshot<ModelUserComment> loadedUserComment;
+    if (pageKey != null) {
+      loadedUserComment = await userCommentColRef(cardId)
+          .orderBy("createdAt", descending: true)
+          .orderBy("commentCreatedAt", descending: true)
+          .startAfterDocument(pageKey)
+          .limit(_pageSize)
+          .get();
+    } else {
+      loadedUserComment = await userCommentColRef(cardId)
+          .orderBy("createdAt", descending: true)
+          .orderBy("commentCreatedAt", descending: true)
+          .limit(_pageSize)
+          .get();
+    }
+    final isLastPage = loadedUserComment.docs.length < _pageSize;
+    if (isLastPage) {
+      pagingController.appendLastPage(loadedUserComment.docs);
+    } else {
+      final nextPageKey = loadedUserComment.docs.last;
+      pagingController.appendPage(loadedUserComment.docs, nextPageKey);
+    }
+  }
 
   final _cardId = "".obs;
   final _textFieldEnabled = true.obs;
@@ -60,19 +91,15 @@ class ScreenInsightCardController extends GetxController {
     textFieldEnabled = false;
     focusNode.unfocus();
     var now = Timestamp.now();
-    var UserCommentColRef =
-        firestore.collection("userInsightCard/$cardId/comments").withConverter(
-              fromFirestore: (snapshot, options) =>
-                  ModelUserComment.fromJson(snapshot.data()!),
-              toFirestore: (value, options) => value.toJson(),
-            );
-    await UserCommentColRef.add(ModelUserComment(
+    await userCommentColRef(cardId)
+        .add(ModelUserComment(
             author: firebaseAuth.currentUser!.uid,
             comment: textController.text,
             createdAt: now,
             commentCreatedAt: targetComment?.commentCreatedAt ?? now))
         .then((value) async {
-      await InsightCardColRef.doc(cardId)
+      await userInsightCardColRef()
+          .doc(cardId)
           .update({'commentCount': FieldValue.increment(1)});
       await refreshCardInfo();
       Get.snackbar("성공", "댓글을 입력했습니다.");
@@ -84,7 +111,7 @@ class ScreenInsightCardController extends GetxController {
   }
 
   Future<void> refreshCardInfo() async {
-    var result = await InsightCardColRef.doc(cardId).get();
+    var result = await userInsightCardColRef().doc(cardId).get();
     _cardInfo.value = result.data();
   }
 
@@ -92,15 +119,20 @@ class ScreenInsightCardController extends GetxController {
   void onInit() async {
     _isLoading.value = true;
     // TODO: implement onInit
+    pagingController.addPageRequestListener((pageKey) {
+      fetchUserComment(pageKey);
+    });
 
     super.onInit();
     _cardId.value = cardId;
     //load the cardInfo
-    var result = await InsightCardColRef.doc(cardId).get();
+    var result = await userInsightCardColRef().doc(cardId).get();
     _cardInfo.value = result.data();
     _isLoading.value = false;
 
-    // focusNode.addListener(_onFocusChangeCallback);
+    scrollController.addListener(() {
+      _scrollOffset.value = scrollController.offset;
+    });
   }
 
   @override
@@ -114,7 +146,7 @@ class ScreenInsightCardController extends GetxController {
     // TODO: implement onClose
     super.onClose();
     textController.dispose();
-
-    // focusNode.removeListener(_onFocusChangeCallback);
+    scrollController.dispose();
+    pagingController.dispose();
   }
 }

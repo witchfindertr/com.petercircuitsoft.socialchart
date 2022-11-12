@@ -10,8 +10,13 @@ import 'firebase_options.dart';
 import 'package:socialchart/socialchart/socialchart.dart';
 import 'package:socialchart/socialchart/socialchart_binding.dart';
 
+//for utils
+import 'package:socialchart/utils/timeago_custom_messages.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  timeago.setLocaleMessages("kr", KrCustomMessages());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

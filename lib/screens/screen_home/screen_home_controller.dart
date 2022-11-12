@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 
 class ScreenHomeController extends GetxController {
@@ -15,13 +16,6 @@ class ScreenHomeController extends GetxController {
   var scrollController = ScrollController();
   final _pageSize = 10;
 
-  var userInsightCardColRef =
-      firestore.collection("userInsightCard").withConverter(
-            fromFirestore: (snapshot, options) =>
-                InsightCardModel.fromJson(snapshot.data()!),
-            toFirestore: (value, options) => value.toJson(),
-          );
-
   final _insightCards = Rx<List<QueryDocumentSnapshot<InsightCardModel>>>([]);
 
   List<QueryDocumentSnapshot<InsightCardModel>> get insightCards =>
@@ -30,13 +24,13 @@ class ScreenHomeController extends GetxController {
   void fetchInsightCard(DocumentSnapshot<Object?>? pageKey) async {
     QuerySnapshot<InsightCardModel> loadedInsightCard;
     if (pageKey != null) {
-      loadedInsightCard = await userInsightCardColRef
+      loadedInsightCard = await userInsightCardColRef()
           .orderBy("createdAt", descending: true)
           .startAfterDocument(pageKey)
           .limit(_pageSize)
           .get();
     } else {
-      loadedInsightCard = await userInsightCardColRef
+      loadedInsightCard = await userInsightCardColRef()
           .orderBy("createdAt", descending: true)
           .limit(_pageSize)
           .get();

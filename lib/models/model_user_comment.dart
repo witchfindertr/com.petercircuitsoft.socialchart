@@ -22,7 +22,7 @@ class ModelUserComment {
           createdAt: json['createdAt']! as Timestamp,
           commentCreatedAt: json['commentCreatedAt']! as Timestamp,
           isDeleted: json['isDeleted'] as bool,
-          deletedAt: json['deletedAt'] as Timestamp,
+          deletedAt: json['deletedAt'] as Timestamp?,
         );
   Map<String, Object?> toJson() {
     return {

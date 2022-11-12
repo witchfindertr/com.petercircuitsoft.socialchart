@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,12 @@ class InsightCardAuthor extends StatelessWidget {
             width: 48,
             height: 48,
             alignment: Alignment.center,
-            child: const CircleAvatar(radius: 30),
+            child: CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.grey,
+                backgroundImage: userData?.imageUrl != null
+                    ? CachedNetworkImageProvider(userData?.imageUrl ?? "")
+                    : null),
           ),
           onTap: () {
             print(Get.routing.current);

@@ -30,7 +30,7 @@ class InsightCardList extends StatelessWidget {
         return Scaffold(
           body: RefreshIndicator(
             onRefresh: () => Future.sync(
-              () => controller.pageController.refresh(),
+              () => controller.pagingController.refresh(),
             ),
             child: CustomScrollView(
               controller: controller.scrollController,
@@ -39,7 +39,7 @@ class InsightCardList extends StatelessWidget {
                   child: header ?? SizedBox(),
                 ),
                 PagedSliverList(
-                  pagingController: controller.pageController,
+                  pagingController: controller.pagingController,
                   builderDelegate: PagedChildBuilderDelegate<
                       QueryDocumentSnapshot<InsightCardModel>>(
                     itemBuilder: ((context, item, index) {

@@ -5,50 +5,24 @@ import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 
-class InsightCardBottomController extends GetxController {
-  static InsightCardBottomController get to => Get.find();
-
-  var _cardInfo = Rxn<InsightCardModel>();
-
-  var _replyCount = 0.obs;
-  var _pinCount = 0.obs;
-
-  int get replyCount => _replyCount.value;
-  set replyCount(int value) => _replyCount.value = value;
-
-  int get pinCount => _pinCount.value;
-  set pinCount(int value) => _pinCount.value = value;
-
-  set cardInfo(InsightCardModel value) => _cardInfo.value = value;
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-    _cardInfo.value = null;
-
-    ever(_cardInfo, (cardInfo) {
-      if (cardInfo != null) {
-        _replyCount.value = cardInfo.commentCount ?? 0;
-        _pinCount.value = cardInfo.pinCount ?? 0;
-      }
-    });
-  }
-}
-
 class InsightCardBottom extends StatelessWidget {
   const InsightCardBottom({
     super.key,
-    required this.cardId,
-    required this.cardInfo,
+    this.scrapCount = 0,
+    this.commentCount = 0,
+    required this.scrapButtonPressed,
+    required this.commentButtonPressed,
+    required this.shareButtonPressed,
   });
-  final String cardId;
-  final InsightCardModel cardInfo;
+
+  final int? scrapCount;
+  final int? commentCount;
+  final VoidCallback scrapButtonPressed;
+  final VoidCallback commentButtonPressed;
+  final VoidCallback shareButtonPressed;
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(InsightCardBottomController(), tag: cardId);
-    controller.cardInfo = cardInfo;
     final iconSize = MediaQuery.of(context).size.width * 0.05;
     return Container(
         padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -65,11 +39,11 @@ class InsightCardBottom extends StatelessWidget {
                     size: iconSize,
                     color: Colors.black87,
                   ),
-                  onPressed: () => {},
+                  onPressed: scrapButtonPressed,
                   alignment: Alignment.center,
                 ),
                 Text(
-                  controller.pinCount.toString(),
+                  scrapCount.toString(),
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Sans",
@@ -87,12 +61,11 @@ class InsightCardBottom extends StatelessWidget {
                     size: iconSize,
                     color: Colors.black87,
                   ),
-                  onPressed: () =>
-                      {print("todo: jump to the ScreenInsightCard")},
+                  onPressed: commentButtonPressed,
                   alignment: Alignment.center,
                 ),
                 Text(
-                  controller.replyCount.toString(),
+                  commentCount.toString(),
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Sans",
@@ -108,10 +81,7 @@ class InsightCardBottom extends StatelessWidget {
                   size: iconSize,
                   color: Colors.black87,
                 ),
-                onPressed: () => {
-                      Share.share("check out my website https://example.com/11",
-                          subject: "Social chart")
-                    },
+                onPressed: shareButtonPressed,
                 alignment: Alignment.center),
           ],
         ));

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:socialchart/app_constant.dart';
-import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/screen_chart/screen_chart.dart';
 import 'package:socialchart/screens/screen_chart/screen_chart_binding.dart';
 import 'package:socialchart/screens/screen_home/screen_home.dart';
@@ -10,8 +9,6 @@ import 'package:socialchart/screens/screen_insightcard/screen_insightcard_bindin
 import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile_binding.dart';
-import 'package:socialchart/screens/screen_test/page_test.dart';
-import 'package:socialchart/screens/screen_test/page_test_binding.dart';
 import 'package:socialchart/screens/screen_write/screen_write.dart';
 import 'package:socialchart/screens/screen_write/screen_write_binding.dart';
 
@@ -24,6 +21,8 @@ class TabNavigatorHome extends StatelessWidget {
       key: Get.nestedKey(NavKeys.home.index),
       initialRoute: ScreenHome.routeName,
       onGenerateRoute: ((settings) {
+        // print(RegExp(r"(\/)+([a-z,A-Z])\w+").firstMatch(settings.name!)?[0] ??
+        //     "/");
         switch (settings.name) {
           case ScreenHome.routeName:
             return GetPageRoute(

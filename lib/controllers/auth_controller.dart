@@ -4,6 +4,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/main.dart';
+import 'package:socialchart/models/firebase_collection_ref.dart';
+import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/socialchart/socialchart_controller.dart';
 // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -16,6 +18,10 @@ class AuthController extends GetxController {
 
   late Rxn<User?> firebaseUser = Rxn<User?>(firebaseAuth.currentUser);
 
+  final _currentUser = Rxn<UserDataModel>();
+
+  UserDataModel? get currentUser => _currentUser.value;
+
   // @override
   // void onInit() {}
 
@@ -24,13 +30,14 @@ class AuthController extends GetxController {
     super.onReady();
     // firebaseUser = Rxn<User?>(auth.currentUser);
     firebaseUser.bindStream(firebaseAuth.userChanges());
-    // ever(firebaseUser, (_) {
-    //   if (firebaseUser.value != null) {
-    //     Get.toNamed("/Main");
-    //   } else {
-    //     Get.toNamed("/Login");
-    //   }
-    // });
+
+    ever(firebaseUser, (_) async {
+      if (_ != null) {
+        userDataColRef().doc(_.uid).get().then(
+              (value) => _currentUser.value = value.data(),
+            );
+      }
+    });
   }
 
   Future<UserCredential?> loginWithEmailAndPassword(
