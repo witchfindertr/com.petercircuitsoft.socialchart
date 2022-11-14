@@ -5,6 +5,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/screens/screen_home/screen_home_controller.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
@@ -21,9 +22,17 @@ class ScreenHome extends GetView<ScreenHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MainAppBar(appBar: AppBar(), title: "Social Chart"),
-      body: InsightCardList(navKey: navKey, scrollToTopEnable: true),
+    return SafeArea(
+      child: Scaffold(
+        // appBar: MainAppBar(appBar: AppBar(), title: "Social Chart"),
+        body: InsightCardList(
+          sliverAppBar: MainSliverAppbar(
+            titleText: "Social Chart",
+          ),
+          navKey: navKey,
+          scrollToTopEnable: true,
+        ),
+      ),
     );
   }
 }

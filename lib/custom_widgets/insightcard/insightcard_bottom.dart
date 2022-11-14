@@ -25,7 +25,7 @@ class InsightCardBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     final iconSize = MediaQuery.of(context).size.width * 0.05;
     return Container(
-        padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         height: MediaQuery.of(context).size.width * 0.1,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,18 +33,18 @@ class InsightCardBottom extends StatelessWidget {
             Row(
               children: [
                 CupertinoButton(
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
+                  onPressed: scrapButtonPressed,
+                  alignment: Alignment.center,
                   child: Icon(
                     CupertinoIcons.paperclip,
                     size: iconSize,
                     color: Colors.black87,
                   ),
-                  onPressed: scrapButtonPressed,
-                  alignment: Alignment.center,
                 ),
                 Text(
                   scrapCount.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontFamily: "Sans",
                     color: Colors.black87,
@@ -55,18 +55,18 @@ class InsightCardBottom extends StatelessWidget {
             Row(
               children: [
                 CupertinoButton(
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
+                  onPressed: commentButtonPressed,
+                  alignment: Alignment.center,
                   child: Icon(
                     CupertinoIcons.chat_bubble,
                     size: iconSize,
                     color: Colors.black87,
                   ),
-                  onPressed: commentButtonPressed,
-                  alignment: Alignment.center,
                 ),
                 Text(
                   commentCount.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontFamily: "Sans",
                     color: Colors.black87,
@@ -75,14 +75,15 @@ class InsightCardBottom extends StatelessWidget {
               ],
             ),
             CupertinoButton(
-                padding: EdgeInsets.all(0),
-                child: Icon(
-                  CupertinoIcons.share,
-                  size: iconSize,
-                  color: Colors.black87,
-                ),
-                onPressed: shareButtonPressed,
-                alignment: Alignment.center),
+              padding: const EdgeInsets.all(0),
+              onPressed: shareButtonPressed,
+              alignment: Alignment.center,
+              child: Icon(
+                CupertinoIcons.share,
+                size: iconSize,
+                color: Colors.black87,
+              ),
+            ),
           ],
         ));
   }

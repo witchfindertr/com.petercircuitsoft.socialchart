@@ -1,33 +1,96 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/custom_widgets/main_appbar.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/controllers/auth_controller.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
+import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
+import 'package:socialchart/models/mode_user_notice.dart';
+import 'package:socialchart/models/model_user_comment.dart';
+import 'package:socialchart/screens/screen_insightcard/screen_insightcard_controller.dart';
+import 'package:socialchart/screens/screen_insightcard/widgets/comment.dart';
+import 'package:socialchart/screens/screen_notice/screen_notice_controller.dart';
 
-class ScreenNotice extends StatelessWidget {
-  const ScreenNotice({super.key, this.navKey});
-  final NavKeys? navKey;
+class ScreenNotice extends GetView<ScreenNoticeController> {
+  const ScreenNotice({super.key, required this.navKey});
 
-  static const routeName = '/ScreenNotice';
+  final NavKeys navKey;
+
+  @override
+  // TODO: implement tag
+  String? get tag => navKey.name;
+
+  static const routeName = "/ScreenNotice";
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MainAppBar(appBar: AppBar(), title: "Notice"),
-      body: Center(
-        child: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return Card(
-              margin: EdgeInsets.fromLTRB(0, 1, 0, 1),
-              child: ListTile(
-                leading: CircleAvatar(
-                  child: Text("B"),
-                ),
-                title: Text("Title"),
-                subtitle: Text("subtitle"),
-                onTap: () => {print("???pressed")},
+    return SafeArea(
+      child: Scaffold(
+        body: RefreshIndicator(
+          onRefresh: () => Future.sync(
+            () => controller.pagingController.refresh(),
+          ),
+          child: CustomScrollView(
+            controller: controller.scrollController,
+            slivers: [
+              MainSliverAppbar(
+                titleText: 'Notice',
               ),
-            );
-          },
+              SliverToBoxAdapter(
+                child: const SizedBox(),
+              ),
+              PagedSliverList(
+                pagingController: controller.pagingController,
+                builderDelegate: PagedChildBuilderDelegate<
+                    QueryDocumentSnapshot<ModelUserNotice>>(
+                  itemBuilder: ((context, item, index) {
+                    return Text(item.data().insightCardId);
+                  }),
+                  noItemsFoundIndicatorBuilder: (context) {
+                    return Container(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "알림이 없습니다.",
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  },
+                  noMoreItemsIndicatorBuilder: (context) {
+                    return Container(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "👆👆마지막 알림입니다.👆👆",
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SliverPadding(
+                padding: EdgeInsets.only(
+                    bottom: kMinInteractiveDimensionCupertino + 10),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: Obx(
+          () => controller.scrollOffset > 0
+              ? TextButton(
+                  onPressed: () {
+                    controller.scrollController.animateTo(
+                      0.0,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.linear,
+                    );
+                  },
+                  child: Icon(Icons.arrow_upward),
+                )
+              : const SizedBox(),
         ),
       ),
     );

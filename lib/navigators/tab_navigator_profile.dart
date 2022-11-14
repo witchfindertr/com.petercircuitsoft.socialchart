@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile_binding.dart';

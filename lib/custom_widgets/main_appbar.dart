@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
+import 'package:socialchart/utils/etc.dart';
 
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
@@ -54,7 +55,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         sendButtonVisible
             ? CupertinoButton(
                 disabledColor: Colors.black12,
-                onPressed: sendButtonOnPressed ?? null,
+                onPressed: sendButtonOnPressed ?? noCallback(),
                 child: LinearGradientMask(
                   child: Icon(CupertinoIcons.paperplane, size: 26),
                 ),

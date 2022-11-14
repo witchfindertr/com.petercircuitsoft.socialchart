@@ -3,11 +3,9 @@ import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:detectable_text_field/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
-import 'package:socialchart/main.dart';
+import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
-import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 
 import 'package:ogp_data_extract/ogp_data_extract.dart';
 

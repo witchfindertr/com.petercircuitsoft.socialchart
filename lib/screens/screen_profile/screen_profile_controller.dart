@@ -6,8 +6,6 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_data.dart';
 
-FirebaseFirestore firestore = FirebaseFirestore.instance;
-
 class ScreenProfileController extends GetxController {
   ScreenProfileController({required this.userId});
   final String userId;
@@ -18,12 +16,12 @@ class ScreenProfileController extends GetxController {
   bool get isCurrentUser => _isCurrentUser.value;
   set isCurrentUser(bool value) => _isCurrentUser.value = value;
 
-  var isloading = true.obs;
   final Rxn<UserDataModel?> _userData = Rxn<UserDataModel?>();
 
   UserDataModel? get userData => _userData.value;
   set userData(UserDataModel? value) => _userData.value = value;
 
+  var isloading = true.obs;
   bool get isLoading => isloading.value;
   set isLoading(bool value) => isloading.value = value;
 

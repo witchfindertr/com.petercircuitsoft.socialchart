@@ -108,12 +108,13 @@ class InsightCard extends StatelessWidget {
                   }
                 },
                 child: InsightCardAuthor(
-                    navKey: navKey,
-                    cardId: cardId,
-                    userId: cardInfo.author.id,
-                    userData: controller.userData.value,
-                    elapsed: timeago.format(cardInfo.createdAt.toDate(),
-                        locale: "kr")),
+                  navKey: navKey,
+                  cardId: cardId,
+                  userId: cardInfo.author.id,
+                  userData: controller.userData.value,
+                  elapsed:
+                      timeago.format(cardInfo.createdAt.toDate(), locale: "kr"),
+                ),
               ),
               InsightCardBody(
                 cardInfo: cardInfo,

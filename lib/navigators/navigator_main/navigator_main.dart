@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:socialchart/navigators/tab_navigator_explore.dart';
 import 'package:socialchart/navigators/tab_navigator_home.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
@@ -52,9 +53,15 @@ class NavigatorMain extends GetView<NavigatorMainController> {
               ],
               currentIndex: controller.currentIndex.index,
               onTap: (index) {
+                print("why??");
                 if (controller.currentIndex.index == index) {
-                  Get.back(id: index);
+                  if (controller.scrollToTop != null) {
+                    controller.scrollToTop!();
+                  } else {
+                    Get.back(id: index);
+                  }
                 }
+                // Get.back(id: index);
                 controller.currentIndex = NavKeys.values[index];
               },
             )

@@ -34,7 +34,7 @@ class Comment extends StatelessWidget {
         tag: userComment.author);
     return Obx(
       () => Padding(
-        padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
+        padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,13 +48,13 @@ class Comment extends StatelessWidget {
                           controller.userData?.imageUrl ?? "")
                       : null),
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             Flexible(
                 child: Container(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               decoration: BoxDecoration(
                   color: Colors.transparent.withOpacity(0.04),
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
+                  borderRadius: const BorderRadius.all(Radius.circular(15))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -69,7 +69,7 @@ class Comment extends StatelessWidget {
                         locale: 'kr', allowFromNow: true),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     userComment.comment,
                     style: Theme.of(context).textTheme.bodyLarge,

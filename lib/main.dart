@@ -4,6 +4,10 @@ import 'package:get/get.dart';
 
 /**Firebase */
 import 'package:firebase_core/firebase_core.dart';
+import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main.dart';
+import 'package:socialchart/screens/screen_home/screen_home.dart';
+import 'package:socialchart/screens/screen_home/screen_home_binding.dart';
 import 'firebase_options.dart';
 
 /**Main App */

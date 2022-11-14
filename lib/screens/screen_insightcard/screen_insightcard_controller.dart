@@ -7,6 +7,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_comment.dart';
+import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/socialchart/socialchart_controller.dart';
 
@@ -58,9 +59,17 @@ class ScreenInsightCardController extends GetxController {
   }
 
   final _cardId = "".obs;
+
   final _textFieldEnabled = true.obs;
+
   bool get textFieldEnabled => _textFieldEnabled.value;
   set textFieldEnabled(bool value) => _textFieldEnabled.value = value;
+
+  final _isCurrentUser = false.obs;
+  bool get isCurrentUser => _isCurrentUser.value;
+
+  final _authorData = Rxn<UserDataModel>();
+  UserDataModel? get authorData => _authorData.value;
 
   final _cardInfo = Rxn<InsightCardModel>();
   InsightCardModel? get cardInfo => _cardInfo.value;
@@ -123,16 +132,24 @@ class ScreenInsightCardController extends GetxController {
       fetchUserComment(pageKey);
     });
 
-    super.onInit();
+    scrollController.addListener(() {
+      _scrollOffset.value = scrollController.offset;
+    });
+
     _cardId.value = cardId;
     //load the cardInfo
     var result = await userInsightCardColRef().doc(cardId).get();
     _cardInfo.value = result.data();
-    _isLoading.value = false;
 
-    scrollController.addListener(() {
-      _scrollOffset.value = scrollController.offset;
-    });
+    _isCurrentUser.value = cardInfo?.author.id == firebaseAuth.currentUser?.uid;
+    if (!isCurrentUser) {
+      var userData = await userDataColRef().doc(cardInfo?.author.id).get();
+      _authorData.value = userData.data();
+    }
+
+    super.onInit();
+
+    _isLoading.value = false;
   }
 
   @override

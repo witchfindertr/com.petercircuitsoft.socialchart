@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
 import './insightcard.dart';
@@ -10,12 +11,14 @@ import './insightcard.dart';
 class InsightCardList extends StatelessWidget {
   const InsightCardList({
     super.key,
+    this.sliverAppBar,
     this.scrollToTopEnable = false,
     this.navKey,
     this.userId,
     this.chartId,
     this.header,
   });
+  final Widget? sliverAppBar;
   final NavKeys? navKey;
   final bool scrollToTopEnable;
   final String? userId;
@@ -35,8 +38,9 @@ class InsightCardList extends StatelessWidget {
             child: CustomScrollView(
               controller: controller.scrollController,
               slivers: [
+                sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox()),
                 SliverToBoxAdapter(
-                  child: header ?? SizedBox(),
+                  child: header ?? const SizedBox(),
                 ),
                 PagedSliverList(
                   pagingController: controller.pagingController,
@@ -63,9 +67,9 @@ class InsightCardList extends StatelessWidget {
                         curve: Curves.linear,
                       );
                     },
-                    child: Icon(Icons.arrow_upward),
+                    child: const Icon(Icons.arrow_upward),
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ),
         );
       },

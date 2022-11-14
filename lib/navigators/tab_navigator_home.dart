@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main.dart';
 import 'package:socialchart/screens/screen_chart/screen_chart.dart';
 import 'package:socialchart/screens/screen_chart/screen_chart_binding.dart';
 import 'package:socialchart/screens/screen_home/screen_home.dart';
@@ -11,6 +14,8 @@ import 'package:get/get.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile_binding.dart';
 import 'package:socialchart/screens/screen_write/screen_write.dart';
 import 'package:socialchart/screens/screen_write/screen_write_binding.dart';
+
+import 'package:navigation_history_observer/navigation_history_observer.dart';
 
 class TabNavigatorHome extends StatelessWidget {
   const TabNavigatorHome({super.key});
