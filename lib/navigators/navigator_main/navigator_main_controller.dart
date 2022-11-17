@@ -30,6 +30,21 @@ class NavigatorMainController extends GetxController {
 
   Map<String, ScrollController> scrollControllerMap = {};
 
+  void onBottomTabTap(int index) {
+    if (currentIndex.index == index) {
+      if (scrollControllerMap['$index${tabObservers[index].currentRouteName}']
+              ?.offset !=
+          0) {
+        scrollControllerMap['$index${tabObservers[index].currentRouteName}']
+            ?.animateTo(0,
+                duration: Duration(milliseconds: 300), curve: Curves.ease);
+      } else {
+        Get.back(id: index);
+      }
+    }
+    currentIndex = NavKeys.values[index];
+  }
+
   @override
   void onInit() {
     // myScrollList.value[0].addEntries("":)

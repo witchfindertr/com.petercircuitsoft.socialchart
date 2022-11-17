@@ -110,7 +110,7 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
                   focusNode: controller.focusNode,
                   controller: controller.textController,
                   enabled: controller.textFieldEnabled,
-                  onTap: controller.scrollToEnd,
+                  // onTap: controller.scrollToEnd,
                   decoration: const InputDecoration(
                     hintText: "댓글을 입력하세요.",
                     contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),

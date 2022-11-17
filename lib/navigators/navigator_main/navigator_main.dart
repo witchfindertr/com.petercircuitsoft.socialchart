@@ -54,27 +54,7 @@ class NavigatorMain extends GetView<NavigatorMainController> {
               ],
               currentIndex: controller.currentIndex.index,
               onTap: (index) {
-                if (controller.currentIndex.index == index) {
-                  if (controller
-                          .scrollControllerMap[
-                              '$index${controller.tabObservers[index].currentRouteName}']
-                          ?.offset !=
-                      0) {
-                    controller.scrollControllerMap[
-                            '$index${controller.tabObservers[index].currentRouteName}']
-                        ?.animateTo(0,
-                            duration: Duration(seconds: 1), curve: Curves.ease);
-                  } else {
-                    Get.back(id: index);
-                  }
-                  // if (controller.scrollToTop != null) {
-                  //   controller.scrollToTop!();
-                  // } else {
-                  //   Get.back(id: index);
-                  // }
-                }
-                // Get.back(id: index);
-                controller.currentIndex = NavKeys.values[index];
+                controller.onBottomTabTap(index);
               },
             )
           : Container(height: 0)),
