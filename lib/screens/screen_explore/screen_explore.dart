@@ -1,18 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/screens/screen_explore/screen_explore_controller.dart';
 
-class ScreenExplore extends StatelessWidget {
-  const ScreenExplore({super.key, this.navKey});
-  final NavKeys? navKey;
+class ScreenExplore extends GetView<ScreenExploreController> {
+  const ScreenExplore({super.key, required this.navKey});
+  final NavKeys navKey;
   static const routeName = '/ScreenExplore';
 
   @override
+  // TODO: implement tag
+  String? get tag => navKey.name;
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MainAppBar(appBar: AppBar(), title: "Explore"),
-      body: Center(child: Text("Explore Screen")),
+    NavigatorMainController.to.scrollControllerMap.addEntries(
+        {'${navKey.index}$routeName': controller.scrollController}.entries);
+    return SafeArea(
+      child: Scaffold(
+        // appBar: MainAppBar(appBar: AppBar(), title: "Social Chart"),
+        body: InsightCardList(
+          scrollController: controller.scrollController,
+          sliverAppBar: MainSliverAppbar(
+            titleText: "Explore",
+          ),
+          navKey: navKey,
+          scrollToTopEnable: true,
+        ),
+      ),
     );
   }
 }

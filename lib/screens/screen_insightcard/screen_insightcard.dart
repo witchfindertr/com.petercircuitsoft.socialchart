@@ -11,6 +11,7 @@ import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_comment.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard_controller.dart';
 import 'package:socialchart/screens/screen_insightcard/widgets/comment.dart';
 
@@ -27,6 +28,8 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
 
   @override
   Widget build(BuildContext context) {
+    NavigatorMainController.to.scrollControllerMap.addEntries(
+        {'${navKey.index}$routeName': controller.scrollController}.entries);
     return SafeArea(
       child: Scaffold(
         body: Obx(
@@ -86,20 +89,6 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
               ],
             ),
           ),
-        ),
-        floatingActionButton: Obx(
-          () => controller.scrollOffset > 0
-              ? TextButton(
-                  onPressed: () {
-                    controller.scrollController.animateTo(
-                      0.0,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.linear,
-                    );
-                  },
-                  child: Icon(Icons.arrow_upward),
-                )
-              : const SizedBox(),
         ),
         bottomSheet: Container(
           width: double.infinity,

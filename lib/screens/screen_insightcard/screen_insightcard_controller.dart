@@ -9,6 +9,7 @@ import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_comment.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/socialchart/socialchart_controller.dart';
 
 class ScreenInsightCardController extends GetxController {

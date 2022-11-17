@@ -13,8 +13,8 @@ class ScreenNoticeController extends GetxController {
   final _pageSize = 20;
 
   ScrollController scrollController = ScrollController();
-  var _scrollOffset = 0.0.obs;
-  double get scrollOffset => _scrollOffset.value;
+  // var _scrollOffset = 0.0.obs;
+  // double get scrollOffset => _scrollOffset.value;
 
   final _userNotices = Rx<List<QueryDocumentSnapshot<ModelUserNotice>>>([]);
 
@@ -51,9 +51,9 @@ class ScreenNoticeController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    scrollController.addListener(() {
-      _scrollOffset.value = scrollController.offset;
-    });
+    // scrollController.addListener(() {
+    //   _scrollOffset.value = scrollController.offset;
+    // });
     pagingController.addPageRequestListener((pageKey) {
       fetchUserNotice(pageKey);
     });

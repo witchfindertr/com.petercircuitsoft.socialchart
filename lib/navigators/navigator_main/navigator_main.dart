@@ -5,6 +5,7 @@ import 'package:socialchart/navigators/tab_navigator_explore.dart';
 import 'package:socialchart/navigators/tab_navigator_home.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/navigators/tab_navigator_notice.dart';
+import 'package:socialchart/navigators/tab_navigator_observer.dart';
 import 'package:socialchart/navigators/tab_navigator_profile.dart';
 // import 'package:cupertino_icons/cupertino_icons.dart';
 
@@ -22,11 +23,11 @@ class NavigatorMain extends GetView<NavigatorMainController> {
       body: Obx(
         () => IndexedStack(
           index: controller.currentIndex.index,
-          children: const [
-            TabNavigatorHome(),
-            TabNavigatorExplore(),
-            TabNavigatorNotice(),
-            TabNavigatorProfile(),
+          children: [
+            TabNavigatorHome(observer: controller.tabObservers[0]),
+            TabNavigatorExplore(observer: controller.tabObservers[1]),
+            TabNavigatorNotice(observer: controller.tabObservers[2]),
+            TabNavigatorProfile(observer: controller.tabObservers[3]),
           ],
         ),
       ),
@@ -53,13 +54,24 @@ class NavigatorMain extends GetView<NavigatorMainController> {
               ],
               currentIndex: controller.currentIndex.index,
               onTap: (index) {
-                print("why??");
                 if (controller.currentIndex.index == index) {
-                  if (controller.scrollToTop != null) {
-                    controller.scrollToTop!();
+                  if (controller
+                          .scrollControllerMap[
+                              '$index${controller.tabObservers[index].currentRouteName}']
+                          ?.offset !=
+                      0) {
+                    controller.scrollControllerMap[
+                            '$index${controller.tabObservers[index].currentRouteName}']
+                        ?.animateTo(0,
+                            duration: Duration(seconds: 1), curve: Curves.ease);
                   } else {
                     Get.back(id: index);
                   }
+                  // if (controller.scrollToTop != null) {
+                  //   controller.scrollToTop!();
+                  // } else {
+                  //   Get.back(id: index);
+                  // }
                 }
                 // Get.back(id: index);
                 controller.currentIndex = NavKeys.values[index];

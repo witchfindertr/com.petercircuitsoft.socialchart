@@ -11,13 +11,14 @@ import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 import 'package:get/get.dart';
 
 class TabNavigatorNotice extends StatelessWidget {
-  const TabNavigatorNotice({super.key});
-
+  const TabNavigatorNotice({super.key, required this.observer});
+  final NavigatorObserver observer;
   @override
   Widget build(BuildContext context) {
     return Navigator(
       key: Get.nestedKey(NavKeys.notice.index),
       initialRoute: ScreenNotice.routeName,
+      observers: [observer],
       onGenerateRoute: ((settings) {
         // return MaterialPageRoute(builder: (context) {
         switch (settings.name) {

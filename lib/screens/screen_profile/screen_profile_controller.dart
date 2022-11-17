@@ -9,9 +9,11 @@ import 'package:socialchart/models/model_user_data.dart';
 class ScreenProfileController extends GetxController {
   ScreenProfileController({required this.userId});
   final String userId;
-  static ScreenProfileController get to => Get.find();
+  // static ScreenProfileController get to => Get.find();
 
   final _isCurrentUser = false.obs;
+
+  var scrollController = ScrollController();
 
   bool get isCurrentUser => _isCurrentUser.value;
   set isCurrentUser(bool value) => _isCurrentUser.value = value;
@@ -25,6 +27,14 @@ class ScreenProfileController extends GetxController {
   bool get isLoading => isloading.value;
   set isLoading(bool value) => isloading.value = value;
 
+  Future<DocumentSnapshot<UserDataModel>> getUserData(String userId) {
+    try {
+      return userDataColRef().doc(userId).get();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   @override
   void onInit() async {
     isLoading = true;
@@ -36,11 +46,10 @@ class ScreenProfileController extends GetxController {
     super.onInit();
   }
 
-  Future<DocumentSnapshot<UserDataModel>> getUserData(String userId) {
-    try {
-      return userDataColRef().doc(userId).get();
-    } catch (error) {
-      rethrow;
-    }
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    scrollController.dispose();
+    super.onClose();
   }
 }

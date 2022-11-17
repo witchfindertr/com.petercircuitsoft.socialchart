@@ -12,6 +12,7 @@ class InsightCardList extends StatelessWidget {
   const InsightCardList({
     super.key,
     this.sliverAppBar,
+    this.scrollController,
     this.scrollToTopEnable = false,
     this.navKey,
     this.userId,
@@ -20,6 +21,7 @@ class InsightCardList extends StatelessWidget {
   });
   final Widget? sliverAppBar;
   final NavKeys? navKey;
+  final ScrollController? scrollController;
   final bool scrollToTopEnable;
   final String? userId;
   final String? chartId;
@@ -36,7 +38,7 @@ class InsightCardList extends StatelessWidget {
               () => controller.pagingController.refresh(),
             ),
             child: CustomScrollView(
-              controller: controller.scrollController,
+              controller: scrollController,
               slivers: [
                 sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox()),
                 SliverToBoxAdapter(
@@ -56,20 +58,6 @@ class InsightCardList extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          floatingActionButton: Obx(
-            () => controller.scrollOffset > 0 && scrollToTopEnable
-                ? TextButton(
-                    onPressed: () {
-                      controller.scrollController.animateTo(
-                        0.0,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.linear,
-                      );
-                    },
-                    child: const Icon(Icons.arrow_upward),
-                  )
-                : const SizedBox(),
           ),
         );
       },

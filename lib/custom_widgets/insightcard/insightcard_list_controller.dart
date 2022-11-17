@@ -15,8 +15,6 @@ class InsightCardListController extends GetxController {
 
   final _pageSize = 10;
 
-  ScrollController scrollController = ScrollController();
-
   var _scrollOffset = 0.0.obs;
   double get scrollOffset => _scrollOffset.value;
 
@@ -59,23 +57,10 @@ class InsightCardListController extends GetxController {
     }
   }
 
-  void scrollToTop() {
-    scrollController.animateTo(0.0,
-        duration: Duration(seconds: 1), curve: Curves.ease);
-  }
-
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    scrollController.addListener(() {
-      if (scrollController.offset != 0) {
-        NavigatorMainController.to.scrollToTop = scrollToTop;
-      } else {
-        NavigatorMainController.to.scrollToTop = () => null;
-      }
-      _scrollOffset.value = scrollController.offset;
-    });
     pagingController.addPageRequestListener((pageKey) {
       fetchInsightCard(pageKey);
     });
@@ -85,7 +70,6 @@ class InsightCardListController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    scrollController.dispose();
     pagingController.dispose();
   }
 }

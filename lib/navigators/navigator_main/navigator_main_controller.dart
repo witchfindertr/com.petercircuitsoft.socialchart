@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/navigators/tab_navigator_observer.dart';
 import 'package:socialchart/utils/etc.dart';
 
 class NavigatorMainController extends GetxController {
@@ -20,15 +21,18 @@ class NavigatorMainController extends GetxController {
   bool get isBottomTabVisible => _isBottomTabVisible.value;
   set isBottomTabVisible(bool visible) => _isBottomTabVisible.value = visible;
 
-  var myScrollList = Rx<List<Map<String,VoidCallback?>>>([]);
-  final _scrollToTop = Rxn<VoidCallback>();
+  List<TabNavigatorObserver> tabObservers = [
+    TabNavigatorObserver(),
+    TabNavigatorObserver(),
+    TabNavigatorObserver(),
+    TabNavigatorObserver(),
+  ];
 
-  set scrollToTop(VoidCallback? f) => _scrollToTop.value = f;
+  Map<String, ScrollController> scrollControllerMap = {};
 
-  VoidCallback? get scrollToTop => () => _scrollToTop.value!();
   @override
   void onInit() {
-    myScrollList.value[0].addEntries("":)
+    // myScrollList.value[0].addEntries("":)
     // scrollToTop.value = () => {print("hello world")};
     // TODO: implement onInit
     super.onInit();

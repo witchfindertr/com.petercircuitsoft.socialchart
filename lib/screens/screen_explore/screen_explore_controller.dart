@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ScreenExploreController extends GetxController {
+  var scrollController = ScrollController();
   @override
   void onInit() {
     // TODO: implement onInit
@@ -16,6 +18,7 @@ class ScreenExploreController extends GetxController {
   @override
   void onClose() {
     // TODO: implement onClose
+    scrollController.dispose();
     super.onClose();
   }
 }

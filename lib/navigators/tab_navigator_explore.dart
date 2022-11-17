@@ -1,29 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/screens/screen_explore/screen_explore.dart';
+import 'package:socialchart/screens/screen_explore/screen_explore_binding.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard.dart';
+import 'package:socialchart/screens/screen_insightcard/screen_insightcard_binding.dart';
 import 'package:socialchart/screens/screen_notice/screen_notice.dart';
 import 'package:get/get.dart';
 
 class TabNavigatorExplore extends StatelessWidget {
-  const TabNavigatorExplore({super.key});
-
+  const TabNavigatorExplore({super.key, required this.observer});
+  final NavigatorObserver observer;
   @override
   Widget build(BuildContext context) {
     return Navigator(
       key: Get.nestedKey(NavKeys.explore.index),
-      initialRoute: ScreenNotice.routeName,
+      initialRoute: ScreenExplore.routeName,
+      observers: [observer],
       onGenerateRoute: ((settings) {
         switch (settings.name) {
-          case ScreenNotice.routeName:
+          case ScreenExplore.routeName:
             return GetPageRoute(
               page: () => ScreenExplore(navKey: NavKeys.explore),
+              binding: ScreenExploreBinding(navKey: NavKeys.explore),
               settings: settings,
             );
 
           case ScreenInsightCard.routeName:
+            var argc = settings.arguments;
             return GetPageRoute(
               page: () => ScreenInsightCard(navKey: NavKeys.explore),
+              binding: ScreenInsightCardBinding(
+                  navKey: NavKeys.explore, cardId: argc.toString()),
               settings: settings,
             );
 
