@@ -5,8 +5,10 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/models/model_user_data.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 //todo for the test
 import 'package:socialchart/utils/developmentHelp.dart';
 
@@ -127,7 +129,15 @@ class UserProfileImages extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextButton(
-                              onPressed: () => AuthController.to.signOut(),
+                              onPressed: () {
+                                showCupertinoModalBottomSheet(
+                                  context: context,
+                                  useRootNavigator: true,
+                                  builder: (context) {
+                                    return Container();
+                                  },
+                                );
+                              },
                               child: Text("프로필 수정"),
                               style: ButtonStyle(
                                 alignment: Alignment.bottomCenter,
@@ -136,8 +146,13 @@ class UserProfileImages extends StatelessWidget {
                             TextButton(
                               onPressed: () => showModalBottomSheet(
                                 context: context,
+                                useRootNavigator: true,
+                                isScrollControlled: true,
                                 builder: (context) {
-                                  return Container();
+                                  return FractionallySizedBox(
+                                    heightFactor: 0.9,
+                                    child: Container(),
+                                  );
                                 },
                               ),
                               child: Text("계정 설정"),
