@@ -134,7 +134,12 @@ class UserProfileImages extends StatelessWidget {
                               ),
                             ),
                             TextButton(
-                              onPressed: () => {},
+                              onPressed: () => showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Container();
+                                },
+                              ),
                               child: Text("계정 설정"),
                               style: ButtonStyle(
                                 alignment: Alignment.bottomCenter,

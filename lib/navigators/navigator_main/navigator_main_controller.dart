@@ -37,7 +37,8 @@ class NavigatorMainController extends GetxController {
           0) {
         scrollControllerMap['$index${tabObservers[index].currentRouteName}']
             ?.animateTo(0,
-                duration: Duration(milliseconds: 300), curve: Curves.ease);
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.ease);
       } else {
         Get.back(id: index);
       }
@@ -47,9 +48,6 @@ class NavigatorMainController extends GetxController {
 
   @override
   void onInit() {
-    // myScrollList.value[0].addEntries("":)
-    // scrollToTop.value = () => {print("hello world")};
-    // TODO: implement onInit
     super.onInit();
     keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool visible) {
