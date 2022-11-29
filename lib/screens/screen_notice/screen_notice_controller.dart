@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
-import 'package:socialchart/models/mode_user_notice.dart';
+import 'package:socialchart/models/model_user_notice.dart';
 
 class ScreenNoticeController extends GetxController {
   PagingController pagingController = PagingController<

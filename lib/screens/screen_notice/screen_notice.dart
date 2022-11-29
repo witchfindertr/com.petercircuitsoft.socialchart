@@ -10,7 +10,7 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
-import 'package:socialchart/models/mode_user_notice.dart';
+import 'package:socialchart/models/model_user_notice.dart';
 import 'package:socialchart/models/model_user_comment.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard_controller.dart';

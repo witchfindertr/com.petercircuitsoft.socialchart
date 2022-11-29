@@ -8,8 +8,9 @@ class InsightCardModel {
     required this.author,
     required this.userText,
     this.linkPreviewData,
-    this.commentCount = 0,
-    this.pinCount = 0,
+    this.commentCounter = 0,
+    this.scrapCounter = 0,
+    this.likeCounter = 0,
   });
   final Timestamp createdAt; //creation time
   final String chartId;
@@ -17,8 +18,9 @@ class InsightCardModel {
   final DocumentReference author; //userReference
   final String userText;
   final LinkPreviewData? linkPreviewData;
-  final int? commentCount;
-  final int? pinCount;
+  final int? commentCounter;
+  final int? scrapCounter;
+  final int? likeCounter;
 
   InsightCardModel.fromJson(Map<String, dynamic?> json)
       : this(
@@ -30,8 +32,9 @@ class InsightCardModel {
           linkPreviewData: json['linkPreviewData'] != null
               ? LinkPreviewData.fromJson(json['linkPreviewData'])
               : null,
-          commentCount: json['commentCount'] as int?,
-          pinCount: json['pinCount'] as int?,
+          commentCounter: json['commentCount'] as int?,
+          scrapCounter: json['scrapCounter'] as int?,
+          likeCounter: json['likeCounter'] as int?,
         );
   Map<String, dynamic?> toJson() {
     return {
@@ -41,12 +44,14 @@ class InsightCardModel {
       'author': author,
       'userText': userText,
       'linkPreviewData': linkPreviewData?.toJson(),
-      'commentCount': commentCount,
-      'pinCount': pinCount,
+      'commentCount': commentCounter,
+      'scrapCounter': scrapCounter,
+      'likeCounter': likeCounter,
     };
   }
 }
 
+//for the subcollection
 class LinkPreviewData {
   LinkPreviewData({
     this.url,

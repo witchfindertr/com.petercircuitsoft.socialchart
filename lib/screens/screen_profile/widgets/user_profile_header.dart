@@ -134,7 +134,10 @@ class UserProfileImages extends StatelessWidget {
                                   context: context,
                                   useRootNavigator: true,
                                   builder: (context) {
-                                    return Container();
+                                    return FractionallySizedBox(
+                                      heightFactor: 0.9,
+                                      child: Container(),
+                                    );
                                   },
                                 );
                               },
@@ -144,17 +147,18 @@ class UserProfileImages extends StatelessWidget {
                               ),
                             ),
                             TextButton(
-                              onPressed: () => showModalBottomSheet(
-                                context: context,
-                                useRootNavigator: true,
-                                isScrollControlled: true,
-                                builder: (context) {
-                                  return FractionallySizedBox(
-                                    heightFactor: 0.9,
-                                    child: Container(),
-                                  );
-                                },
-                              ),
+                              onPressed: () {
+                                showCupertinoModalBottomSheet(
+                                  context: context,
+                                  useRootNavigator: true,
+                                  builder: (context) {
+                                    return FractionallySizedBox(
+                                      heightFactor: 0.9,
+                                      child: Container(),
+                                    );
+                                  },
+                                );
+                              },
                               child: Text("계정 설정"),
                               style: ButtonStyle(
                                 alignment: Alignment.bottomCenter,
