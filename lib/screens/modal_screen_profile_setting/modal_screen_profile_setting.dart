@@ -42,9 +42,10 @@ class ModalScreenProfileSetting
               right: 0,
               //userBackgroundImage
               child: GestureDetector(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.2,
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    // width: double.infinity,
+                    // height: MediaQuery.of(context).size.height * 0.2,
                     child: Stack(children: [
                       Obx(
                         () => Container(
