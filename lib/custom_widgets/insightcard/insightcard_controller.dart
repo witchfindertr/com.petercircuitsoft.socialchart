@@ -78,36 +78,42 @@ class InsightCardController extends GetxController {
   }
 
   void onLikeButtonPress() {
-    print("like button pressed, $cardId");
-    //if !likePressed
-    //add to the like user list
-    //increment by 1 using counter shards
-    //likePressed != likePressed;
     if (!likePressed) {
-      likeUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid).set(
-          ModelUserList(
-              userId: firebaseAuth.currentUser!.uid,
-              createdAt: Timestamp.now()));
-      userInsightCardColRef()
-          .doc(cardId)
-          .collection(SHARD_COLLECTION_ID)
-          .add({"likeCounter": 1});
-      currentLikeCounter++;
-      likePressed = !likePressed;
+      firestore.runTransaction(
+        (transaction) async {
+          transaction.set(
+              likeUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid),
+              ModelUserList(
+                  userId: firebaseAuth.currentUser!.uid,
+                  createdAt: Timestamp.now()));
+          transaction.set(
+              userInsightCardColRef()
+                  .doc(cardId)
+                  .collection(SHARD_COLLECTION_ID)
+                  .doc(),
+              {"likeCounter": 1});
+        },
+      ).then((value) {
+        currentLikeCounter++;
+        likePressed = !likePressed;
+      }, onError: (e) => throw (e));
     } else {
-      likeUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid).delete();
-      userInsightCardColRef()
-          .doc(cardId)
-          .collection(SHARD_COLLECTION_ID)
-          .add({"likeCounter": -1});
-      currentLikeCounter--;
-      likePressed = !likePressed;
+      firestore.runTransaction(
+        (transaction) async {
+          transaction.delete(
+              likeUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid));
+          transaction.set(
+              userInsightCardColRef()
+                  .doc(cardId)
+                  .collection(SHARD_COLLECTION_ID)
+                  .doc(),
+              {"likeCounter": -1});
+        },
+      ).then((value) {
+        currentLikeCounter--;
+        likePressed = !likePressed;
+      }, onError: (e) => throw (e));
     }
-
-    //else
-    //remove from the like user list
-    //decrement by 1 using counter shards
-    //likePressed != likePressed;
   }
 
   @override
@@ -124,6 +130,10 @@ class InsightCardController extends GetxController {
         .doc(firebaseAuth.currentUser?.uid)
         .get()
         .then((value) => likePressed = value.exists);
+    scrapUserListColRef(cardId)
+        .doc(firebaseAuth.currentUser?.uid)
+        .get()
+        .then((value) => scrapPressed = value.exists);
   }
 
   @override
