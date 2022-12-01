@@ -56,29 +56,44 @@ class InsightCardController extends GetxController {
     //increase the number of Scrap count
     print("Scrap button pressed, $cardId");
     if (!scrapPressed) {
-      scrapUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid).set(
-          ModelUserList(
-              userId: firebaseAuth.currentUser!.uid,
-              createdAt: Timestamp.now()));
-      userInsightCardColRef()
-          .doc(cardId)
-          .collection(SHARD_COLLECTION_ID)
-          .add({"scrapCounter": 1});
       scrapPressed = !scrapPressed;
-      currentScrapCounter++;
+      firestore.runTransaction((transaction) async {
+        transaction.set(
+            scrapUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid),
+            ModelUserList(
+                userId: firebaseAuth.currentUser!.uid,
+                createdAt: Timestamp.now()));
+
+        transaction.set(
+            userInsightCardColRef()
+                .doc(cardId)
+                .collection(SHARD_COLLECTION_ID)
+                .doc(),
+            {"scrapCounter": 1});
+      }).then((value) {
+        currentScrapCounter++;
+      }, onError: (e) => throw (e));
     } else {
-      scrapUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid).delete();
-      userInsightCardColRef()
-          .doc(cardId)
-          .collection(SHARD_COLLECTION_ID)
-          .add({"scrapCounter": -1});
       scrapPressed = !scrapPressed;
-      currentScrapCounter--;
+      firestore.runTransaction((transaction) async {
+        transaction.delete(
+            scrapUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid));
+
+        transaction.set(
+            userInsightCardColRef()
+                .doc(cardId)
+                .collection(SHARD_COLLECTION_ID)
+                .doc(),
+            {"scrapCounter": -1});
+      }).then((value) {
+        currentScrapCounter--;
+      }, onError: (e) => throw (e));
     }
   }
 
   void onLikeButtonPress() {
     if (!likePressed) {
+      likePressed = !likePressed;
       firestore.runTransaction(
         (transaction) async {
           transaction.set(
@@ -94,10 +109,11 @@ class InsightCardController extends GetxController {
               {"likeCounter": 1});
         },
       ).then((value) {
+        print("added");
         currentLikeCounter++;
-        likePressed = !likePressed;
       }, onError: (e) => throw (e));
     } else {
+      likePressed = !likePressed;
       firestore.runTransaction(
         (transaction) async {
           transaction.delete(
@@ -110,8 +126,8 @@ class InsightCardController extends GetxController {
               {"likeCounter": -1});
         },
       ).then((value) {
+        print("removed");
         currentLikeCounter--;
-        likePressed = !likePressed;
       }, onError: (e) => throw (e));
     }
   }
@@ -140,6 +156,5 @@ class InsightCardController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    print("disposed");
   }
 }

@@ -11,7 +11,7 @@ class InsightCardListController extends GetxController {
 
   PagingController<DocumentSnapshot<InsightCardModel?>?,
           QueryDocumentSnapshot<InsightCardModel>> pagingController =
-      PagingController(firstPageKey: null);
+      PagingController(firstPageKey: null, invisibleItemsThreshold: 10);
 
   final _pageSize = 10;
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
@@ -49,10 +50,19 @@ class InsightCardList extends StatelessWidget {
                   builderDelegate: PagedChildBuilderDelegate<
                       QueryDocumentSnapshot<InsightCardModel>>(
                     itemBuilder: ((context, item, index) {
-                      return InsightCard(
-                          navKey: navKey,
-                          cardId: item.id,
-                          cardInfo: item.data());
+                      return GetBuilder(
+                        init: InsightCardController(
+                            userId: item.data().author.id,
+                            cardId: item.id,
+                            cardInfo: item.data()),
+                        tag: item.id,
+                        builder: (controller) {
+                          return InsightCard(
+                              navKey: navKey,
+                              cardId: item.id,
+                              cardInfo: item.data());
+                        },
+                      );
                     }),
                   ),
                 ),

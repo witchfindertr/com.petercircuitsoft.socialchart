@@ -9,6 +9,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting.dart';
+import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting_binding.dart';
 //todo for the test
 import 'package:socialchart/utils/developmentHelp.dart';
 
@@ -51,6 +53,7 @@ class UserProfileImages extends StatelessWidget {
                 ),
                 onTap: () {
                   Get.to(
+                    fullscreenDialog: true,
                     () => GestureDetector(
                       child: Hero(
                         tag: userId + "background",
@@ -102,6 +105,7 @@ class UserProfileImages extends StatelessWidget {
                         ),
                         onTap: () {
                           Get.to(
+                            fullscreenDialog: true,
                             () => GestureDetector(
                               child: Hero(
                                 tag: userId + "image",
@@ -130,16 +134,20 @@ class UserProfileImages extends StatelessWidget {
                           children: [
                             TextButton(
                               onPressed: () {
-                                showCupertinoModalBottomSheet(
-                                  context: context,
-                                  useRootNavigator: true,
-                                  builder: (context) {
-                                    return FractionallySizedBox(
-                                      heightFactor: 0.9,
-                                      child: Container(),
-                                    );
-                                  },
-                                );
+                                Get.to(
+                                    fullscreenDialog: true,
+                                    binding: ModalScreenProfileSettingBinding(),
+                                    () => ModalScreenProfileSetting());
+                                // showCupertinoModalBottomSheet(
+                                //   context: context,
+                                //   useRootNavigator: true,
+                                //   builder: (context) {
+                                //     return FractionallySizedBox(
+                                //       heightFactor: 0.95,
+                                //       child: ModalScreenProfileSetting(),
+                                //     );
+                                //   },
+                                // );
                               },
                               child: Text("프로필 수정"),
                               style: ButtonStyle(
@@ -153,7 +161,7 @@ class UserProfileImages extends StatelessWidget {
                                   useRootNavigator: true,
                                   builder: (context) {
                                     return FractionallySizedBox(
-                                      heightFactor: 0.9,
+                                      heightFactor: 0.95,
                                       child: Container(),
                                     );
                                   },

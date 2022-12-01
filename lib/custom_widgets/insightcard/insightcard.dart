@@ -14,7 +14,7 @@ import './insightcard_bottom.dart';
 import './insightcard_header.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class InsightCard extends StatelessWidget {
+class InsightCard extends GetView<InsightCardController> {
   const InsightCard({
     super.key,
     this.navKey,
@@ -29,12 +29,11 @@ class InsightCard extends StatelessWidget {
   final int? trimLine;
 
   @override
+  // TODO: implement tag
+  String? get tag => cardId;
+
+  @override
   Widget build(BuildContext context) {
-    var controller = Get.put(
-      InsightCardController(
-          userId: cardInfo.author.id, cardId: cardId, cardInfo: cardInfo),
-      tag: cardId,
-    );
     return Card(
       shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(0)),
