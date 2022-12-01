@@ -9,6 +9,7 @@ import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
+import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting_controller.dart';
 import 'package:socialchart/screens/screen_explore/screen_explore_controller.dart';
@@ -33,7 +34,7 @@ class ModalScreenProfileSetting
         ],
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height * 0.25,
+        height: MediaQuery.of(context).size.height * 0.3,
         child: Stack(
           children: [
             Positioned(
@@ -51,15 +52,15 @@ class ModalScreenProfileSetting
                         () => Container(
                           color: Colors.amber,
                           height: 200,
-                          child: controller.backgroundImage.value != null
+                          child: controller.backgroundImage != null
                               ? Image.file(
                                   width: double.infinity,
                                   fit: BoxFit.cover,
-                                  File(controller.backgroundImage.value!.path))
+                                  File(controller.backgroundImage!.path))
                               : CachedNetworkImage(
                                   width: double.infinity,
                                   imageUrl:
-                                      "https://i.picsum.photos/id/274/300/300.jpg?hmac=ONC6yV48qfvyeyXwAe7QE7b08QXABIQJjwT5chzImAg",
+                                      controller.userData.backgroundImageUrl!,
                                   fit: BoxFit.fitWidth,
                                 ),
                         ),
@@ -96,7 +97,7 @@ class ModalScreenProfileSetting
                   }),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.15,
+              top: MediaQuery.of(context).size.height * 0.2,
               left: 0,
               right: 0,
               child: Container(
@@ -105,75 +106,81 @@ class ModalScreenProfileSetting
                   width: MediaQuery.of(context).size.height * 0.1,
                   height: MediaQuery.of(context).size.height * 0.1,
                   margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: GestureDetector(
-                      child: Stack(
-                        children: [
-                          Obx(
-                            () => Container(
-                              color: Colors.amber,
-                              height: 200,
-                              child: controller.userImage.value != null
-                                  ? Image.file(
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                      File(controller.userImage.value!.path))
-                                  : CachedNetworkImage(
-                                      width: double.infinity,
-                                      imageUrl:
-                                          "https://i.picsum.photos/id/274/300/300.jpg?hmac=ONC6yV48qfvyeyXwAe7QE7b08QXABIQJjwT5chzImAg",
-                                      fit: BoxFit.cover,
-                                    ),
-                            ),
-                          ),
-                          Align(
-                            child: Icon(CupertinoIcons.camera_circle,
-                                color: Colors.black.withOpacity(0.5), size: 40),
-                          )
-                        ],
-                      ),
-                      onTap: () {
-                        Get.dialog(
-                          SimpleDialog(
-                            contentPadding: EdgeInsets.symmetric(vertical: 5),
-                            insetPadding: EdgeInsets.zero,
-                            alignment: Alignment.center,
-                            children: [
-                              CupertinoButton(
-                                padding: EdgeInsets.zero,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("갤러리에서 선택 "),
-                                    Icon(CupertinoIcons.photo)
-                                  ],
-                                ),
-                                onPressed: () => controller
-                                    .setUserImage(ImageSource.gallery),
-                              ),
-                              Divider(thickness: 1),
-                              CupertinoButton(
-                                padding: EdgeInsets.zero,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("사진 촬영 "),
-                                    Icon(CupertinoIcons.photo_camera)
-                                  ],
-                                ),
-                                onPressed: () =>
-                                    controller.setUserImage(ImageSource.camera),
-                              )
-                            ],
-                          ),
-                        );
-                      },
+                  // padding: EdgeInsets.all(5),
+                  // decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //     borderRadius: BorderRadius.circular(10)),
+                  child: GestureDetector(
+                    child: Stack(
+                      children: [
+                        Obx(
+                          () => Container(
+                              width: MediaQuery.of(context).size.height * 0.1,
+                              height: MediaQuery.of(context).size.height * 0.1,
+                              child: controller.userImage != null
+                                  ? CircleAvatar(
+                                      backgroundColor: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: CircleAvatar(
+                                            minRadius: 24,
+                                            backgroundImage: FileImage(
+                                                controller.userImage!)),
+                                      ))
+                                  : CircleAvatar(
+                                      backgroundColor: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: userAvata(
+                                            controller.userData.imageUrl,
+                                            controller.userId),
+                                      ),
+                                    )),
+                        ),
+                        Align(
+                          child: Icon(CupertinoIcons.camera_circle,
+                              color: Colors.black.withOpacity(0.5), size: 40),
+                        )
+                      ],
                     ),
+                    onTap: () {
+                      Get.dialog(
+                        SimpleDialog(
+                          contentPadding: EdgeInsets.symmetric(vertical: 5),
+                          insetPadding: EdgeInsets.zero,
+                          alignment: Alignment.center,
+                          children: [
+                            CupertinoButton(
+                              padding: EdgeInsets.zero,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("갤러리에서 선택 "),
+                                  Icon(CupertinoIcons.photo)
+                                ],
+                              ),
+                              onPressed: () =>
+                                  controller.setUserImage(ImageSource.gallery),
+                            ),
+                            Divider(thickness: 1),
+                            CupertinoButton(
+                              padding: EdgeInsets.zero,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("사진 촬영 "),
+                                  Icon(CupertinoIcons.photo_camera)
+                                ],
+                              ),
+                              onPressed: () =>
+                                  controller.setUserImage(ImageSource.camera),
+                            )
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),

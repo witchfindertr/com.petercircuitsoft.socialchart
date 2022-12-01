@@ -7,12 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
+import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting.dart';
 import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting_binding.dart';
 //todo for the test
 import 'package:socialchart/utils/developmentHelp.dart';
+import 'package:random_avatar/random_avatar.dart';
+import 'package:validators/validators.dart';
 
 class UserProfileImages extends StatelessWidget {
   const UserProfileImages({
@@ -42,14 +45,14 @@ class UserProfileImages extends StatelessWidget {
                 child: Hero(
                   tag: userId + "background",
                   child: SizedBox(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          "https://i.picsum.photos/id/274/300/300.jpg?hmac=ONC6yV48qfvyeyXwAe7QE7b08QXABIQJjwT5chzImAg",
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      child: isURL(userData?.backgroundImageUrl)
+                          ? CachedNetworkImage(
+                              imageUrl: userData!.backgroundImageUrl!,
+                              fit: BoxFit.fitWidth,
+                            )
+                          : Container(color: Colors.grey)),
                 ),
                 onTap: () {
                   Get.to(
@@ -60,11 +63,12 @@ class UserProfileImages extends StatelessWidget {
                         child: SizedBox(
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.2,
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                "https://i.picsum.photos/id/274/300/300.jpg?hmac=ONC6yV48qfvyeyXwAe7QE7b08QXABIQJjwT5chzImAg",
-                            fit: BoxFit.fitWidth,
-                          ),
+                          child: isURL(userData?.backgroundImageUrl)
+                              ? CachedNetworkImage(
+                                  imageUrl: userData!.backgroundImageUrl!,
+                                  fit: BoxFit.fitWidth,
+                                )
+                              : Container(color: Colors.grey),
                         ),
                       ),
                       onTap: () => Get.back(),
@@ -82,49 +86,48 @@ class UserProfileImages extends StatelessWidget {
               children: [
                 Container(
                   margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
+                  // padding: EdgeInsets.all(5),
+                  // decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //     borderRadius: BorderRadius.circular(10)),
                   width: MediaQuery.of(context).size.height * 0.1,
                   height: MediaQuery.of(context).size.height * 0.1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: GestureDetector(
-                        child: Hero(
-                          tag: userId + "image",
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://i.picsum.photos/id/442/200/200.jpg?hmac=S-yNCNr30GK97ulUYoey_Fh2-czIf7YnNgcKp7zrEoE",
-                              fit: BoxFit.fitWidth,
+                  child: GestureDetector(
+                      child: Hero(
+                        tag: userId + "image",
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          child: CircleAvatar(
+                            backgroundColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: userAvata(userData?.imageUrl, userId),
                             ),
                           ),
                         ),
-                        onTap: () {
-                          Get.to(
-                            fullscreenDialog: true,
-                            () => GestureDetector(
-                              child: Hero(
-                                tag: userId + "image",
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.2,
-                                  child: CachedNetworkImage(
-                                    imageUrl:
-                                        "https://i.picsum.photos/id/442/200/200.jpg?hmac=S-yNCNr30GK97ulUYoey_Fh2-czIf7YnNgcKp7zrEoE",
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                ),
+                      ),
+                      onTap: () {
+                        Get.to(
+                          fullscreenDialog: true,
+                          () => GestureDetector(
+                            child: Hero(
+                              tag: userId + "image",
+                              child: SizedBox(
+                                width: double.infinity,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2,
+                                child: isURL(userData?.imageUrl)
+                                    ? CachedNetworkImage(
+                                        imageUrl: userData!.imageUrl!)
+                                    : randomAvatar(userId),
                               ),
-                              onTap: () => Get.back(),
                             ),
-                          );
-                        }),
-                  ),
+                            onTap: () => Get.back(),
+                          ),
+                        );
+                      }),
                 ),
                 isCurrentUser
                     ? Container(
@@ -136,7 +139,8 @@ class UserProfileImages extends StatelessWidget {
                               onPressed: () {
                                 Get.to(
                                     fullscreenDialog: true,
-                                    binding: ModalScreenProfileSettingBinding(),
+                                    binding: ModalScreenProfileSettingBinding(
+                                        userId: userId, userData: userData!),
                                     () => ModalScreenProfileSetting());
                                 // showCupertinoModalBottomSheet(
                                 //   context: context,

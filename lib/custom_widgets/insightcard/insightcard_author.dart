@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile.dart';
@@ -38,12 +39,7 @@ class InsightCardAuthor extends StatelessWidget {
             width: 48,
             height: 48,
             alignment: Alignment.center,
-            child: CircleAvatar(
-                radius: 20,
-                backgroundColor: Colors.grey,
-                backgroundImage: userData?.imageUrl != null
-                    ? CachedNetworkImageProvider(userData?.imageUrl ?? "")
-                    : null),
+            child: userAvata(userData?.imageUrl, userId),
           ),
           onTap: () {
             print(Get.routing.current);
