@@ -98,13 +98,15 @@ class UserProfileImages extends StatelessWidget {
                         child: SizedBox(
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.2,
-                          child: CircleAvatar(
-                            backgroundColor:
-                                Theme.of(context).scaffoldBackgroundColor,
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: userAvata(userData?.imageUrl, userId),
-                            ),
+                          child: CircularPaddedAvatar(
+                            radius: 48,
+                            backgroundImage: isURL(userData?.imageUrl)
+                                ? CachedNetworkImageProvider(
+                                    userData!.imageUrl!)
+                                : null,
+                            child: isURL(userData?.imageUrl)
+                                ? null
+                                : randomAvatar(userId),
                           ),
                         ),
                       ),

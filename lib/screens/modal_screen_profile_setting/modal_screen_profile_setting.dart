@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:random_avatar/random_avatar.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/app_constant.dart';
@@ -13,6 +14,7 @@ import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting_controller.dart';
 import 'package:socialchart/screens/screen_explore/screen_explore_controller.dart';
+import 'package:validators/validators.dart';
 
 class ModalScreenProfileSetting
     extends GetView<ModalScreenProfileSettingController> {
@@ -52,17 +54,21 @@ class ModalScreenProfileSetting
                         () => Container(
                           color: Colors.amber,
                           height: 200,
-                          child: controller.backgroundImage != null
+                          child: controller.backgroundNewImage != null
                               ? Image.file(
                                   width: double.infinity,
                                   fit: BoxFit.cover,
-                                  File(controller.backgroundImage!.path))
-                              : CachedNetworkImage(
-                                  width: double.infinity,
-                                  imageUrl:
-                                      controller.userData.backgroundImageUrl!,
-                                  fit: BoxFit.fitWidth,
-                                ),
+                                  File(controller.backgroundNewImage!.path))
+                              : isURL(controller.userData.backgroundImageUrl)
+                                  ? CachedNetworkImage(
+                                      width: double.infinity,
+                                      imageUrl: controller
+                                          .userData.backgroundImageUrl!,
+                                      fit: BoxFit.fitWidth,
+                                    )
+                                  : Container(
+                                      color: Colors.grey,
+                                    ),
                         ),
                       ),
                       Align(
@@ -117,27 +123,18 @@ class ModalScreenProfileSetting
                           () => Container(
                               width: MediaQuery.of(context).size.height * 0.1,
                               height: MediaQuery.of(context).size.height * 0.1,
-                              child: controller.userImage != null
-                                  ? CircleAvatar(
-                                      backgroundColor: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: CircleAvatar(
-                                            minRadius: 24,
-                                            backgroundImage: FileImage(
-                                                controller.userImage!)),
-                                      ))
-                                  : CircleAvatar(
-                                      backgroundColor: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: userAvata(
-                                            controller.userData.imageUrl,
-                                            controller.userId),
-                                      ),
-                                    )),
+                              child: controller.userNewImage != null
+                                  ? CircularPaddedAvatar(
+                                      radius: 48,
+                                      // padding: 4,
+                                      backgroundImage:
+                                          FileImage(controller.userNewImage!),
+                                    )
+                                  : userAvatar(
+                                      padding: 4,
+                                      url: controller.userData.imageUrl,
+                                      unique: controller.userId,
+                                      radius: 48)),
                         ),
                         Align(
                           child: Icon(CupertinoIcons.camera_circle,

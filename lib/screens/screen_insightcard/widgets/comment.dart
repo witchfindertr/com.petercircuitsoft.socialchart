@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_comment.dart';
 import 'package:socialchart/models/model_user_data.dart';
@@ -40,13 +41,12 @@ class Comment extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Colors.grey,
-                  backgroundImage: controller.userData?.imageUrl != null
-                      ? CachedNetworkImageProvider(
-                          controller.userData?.imageUrl ?? "")
-                      : null),
+              child: userAvatar(
+                padding: 0,
+                radius: 25,
+                unique: controller.userId,
+                url: controller.userData?.imageUrl,
+              ),
             ),
             const SizedBox(width: 20),
             Flexible(

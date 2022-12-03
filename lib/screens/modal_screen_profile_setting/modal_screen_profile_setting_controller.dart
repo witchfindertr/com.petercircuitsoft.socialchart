@@ -18,11 +18,11 @@ class ModalScreenProfileSettingController extends GetxController {
       {required this.userId, required this.userData});
   final ImagePicker imagePicker = ImagePicker();
 
-  var _userImage = Rxn<File>();
-  var _backgroundImage = Rxn<File>();
+  var _userNewImage = Rxn<File>();
+  var _backgroundNewImage = Rxn<File>();
 
-  File? get userImage => _userImage.value;
-  File? get backgroundImage => _backgroundImage.value;
+  File? get userNewImage => _userNewImage.value;
+  File? get backgroundNewImage => _backgroundNewImage.value;
 
   Future setUserImage(ImageSource imageSource) async {
     try {
@@ -46,7 +46,8 @@ class ModalScreenProfileSettingController extends GetxController {
             ),
           ],
         ).then((croppedImage) {
-          if (croppedImage != null) _userImage.value = File(croppedImage.path);
+          if (croppedImage != null)
+            _userNewImage.value = File(croppedImage.path);
         });
       }
     } catch (e) {
@@ -77,7 +78,7 @@ class ModalScreenProfileSettingController extends GetxController {
           ],
         ).then((croppedImage) {
           if (croppedImage != null)
-            _backgroundImage.value = File(croppedImage.path);
+            _backgroundNewImage.value = File(croppedImage.path);
         });
       }
     } catch (e) {
