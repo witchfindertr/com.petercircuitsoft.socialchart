@@ -158,7 +158,8 @@ class ModalScreenProfileSetting
                                             )
                                           : userAvatar(
                                               padding: 4,
-                                              url: controller.userData.imageUrl,
+                                              url: controller
+                                                  .userData.profileImageUrl,
                                               unique: controller.userId,
                                               radius: 48)),
                                 ),

@@ -5,7 +5,7 @@ class UserDataModel {
     required this.createdAt,
     required this.userEmail,
     this.backgroundImageUrl,
-    this.imageUrl,
+    this.profileImageUrl,
     this.displayName,
     this.introductionMessage,
     this.userUrl,
@@ -16,7 +16,7 @@ class UserDataModel {
   final Timestamp createdAt; //creation time
   final String userEmail;
   final String? backgroundImageUrl; //user email
-  final String? imageUrl;
+  final String? profileImageUrl;
   final String? displayName;
   final String? introductionMessage; // user text reported
   final String? userUrl;
@@ -28,7 +28,7 @@ class UserDataModel {
           createdAt: json['createdAt']! as Timestamp,
           userEmail: json['userEmail']! as String,
           backgroundImageUrl: json['backgroundImageUrl'] as String?,
-          imageUrl: json['imageUrl'] as String?,
+          profileImageUrl: json['profileImageUrl'] as String?,
           displayName: json['displayName'] as String?,
           introductionMessage: json['introductionMessage'] as String?,
           userUrl: json['userUrl'] as String?,
@@ -41,7 +41,7 @@ class UserDataModel {
       'createdAt': createdAt,
       'userEmail': userEmail,
       'backgroundImageUrl': backgroundImageUrl,
-      'imageUrl': imageUrl,
+      'profileImageUrl': profileImageUrl,
       'displayName': displayName,
       'introductionMessage': introductionMessage,
       'userUrl': userUrl,

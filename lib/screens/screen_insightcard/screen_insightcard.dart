@@ -102,7 +102,7 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
             children: [
               userAvatar(
                 padding: 0,
-                url: AuthController.to.currentUser?.imageUrl,
+                url: AuthController.to.currentUser?.profileImageUrl,
                 radius: 21,
                 unique: AuthController.to.firebaseUser.value!.uid,
               ),

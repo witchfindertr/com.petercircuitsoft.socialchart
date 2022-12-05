@@ -39,7 +39,7 @@ class UserProfileInfo extends StatelessWidget {
               style: Theme.of(context).textTheme.caption,
             ),
             Text(
-              userData?.userUrl ?? "유저 URL이 없습니다.",
+              userData?.userUrl ?? "등록한 웹 주소가 없습니다.",
               style: Theme.of(context).textTheme.caption,
             ),
             Text(

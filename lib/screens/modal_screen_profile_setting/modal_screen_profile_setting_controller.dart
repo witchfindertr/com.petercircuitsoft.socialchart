@@ -41,22 +41,30 @@ class ModalScreenProfileSettingController extends GetxController {
   File? get backgroundNewImage => _backgroundNewImage.value;
 
   void saveProfileInfo() async {
+    Get.back();
     String userNewImageUrl = "";
     String backgroundNewImageUrl = "";
     Map<String, Object?> userUpdateData = {
-      "displayName": displayNameFieldController.text,
-      "introductionMessage": introductinoFieldController.text,
-      "userUrl": websiteFieldController.text,
-      "belong": belongFieldController.text
+      "displayName": displayNameFieldController.text.isNotEmpty
+          ? displayNameFieldController.text
+          : null,
+      "introductionMessage": introductinoFieldController.text.isNotEmpty
+          ? introductinoFieldController.text
+          : null,
+      "userUrl": websiteFieldController.text.isNotEmpty
+          ? websiteFieldController.text
+          : null,
+      "belong": belongFieldController.text.isNotEmpty
+          ? belongFieldController.text
+          : null
     };
-    Get.back();
     SocialChartController.to.showFullScreenLoadingIndicator = true;
     //save userNewImage
     if (userNewImage != null) {
-      var userImageRef = storageRef.child("avatarImage");
+      var userImageRef = storageRef.child("profileImage");
       await userImageRef.putFile(userNewImage!);
       userNewImageUrl = await userImageRef.getDownloadURL();
-      userUpdateData["userImageUrl"] = userNewImageUrl;
+      userUpdateData["profileImageUrl"] = userNewImageUrl;
     }
     //save backgroundImage
     if (backgroundNewImage != null) {
@@ -74,8 +82,7 @@ class ModalScreenProfileSettingController extends GetxController {
           onError: (e) => print(e),
         );
     SocialChartController.to.showFullScreenLoadingIndicator = false;
-    Get.find<ScreenProfileController>(tag: NavKeys.profile.name)
-        .getUserData(userId);
+    Get.find<ScreenProfileController>(tag: NavKeys.profile.name).getUserData();
   }
 
   Future setUserImage(ImageSource imageSource) async {

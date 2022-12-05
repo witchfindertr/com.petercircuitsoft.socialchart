@@ -39,8 +39,8 @@ class InsightCardAuthor extends StatelessWidget {
             width: 48,
             height: 48,
             alignment: Alignment.center,
-            child:
-                userAvatar(url: userData?.imageUrl, unique: userId, radius: 48),
+            child: userAvatar(
+                url: userData?.profileImageUrl, unique: userId, radius: 48),
           ),
           onTap: () {
             print(Get.routing.current);

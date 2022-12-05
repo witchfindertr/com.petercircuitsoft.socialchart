@@ -45,7 +45,7 @@ class Comment extends StatelessWidget {
                 padding: 0,
                 radius: 25,
                 unique: controller.userId,
-                url: controller.userData?.imageUrl,
+                url: controller.userData?.profileImageUrl,
               ),
             ),
             const SizedBox(width: 20),

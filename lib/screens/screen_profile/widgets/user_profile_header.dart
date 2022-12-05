@@ -96,11 +96,11 @@ class UserProfileImages extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.2,
                           child: CircularPaddedAvatar(
                             radius: 48,
-                            backgroundImage: isURL(userData?.imageUrl)
+                            backgroundImage: isURL(userData?.profileImageUrl)
                                 ? CachedNetworkImageProvider(
-                                    userData!.imageUrl!)
+                                    userData!.profileImageUrl!)
                                 : null,
-                            child: isURL(userData?.imageUrl)
+                            child: isURL(userData?.profileImageUrl)
                                 ? null
                                 : randomAvatar(userId),
                           ),
@@ -116,9 +116,9 @@ class UserProfileImages extends StatelessWidget {
                                 width: double.infinity,
                                 height:
                                     MediaQuery.of(context).size.height * 0.2,
-                                child: isURL(userData?.imageUrl)
+                                child: isURL(userData?.profileImageUrl)
                                     ? CachedNetworkImage(
-                                        imageUrl: userData!.imageUrl!)
+                                        imageUrl: userData!.profileImageUrl!)
                                     : randomAvatar(userId),
                               ),
                             ),
