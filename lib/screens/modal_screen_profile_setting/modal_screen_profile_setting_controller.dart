@@ -2,12 +2,20 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_data.dart';
+import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/screens/screen_profile/screen_profile.dart';
+import 'package:socialchart/screens/screen_profile/screen_profile_controller.dart';
+import 'package:socialchart/socialchart/socialchart_controller.dart';
 
 enum UserImageType { userimage, background }
 
@@ -18,11 +26,57 @@ class ModalScreenProfileSettingController extends GetxController {
       {required this.userId, required this.userData});
   final ImagePicker imagePicker = ImagePicker();
 
-  var _userNewImage = Rxn<File>();
-  var _backgroundNewImage = Rxn<File>();
+  Reference storageRef =
+      firestorage.ref("/userImage/${firebaseAuth.currentUser!.uid}");
+
+  final displayNameFieldController = TextEditingController();
+  final introductinoFieldController = TextEditingController();
+  final belongFieldController = TextEditingController();
+  final websiteFieldController = TextEditingController();
+
+  final _userNewImage = Rxn<File>();
+  final _backgroundNewImage = Rxn<File>();
 
   File? get userNewImage => _userNewImage.value;
   File? get backgroundNewImage => _backgroundNewImage.value;
+
+  void saveProfileInfo() async {
+    String userNewImageUrl = "";
+    String backgroundNewImageUrl = "";
+    Map<String, Object?> userUpdateData = {
+      "displayName": displayNameFieldController.text,
+      "introductionMessage": introductinoFieldController.text,
+      "userUrl": websiteFieldController.text,
+      "belong": belongFieldController.text
+    };
+    Get.back();
+    SocialChartController.to.showFullScreenLoadingIndicator = true;
+    //save userNewImage
+    if (userNewImage != null) {
+      var userImageRef = storageRef.child("avatarImage");
+      await userImageRef.putFile(userNewImage!);
+      userNewImageUrl = await userImageRef.getDownloadURL();
+      userUpdateData["userImageUrl"] = userNewImageUrl;
+    }
+    //save backgroundImage
+    if (backgroundNewImage != null) {
+      var userImageRef = storageRef.child("backgroundImage");
+      await userImageRef.putFile(backgroundNewImage!);
+      backgroundNewImageUrl = await userImageRef.getDownloadURL();
+      userUpdateData["backgroundImageUrl"] = backgroundNewImageUrl;
+    }
+
+    await userDataColRef()
+        .doc(firebaseAuth.currentUser!.uid)
+        .update(userUpdateData)
+        .then(
+          (value) {},
+          onError: (e) => print(e),
+        );
+    SocialChartController.to.showFullScreenLoadingIndicator = false;
+    Get.find<ScreenProfileController>(tag: NavKeys.profile.name)
+        .getUserData(userId);
+  }
 
   Future setUserImage(ImageSource imageSource) async {
     try {
@@ -46,8 +100,10 @@ class ModalScreenProfileSettingController extends GetxController {
             ),
           ],
         ).then((croppedImage) {
-          if (croppedImage != null)
+          if (croppedImage != null) {
             _userNewImage.value = File(croppedImage.path);
+          }
+          Get.back();
         });
       }
     } catch (e) {
@@ -77,8 +133,10 @@ class ModalScreenProfileSettingController extends GetxController {
             ),
           ],
         ).then((croppedImage) {
-          if (croppedImage != null)
+          if (croppedImage != null) {
             _backgroundNewImage.value = File(croppedImage.path);
+          }
+          Get.back();
         });
       }
     } catch (e) {
@@ -91,6 +149,10 @@ class ModalScreenProfileSettingController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
+    displayNameFieldController.text = userData.displayName ?? "";
+    belongFieldController.text = userData.belong ?? "";
+    introductinoFieldController.text = userData.introductionMessage ?? "";
+    websiteFieldController.text = userData.userUrl ?? "";
   }
 
   @override

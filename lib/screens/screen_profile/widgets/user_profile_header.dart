@@ -85,11 +85,7 @@ class UserProfileImages extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  // padding: EdgeInsets.all(5),
-                  // decoration: BoxDecoration(
-                  //     color: Colors.white,
-                  //     borderRadius: BorderRadius.circular(10)),
+                  margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                   width: MediaQuery.of(context).size.height * 0.1,
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: GestureDetector(
@@ -144,16 +140,6 @@ class UserProfileImages extends StatelessWidget {
                                     binding: ModalScreenProfileSettingBinding(
                                         userId: userId, userData: userData!),
                                     () => ModalScreenProfileSetting());
-                                // showCupertinoModalBottomSheet(
-                                //   context: context,
-                                //   useRootNavigator: true,
-                                //   builder: (context) {
-                                //     return FractionallySizedBox(
-                                //       heightFactor: 0.95,
-                                //       child: ModalScreenProfileSetting(),
-                                //     );
-                                //   },
-                                // );
                               },
                               child: Text("프로필 수정"),
                               style: ButtonStyle(

@@ -61,6 +61,8 @@ dependencies:
   firebase_dynamic_links: ^5.0.6
   random_avatar: ^0.0.7
   validators: ^3.0.0
+  firebase_storage: ^11.0.6
+  path_provider: ^2.0.11
 
 dev_dependencies:
   flutter_test:

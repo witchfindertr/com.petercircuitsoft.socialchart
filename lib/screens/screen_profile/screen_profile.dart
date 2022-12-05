@@ -14,7 +14,7 @@ class ScreenProfile extends GetView<ScreenProfileController> {
 
   @override
   // TODO: implement tag
-  String? get tag => navKey?.name;
+  String? get tag => navKey.name;
 
   @override
   Widget build(BuildContext context) {

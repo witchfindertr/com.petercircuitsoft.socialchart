@@ -27,9 +27,13 @@ class ScreenProfileController extends GetxController {
   bool get isLoading => isloading.value;
   set isLoading(bool value) => isloading.value = value;
 
-  Future<DocumentSnapshot<UserDataModel>> getUserData(String userId) {
+  Future<void> getUserData(String userId) {
     try {
-      return userDataColRef().doc(userId).get();
+      return userDataColRef().doc(userId).get().then(
+        (value) {
+          userData = value.data();
+        },
+      );
     } catch (error) {
       rethrow;
     }
@@ -39,8 +43,7 @@ class ScreenProfileController extends GetxController {
   void onInit() async {
     isLoading = true;
     if (userId == firebaseAuth.currentUser?.uid) _isCurrentUser.value = true;
-    var result = await getUserData(userId);
-    userData = result.data();
+    await getUserData(userId);
     isLoading = false;
 
     super.onInit();

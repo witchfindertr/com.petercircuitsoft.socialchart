@@ -9,6 +9,7 @@ class UserDataModel {
     this.displayName,
     this.introductionMessage,
     this.userUrl,
+    this.belong,
     this.followerCount = 0,
     this.followingCount = 0,
   });
@@ -19,6 +20,7 @@ class UserDataModel {
   final String? displayName;
   final String? introductionMessage; // user text reported
   final String? userUrl;
+  final String? belong;
   final int? followerCount;
   final int? followingCount;
   UserDataModel.fromJson(Map<String, Object?> json)
@@ -30,6 +32,7 @@ class UserDataModel {
           displayName: json['displayName'] as String?,
           introductionMessage: json['introductionMessage'] as String?,
           userUrl: json['userUrl'] as String?,
+          belong: json['belong'] as String?,
           followerCount: json['followerCount'] as int?,
           followingCount: json['followingCount'] as int?,
         );
@@ -42,6 +45,7 @@ class UserDataModel {
       'displayName': displayName,
       'introductionMessage': introductionMessage,
       'userUrl': userUrl,
+      'belong': belong,
       'followerCount': followerCount,
       'followingCount': followingCount,
     };
