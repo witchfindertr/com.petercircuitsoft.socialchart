@@ -1,20 +1,12 @@
-import 'dart:developer';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
-import 'package:socialchart/controllers/auth_controller.dart';
-import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_notice.dart';
-import 'package:socialchart/models/model_user_comment.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
-import 'package:socialchart/screens/screen_insightcard/screen_insightcard_controller.dart';
-import 'package:socialchart/screens/screen_insightcard/widgets/comment.dart';
 import 'package:socialchart/screens/screen_notice/screen_notice_controller.dart';
 
 class ScreenNotice extends GetView<ScreenNoticeController> {

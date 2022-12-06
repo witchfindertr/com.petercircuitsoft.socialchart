@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/text_and_link.dart';
 import 'package:socialchart/models/model_user_data.dart';
+import 'package:socialchart/utils/etc.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:validators/validators.dart';
 
@@ -47,7 +48,7 @@ class UserProfileInfo extends StatelessWidget {
             InkWell(
                 child: Text(
                   "🔗${userData?.userUrl ?? "등록한 웹 주소가 없습니다."}",
-                  style: Theme.of(context).textTheme.bodyText2!.merge(
+                  style: Theme.of(context).textTheme.caption!.merge(
                       userData?.userUrl == null
                           ? TextStyle(color: Colors.grey)
                           : null),
@@ -55,27 +56,14 @@ class UserProfileInfo extends StatelessWidget {
                   maxLines: 3,
                 ),
                 onTap: () {
-                  var link = "https://www.petercircuitsoft.com";
-                  Uri _uri = Uri.parse(link);
-                  if (_uri.isScheme('HTTP')) {
-                    print("http");
-                  }
-                  // if (isURL(userData?.userUrl)) {
-                  //   print("what???");
-                  //   launchUrl(Uri.parse("www.petercircuitsoft.com").scheme);
-                  // } else {
-                  //   print("null");
-                  // }
-                  // isURL(userData?.userUrl)
-                  //     // ? launchUrl(Uri.parse(userData!.userUrl!))
-                  //     ? launchUrl(Uri.parse(userData!.userUrl!))
-                  //     : null;
+                  var userLink = completeLinkScheme(userData?.userUrl);
+                  isURL(userLink) ? launchUrl(Uri.parse(userLink!)) : null;
                 }),
             Text(
               "팔로워 ${userData?.followerCount ?? 0}명 / 팔로잉 ${userData?.followingCount ?? 0}명",
-              style: Theme.of(context).textTheme.bodyText2!.merge(
+              style: Theme.of(context).textTheme.caption!.merge(
                   userData?.userUrl == null
-                      ? TextStyle(color: Colors.grey)
+                      ? const TextStyle(color: Colors.grey)
                       : null),
               overflow: TextOverflow.ellipsis,
               maxLines: 3,

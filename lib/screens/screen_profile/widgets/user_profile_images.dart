@@ -6,12 +6,14 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting.dart';
 import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting_binding.dart';
+import 'package:socialchart/screens/screen_account_setting/screen_account_setting.dart';
 //todo for the test
 import 'package:socialchart/utils/developmentHelp.dart';
 import 'package:random_avatar/random_avatar.dart';
@@ -136,6 +138,7 @@ class UserProfileImages extends StatelessWidget {
                             TextButton(
                               onPressed: () {
                                 Get.to(
+                                    duration: Duration(milliseconds: 500),
                                     fullscreenDialog: true,
                                     binding: ModalScreenProfileSettingBinding(
                                         userId: userId, userData: userData!),
@@ -148,18 +151,11 @@ class UserProfileImages extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                showCupertinoModalBottomSheet(
-                                  context: context,
-                                  useRootNavigator: true,
-                                  builder: (context) {
-                                    return FractionallySizedBox(
-                                      heightFactor: 0.95,
-                                      child: Container(),
-                                    );
-                                  },
-                                );
+                                Get.toNamed(ScreenAccountSetting.routeName,
+                                    id: NavKeys.profile.index,
+                                    arguments: userData);
                               },
-                              child: Text("계정 설정"),
+                              child: Text("설정"),
                               style: ButtonStyle(
                                 alignment: Alignment.bottomCenter,
                               ),

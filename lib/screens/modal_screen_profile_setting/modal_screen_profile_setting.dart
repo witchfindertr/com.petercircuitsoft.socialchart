@@ -114,7 +114,7 @@ class ModalScreenProfileSetting
                                     padding: EdgeInsets.zero,
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Text("사진 촬영 "),
                                         Icon(CupertinoIcons.photo_camera)
@@ -182,7 +182,7 @@ class ModalScreenProfileSetting
                                       padding: EdgeInsets.zero,
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.spaceAround,
                                         children: [
                                           Text("갤러리에서 선택 "),
                                           Icon(CupertinoIcons.photo)
@@ -196,7 +196,7 @@ class ModalScreenProfileSetting
                                       padding: EdgeInsets.zero,
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.spaceAround,
                                         children: [
                                           Text("사진 촬영 "),
                                           Icon(CupertinoIcons.photo_camera)

@@ -155,11 +155,11 @@ class ModalScreenProfileSettingController extends GetxController {
   @override
   void onInit() async {
     // TODO: implement onInit
-    super.onInit();
     displayNameFieldController.text = userData.displayName ?? "";
     belongFieldController.text = userData.belong ?? "";
     introductinoFieldController.text = userData.introductionMessage ?? "";
     websiteFieldController.text = userData.userUrl ?? "";
+    super.onInit();
   }
 
   @override

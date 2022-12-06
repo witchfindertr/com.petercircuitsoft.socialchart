@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialchart/custom_widgets/user_interested_chart.dart';
 import 'package:socialchart/models/model_user_data.dart';
-import './user_profile_header.dart';
+import 'user_profile_images.dart';
 import './user_profile_info.dart';
 
 class UserProfile extends StatelessWidget {

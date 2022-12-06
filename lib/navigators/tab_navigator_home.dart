@@ -77,11 +77,6 @@ class TabNavigatorHome extends StatelessWidget {
                   ScreenWriteBinding(navKey: NavKeys.home, chartId: chartId),
               settings: settings,
             );
-          // case PageTest.routeName:
-          //   return GetPageRoute(
-          //     page: () => PageTest(controllerTag: "홈"),
-          //     binding: PageTestBinding(controllerTag: "홈"),
-          //   );
           default:
             return null;
         }
