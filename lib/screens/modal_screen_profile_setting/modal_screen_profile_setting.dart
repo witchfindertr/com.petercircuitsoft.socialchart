@@ -142,7 +142,7 @@ class ModalScreenProfileSetting
                             child: Stack(
                               children: [
                                 Obx(
-                                  () => Container(
+                                  () => SizedBox(
                                       width:
                                           MediaQuery.of(context).size.height *
                                               0.1,
@@ -256,7 +256,7 @@ Widget textAndField({
   int? maxLength,
 }) {
   return Padding(
-    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
