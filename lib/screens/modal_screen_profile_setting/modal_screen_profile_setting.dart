@@ -1,21 +1,12 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:random_avatar/random_avatar.dart';
-import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
-import 'package:socialchart/custom_widgets/main_appbar.dart';
-import 'package:socialchart/app_constant.dart';
-import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
-import 'package:socialchart/custom_widgets/text_input_formatter/utf8_limit_formatter.dart';
 import 'package:socialchart/custom_widgets/user_avata.dart';
-import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting_controller.dart';
-import 'package:socialchart/screens/screen_explore/screen_explore_controller.dart';
 import 'package:validators/validators.dart';
 
 class ModalScreenProfileSetting
@@ -54,8 +45,6 @@ class ModalScreenProfileSetting
                       child: GestureDetector(
                           child: AspectRatio(
                             aspectRatio: 16 / 9,
-                            // width: double.infinity,
-                            // height: MediaQuery.of(context).size.height * 0.2,
                             child: Stack(children: [
                               Obx(
                                 () => Container(
@@ -95,34 +84,20 @@ class ModalScreenProfileSetting
                                 insetPadding: EdgeInsets.zero,
                                 alignment: Alignment.center,
                                 children: [
-                                  CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text("갤러리에서 선택 "),
-                                        Icon(CupertinoIcons.photo)
-                                      ],
-                                    ),
-                                    onPressed: () =>
+                                  dialogMenuItem(
+                                    icon: CupertinoIcons.photo,
+                                    text: "갤러리에서 선택",
+                                    onPress: () =>
                                         controller.setBackgroundImage(
                                             ImageSource.gallery),
                                   ),
                                   Divider(thickness: 1),
-                                  CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text("사진 촬영 "),
-                                        Icon(CupertinoIcons.photo_camera)
-                                      ],
-                                    ),
-                                    onPressed: () => controller
+                                  dialogMenuItem(
+                                    icon: CupertinoIcons.photo_camera,
+                                    text: "사진 촬영",
+                                    onPress: () => controller
                                         .setBackgroundImage(ImageSource.camera),
-                                  )
+                                  ),
                                 ],
                               ),
                             );
@@ -178,33 +153,19 @@ class ModalScreenProfileSetting
                                   insetPadding: EdgeInsets.zero,
                                   alignment: Alignment.center,
                                   children: [
-                                    CupertinoButton(
-                                      padding: EdgeInsets.zero,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text("갤러리에서 선택 "),
-                                          Icon(CupertinoIcons.photo)
-                                        ],
-                                      ),
-                                      onPressed: () => controller
+                                    dialogMenuItem(
+                                      icon: CupertinoIcons.photo,
+                                      text: "갤러리에서 선택",
+                                      onPress: () => controller
                                           .setUserImage(ImageSource.gallery),
                                     ),
                                     Divider(thickness: 1),
-                                    CupertinoButton(
-                                      padding: EdgeInsets.zero,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text("사진 촬영 "),
-                                          Icon(CupertinoIcons.photo_camera)
-                                        ],
-                                      ),
-                                      onPressed: () => controller
+                                    dialogMenuItem(
+                                      icon: CupertinoIcons.photo_camera,
+                                      text: "사진 촬영",
+                                      onPress: () => controller
                                           .setUserImage(ImageSource.camera),
-                                    )
+                                    ),
                                   ],
                                 ),
                               );
@@ -281,6 +242,29 @@ Widget textAndField({
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
           ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget dialogMenuItem({
+  required IconData icon,
+  required String text,
+  VoidCallback? onPress,
+}) {
+  return CupertinoButton(
+    onPressed: onPress,
+    padding: EdgeInsets.zero,
+    child: Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Icon(icon),
+        ),
+        Expanded(
+          flex: 2,
+          child: Text(text),
         ),
       ],
     ),

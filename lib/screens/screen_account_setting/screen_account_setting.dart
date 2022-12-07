@@ -29,6 +29,7 @@ class ScreenAccountSetting extends GetView<ScreenAccountSettingController> {
               title: Text("내 계정 정보"),
               subtitle: Text("내 계정 정보를 확인합니다."),
               onTap: () => showCupertinoModalBottomSheet(
+                barrierColor: Colors.transparent.withOpacity(0.5),
                 context: context,
                 builder: (context) {
                   return FractionallySizedBox(
@@ -63,6 +64,7 @@ class ScreenAccountSetting extends GetView<ScreenAccountSettingController> {
               title: Text("언어 설정"),
               subtitle: Text("언어를 설정합니다."),
               onTap: () => showCupertinoModalBottomSheet(
+                  barrierColor: Colors.transparent.withOpacity(0.5),
                   context: context,
                   builder: (context) {
                     return FractionallySizedBox(
@@ -87,6 +89,7 @@ class ScreenAccountSetting extends GetView<ScreenAccountSettingController> {
               title: Text("기타"),
               subtitle: Text("버전, 법적 고지 등 기타 사항을 확인합니다."),
               onTap: () => showCupertinoModalBottomSheet(
+                barrierColor: Colors.transparent.withOpacity(0.5),
                 context: context,
                 builder: (context) {
                   return FractionallySizedBox(

@@ -21,6 +21,12 @@ class ScreenAccountSettingController extends GetxController {
     setting.writeIfNull("autoTranslate", false);
     autoTranslateEnable = setting.read("autoTranslate");
 
+    ever(
+      _autoTranslateEnable,
+      (_) => {
+        setting.write("autoTranslate", _),
+      },
+    );
     super.onInit();
   }
 
