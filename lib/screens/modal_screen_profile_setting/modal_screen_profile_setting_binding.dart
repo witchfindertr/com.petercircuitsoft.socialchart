@@ -3,7 +3,7 @@ import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting_controller.dart';
 
 class ModalScreenProfileSettingBinding extends Bindings {
-  final UserDataModel userData;
+  final ModelUserData userData;
   final String userId;
   @override
   void dependencies() {

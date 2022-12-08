@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserReportModel {
-  const UserReportModel({
+class ModelUserReport {
+  const ModelUserReport({
     required this.userEmail,
     required this.userMessage,
     required this.createdAt,
@@ -13,7 +13,7 @@ class UserReportModel {
   final Timestamp createdAt; //creation time
   final bool? isReplied;
   final String? replyMessage;
-  UserReportModel.fromJson(Map<String, Object?> json)
+  ModelUserReport.fromJson(Map<String, Object?> json)
       : this(
           userMessage: json['userMessage']! as String,
           createdAt: json['createdAt']! as Timestamp,

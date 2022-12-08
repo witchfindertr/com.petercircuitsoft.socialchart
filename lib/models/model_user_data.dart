@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserDataModel {
-  UserDataModel({
+class ModelUserData {
+  ModelUserData({
     required this.createdAt,
     required this.userEmail,
     this.backgroundImageUrl,
@@ -23,7 +23,7 @@ class UserDataModel {
   final String? belong;
   final int? followerCount;
   final int? followingCount;
-  UserDataModel.fromJson(Map<String, Object?> json)
+  ModelUserData.fromJson(Map<String, Object?> json)
       : this(
           createdAt: json['createdAt']! as Timestamp,
           userEmail: json['userEmail']! as String,

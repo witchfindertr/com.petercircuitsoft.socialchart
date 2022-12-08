@@ -7,6 +7,7 @@ import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.da
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
+import 'package:socialchart/screens/screen_chart/chart/chart_persistent_header_delegate.dart';
 import './insightcard.dart';
 
 class InsightCardList extends StatelessWidget {
@@ -18,7 +19,8 @@ class InsightCardList extends StatelessWidget {
     this.navKey,
     this.userId,
     this.chartId,
-    this.header,
+    this.showCardHeader,
+    this.persistentHeader,
   });
   final Widget? sliverAppBar;
   final NavKeys? navKey;
@@ -26,7 +28,8 @@ class InsightCardList extends StatelessWidget {
   final bool scrollToTopEnable;
   final String? userId;
   final String? chartId;
-  final Widget? header;
+  final bool? showCardHeader;
+  final Widget? persistentHeader;
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -42,13 +45,18 @@ class InsightCardList extends StatelessWidget {
               controller: scrollController,
               slivers: [
                 sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox()),
-                SliverToBoxAdapter(
-                  child: header ?? const SizedBox(),
-                ),
+                persistentHeader ?? const SliverToBoxAdapter(child: SizedBox()),
+                // SliverPersistentHeader(
+                //   delegate: persistentHeader ?? const SizedBox(),
+                //   // pinned: true,
+                // ),
+                // SliverToBoxAdapter(
+                //   child: persistentHeaderDelegate ?? const SizedBox(),
+                // ),
                 PagedSliverList(
                   pagingController: controller.pagingController,
                   builderDelegate: PagedChildBuilderDelegate<
-                      QueryDocumentSnapshot<InsightCardModel>>(
+                      QueryDocumentSnapshot<ModelInsightCard>>(
                     itemBuilder: ((context, item, index) {
                       return GetBuilder(
                         init: InsightCardController(
@@ -58,9 +66,11 @@ class InsightCardList extends StatelessWidget {
                         tag: item.id,
                         builder: (controller) {
                           return InsightCard(
-                              navKey: navKey,
-                              cardId: item.id,
-                              cardInfo: item.data());
+                            navKey: navKey,
+                            showHeader: showCardHeader ?? true,
+                            cardId: item.id,
+                            cardInfo: item.data(),
+                          );
                         },
                       );
                     }),

@@ -16,7 +16,7 @@ class UserProfileInfo extends StatelessWidget {
     super.key,
     this.userData,
   });
-  final UserDataModel? userData;
+  final ModelUserData? userData;
   @override
   Widget build(BuildContext context) {
     return Container(

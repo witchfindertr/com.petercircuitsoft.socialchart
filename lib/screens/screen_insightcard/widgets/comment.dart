@@ -13,8 +13,8 @@ import 'package:timeago/timeago.dart' as timeago;
 class CommentController extends GetxController {
   CommentController({required this.userId});
   final String userId;
-  final _userData = Rxn<UserDataModel>();
-  UserDataModel? get userData => _userData.value;
+  final _userData = Rxn<ModelUserData>();
+  ModelUserData? get userData => _userData.value;
   @override
   void onInit() {
     // TODO: implement onInit

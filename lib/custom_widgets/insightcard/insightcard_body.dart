@@ -12,7 +12,7 @@ import 'dart:developer';
 
 class InsightCardBody extends StatelessWidget {
   const InsightCardBody({super.key, required this.cardInfo, this.trimLine});
-  final InsightCardModel cardInfo;
+  final ModelInsightCard cardInfo;
   final int? trimLine;
 
   @override

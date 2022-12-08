@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class InsightCardModel {
-  InsightCardModel({
+class ModelInsightCard {
+  ModelInsightCard({
     required this.createdAt,
     required this.chartId,
     required this.cardType,
@@ -22,7 +22,7 @@ class InsightCardModel {
   final int? scrapCounter;
   final int? likeCounter;
 
-  InsightCardModel.fromJson(Map<String, dynamic?> json)
+  ModelInsightCard.fromJson(Map<String, dynamic?> json)
       : this(
           createdAt: json['createdAt']! as Timestamp,
           chartId: json['chartId']! as String,

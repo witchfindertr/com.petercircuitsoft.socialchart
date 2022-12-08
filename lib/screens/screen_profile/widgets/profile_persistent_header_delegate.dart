@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:socialchart/custom_widgets/user_interested_chart.dart';
 import 'package:socialchart/models/model_user_data.dart';
-import 'user_profile_images.dart';
-import './user_profile_info.dart';
+import 'package:socialchart/screens/screen_profile/widgets/user_profile_images.dart';
+import 'package:socialchart/screens/screen_profile/widgets/user_profile_info.dart';
 
-class UserProfile extends StatelessWidget {
-  const UserProfile({
-    super.key,
-    required this.userData,
-    required this.userId,
-    this.isCurrentUser = false,
-  });
+class ProfilePersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
+  ProfilePersistentHeaderDelegate(
+      {required this.userData,
+      required this.userId,
+      this.isCurrentUser = false});
+
   final ModelUserData? userData;
-  final String? userId;
+  final String userId;
   final bool isCurrentUser;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    // TODO: implement build
     return Card(
       margin: EdgeInsets.all(0),
       shape: ContinuousRectangleBorder(
@@ -54,5 +55,17 @@ class UserProfile extends StatelessWidget {
         ],
       ),
     );
+    throw UnimplementedError();
   }
+
+  @override
+  // TODO: implement maxExtent
+  double get maxExtent => 620;
+
+  @override
+  // TODO: implement minExtent
+  double get minExtent => 620;
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      true;
 }

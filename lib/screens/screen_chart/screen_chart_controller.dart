@@ -1,6 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ScreenChartController extends GetxController {
+  ScreenChartController({required this.chartId});
+  final String chartId;
+  ScrollController scrollController = ScrollController();
+
   @override
   void onInit() {
     // TODO: implement onInit

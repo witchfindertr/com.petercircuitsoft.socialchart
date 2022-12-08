@@ -16,9 +16,9 @@ class InsightCardController extends GetxController {
 
   final String userId;
   final String cardId;
-  final InsightCardModel cardInfo;
+  final ModelInsightCard cardInfo;
 
-  var userData = Rxn<UserDataModel>();
+  var userData = Rxn<ModelUserData>();
 
   var _likePressed = false.obs;
   var _scrapPressed = false.obs;

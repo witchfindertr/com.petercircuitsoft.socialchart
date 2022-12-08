@@ -32,7 +32,7 @@ class ScreenReportController extends GetxController {
 
   Future<void> sendReport(String userEmail, userMessage) {
     return userReportColRef()
-        .add(UserReportModel(
+        .add(ModelUserReport(
             userEmail: userEmail,
             userMessage: userMessage,
             createdAt: Timestamp.now(),

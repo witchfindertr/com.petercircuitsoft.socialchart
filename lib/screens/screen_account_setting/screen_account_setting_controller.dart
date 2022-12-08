@@ -4,7 +4,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ScreenAccountSettingController extends GetxController {
-  final UserDataModel? userData;
+  final ModelUserData? userData;
   ScreenAccountSettingController({this.userData});
 
   GetStorage setting = GetStorage();

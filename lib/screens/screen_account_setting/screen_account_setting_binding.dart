@@ -5,7 +5,7 @@ import 'package:socialchart/screens/screen_account_setting/screen_account_settin
 
 class ScreenAccountSettingBinding extends Bindings {
   final NavKeys? navkey;
-  final UserDataModel? userData;
+  final ModelUserData? userData;
   @override
   void dependencies() {
     // TODO: implement dependencies

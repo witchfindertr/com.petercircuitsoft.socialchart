@@ -60,10 +60,12 @@ class TabNavigatorHome extends StatelessWidget {
               settings: settings,
             );
           case ScreenChart.routeName:
+            var args = settings.arguments;
             return GetPageRoute(
               routeName: ScreenChart.routeName,
               page: () => ScreenChart(navKey: NavKeys.home),
-              binding: ScreenChartBinding(navKey: NavKeys.home),
+              binding: ScreenChartBinding(
+                  navKey: NavKeys.home, chartId: args.toString()),
               settings: settings,
             );
           case ScreenWrite.routeName:

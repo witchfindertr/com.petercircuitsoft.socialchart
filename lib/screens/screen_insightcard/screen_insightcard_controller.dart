@@ -69,11 +69,11 @@ class ScreenInsightCardController extends GetxController {
   final _isCurrentUser = false.obs;
   bool get isCurrentUser => _isCurrentUser.value;
 
-  final _authorData = Rxn<UserDataModel>();
-  UserDataModel? get authorData => _authorData.value;
+  final _authorData = Rxn<ModelUserData>();
+  ModelUserData? get authorData => _authorData.value;
 
-  final _cardInfo = Rxn<InsightCardModel>();
-  InsightCardModel? get cardInfo => _cardInfo.value;
+  final _cardInfo = Rxn<ModelInsightCard>();
+  ModelInsightCard? get cardInfo => _cardInfo.value;
   // set cardInfo(InsightCardModel? value) => _cardInfo.value = value;
 
   final _targetComment = Rxn<ModelUserComment>();

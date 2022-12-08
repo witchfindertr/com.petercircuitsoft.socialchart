@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/screens/screen_profile/widgets/profile_persistent_header_delegate.dart';
 import './widgets/user_profile.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
@@ -34,13 +35,21 @@ class ScreenProfile extends GetView<ScreenProfileController> {
           scrollToTopEnable: true,
           navKey: navKey,
           userId: controller.userId,
-          header: Obx(
-            () => UserProfile(
-              isCurrentUser: controller.isCurrentUser,
+          persistentHeader: Obx(
+            () => SliverPersistentHeader(
+                delegate: ProfilePersistentHeaderDelegate(
               userData: controller.userData,
               userId: controller.userId,
-            ),
+              isCurrentUser: controller.isCurrentUser,
+            )),
           ),
+          // persistentHeader: Obx(
+          //   () => UserProfile(
+          //     isCurrentUser: controller.isCurrentUser,
+          //     userData: controller.userData,
+          //     userId: controller.userId,
+          //   ),
+          // ),
         ),
       ),
     );

@@ -30,12 +30,13 @@ class MainSliverAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverSafeArea(
       sliver: SliverAppBar(
+        elevation: 0,
         automaticallyImplyLeading: false,
         title: title,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         centerTitle: false,
         floating: true,
-        snap: true,
+        // snap: true,
         actions: [
           searchButtonVisible
               ? CupertinoButton(

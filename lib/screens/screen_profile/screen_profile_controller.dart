@@ -18,10 +18,10 @@ class ScreenProfileController extends GetxController {
   bool get isCurrentUser => _isCurrentUser.value;
   set isCurrentUser(bool value) => _isCurrentUser.value = value;
 
-  final Rxn<UserDataModel?> _userData = Rxn<UserDataModel?>();
+  final Rxn<ModelUserData?> _userData = Rxn<ModelUserData?>();
 
-  UserDataModel? get userData => _userData.value;
-  set userData(UserDataModel? value) => _userData.value = value;
+  ModelUserData? get userData => _userData.value;
+  set userData(ModelUserData? value) => _userData.value = value;
 
   var isloading = true.obs;
   bool get isLoading => isloading.value;

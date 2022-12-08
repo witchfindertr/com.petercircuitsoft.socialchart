@@ -9,8 +9,8 @@ import 'package:socialchart/navigators/navigator_main/navigator_main_controller.
 class InsightCardListController extends GetxController {
   InsightCardListController({this.chartId, this.userId});
 
-  PagingController<DocumentSnapshot<InsightCardModel?>?,
-          QueryDocumentSnapshot<InsightCardModel>> pagingController =
+  PagingController<DocumentSnapshot<ModelInsightCard?>?,
+          QueryDocumentSnapshot<ModelInsightCard>> pagingController =
       PagingController(firstPageKey: null, invisibleItemsThreshold: 10);
 
   final _pageSize = 10;
@@ -21,13 +21,13 @@ class InsightCardListController extends GetxController {
   String? userId;
   String? chartId;
 
-  final _insightCards = Rx<List<QueryDocumentSnapshot<InsightCardModel>>>([]);
+  final _insightCards = Rx<List<QueryDocumentSnapshot<ModelInsightCard>>>([]);
 
-  List<QueryDocumentSnapshot<InsightCardModel>> get insightCards =>
+  List<QueryDocumentSnapshot<ModelInsightCard>> get insightCards =>
       _insightCards.value;
 
   void fetchInsightCard(DocumentSnapshot<Object?>? pageKey) async {
-    QuerySnapshot<InsightCardModel> loadedInsightCard;
+    QuerySnapshot<ModelInsightCard> loadedInsightCard;
     if (pageKey != null) {
       loadedInsightCard = await userInsightCardColRef()
           .where("author",

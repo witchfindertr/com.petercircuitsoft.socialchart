@@ -27,7 +27,7 @@ class UserProfileImages extends StatelessWidget {
     this.isCurrentUser = false,
   });
 
-  final UserDataModel? userData;
+  final ModelUserData? userData;
   final String userId;
   final bool isCurrentUser;
 

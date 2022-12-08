@@ -18,14 +18,15 @@ class InsightCard extends GetView<InsightCardController> {
   const InsightCard({
     super.key,
     this.navKey,
+    this.showHeader = true,
     required this.cardId,
     required this.cardInfo,
     this.trimLine,
   });
-
+  final bool showHeader;
   final NavKeys? navKey;
   final String cardId;
-  final InsightCardModel cardInfo;
+  final ModelInsightCard cardInfo;
   final int? trimLine;
 
   @override
@@ -45,12 +46,14 @@ class InsightCard extends GetView<InsightCardController> {
         child: Obx(
           () => Column(
             children: <Widget>[
-              GestureDetector(
-                child: InsightCardHeader(),
-                behavior: HitTestBehavior.opaque,
-                onTap: () =>
-                    Get.toNamed(ScreenChart.routeName, id: navKey?.index),
-              ),
+              showHeader
+                  ? GestureDetector(
+                      child: InsightCardHeader(),
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => Get.toNamed(ScreenChart.routeName,
+                          id: navKey?.index, arguments: cardInfo.chartId),
+                    )
+                  : SizedBox(),
               Divider(
                 height: 0,
                 indent: 10,

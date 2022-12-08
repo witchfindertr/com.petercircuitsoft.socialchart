@@ -18,9 +18,9 @@ class AuthController extends GetxController {
 
   late Rxn<User?> firebaseUser = Rxn<User?>(firebaseAuth.currentUser);
 
-  final _currentUser = Rxn<UserDataModel>();
+  final _currentUser = Rxn<ModelUserData>();
 
-  UserDataModel? get currentUser => _currentUser.value;
+  ModelUserData? get currentUser => _currentUser.value;
 
   // @override
   // void onInit() {}

@@ -53,10 +53,12 @@ class TabNavigatorProfile extends StatelessWidget {
               settings: settings,
             );
           case ScreenChart.routeName:
+            var args = settings.arguments;
             return GetPageRoute(
               routeName: ScreenChart.routeName,
               page: () => ScreenChart(navKey: NavKeys.profile),
-              binding: ScreenChartBinding(navKey: NavKeys.profile),
+              binding: ScreenChartBinding(
+                  navKey: NavKeys.profile, chartId: args.toString()),
               settings: settings,
             );
           case ScreenAccountSetting.routeName:
@@ -64,7 +66,7 @@ class TabNavigatorProfile extends StatelessWidget {
             return GetPageRoute(
               page: () => ScreenAccountSetting(navKey: NavKeys.profile),
               binding: ScreenAccountSettingBinding(
-                  navkey: NavKeys.profile, userData: args as UserDataModel),
+                  navkey: NavKeys.profile, userData: args as ModelUserData),
               settings: settings,
             );
             break;

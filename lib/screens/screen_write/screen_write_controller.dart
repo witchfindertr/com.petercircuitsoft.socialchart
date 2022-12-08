@@ -19,7 +19,7 @@ class ScreenWriteController extends GetxController
       firestore.collection("userInsightCard").withConverter(
             fromFirestore: (snapshot, options) {
               // print("Snapshot: ${snapshot.data()}");
-              return InsightCardModel.fromJson(snapshot.data()!);
+              return ModelInsightCard.fromJson(snapshot.data()!);
             },
             toFirestore: (value, options) => value.toJson(),
           );
@@ -106,7 +106,7 @@ class ScreenWriteController extends GetxController
     loading.showFullScreenLoadingIndicator = true;
     try {
       await insightCardCollectionRef.add(
-        InsightCardModel(
+        ModelInsightCard(
           createdAt: Timestamp.now(),
           chartId: chartId,
           cardType: "sample",

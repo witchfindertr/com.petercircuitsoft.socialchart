@@ -17,11 +17,9 @@ import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile_controller.dart';
 import 'package:socialchart/socialchart/socialchart_controller.dart';
 
-enum UserImageType { userimage, background }
-
 class ModalScreenProfileSettingController extends GetxController {
   final String userId;
-  final UserDataModel userData;
+  final ModelUserData userData;
   ModalScreenProfileSettingController(
       {required this.userId, required this.userData});
   final ImagePicker imagePicker = ImagePicker();

@@ -85,6 +85,7 @@ class ScreenWrite extends GetView<ScreenWriteController> {
                     ? Stack(
                         children: [
                           LinkPreview(
+                            //todo: image can be null(null check)
                             imageUrl: controller.linkData!.image!,
                             title: controller.linkData!.title!,
                             description: controller.linkData!.description!,

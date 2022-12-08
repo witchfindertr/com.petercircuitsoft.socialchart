@@ -20,7 +20,7 @@ class InsightCardAuthor extends StatelessWidget {
     this.navKey,
   });
   final NavKeys? navKey;
-  final UserDataModel? userData;
+  final ModelUserData? userData;
   final String userId;
   final String cardId;
   final String elapsed;

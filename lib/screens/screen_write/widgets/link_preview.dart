@@ -16,6 +16,7 @@ class LinkPreview extends StatelessWidget {
   final String? description;
   final VoidCallback? tapCallback;
 
+  //todo image can be null
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
