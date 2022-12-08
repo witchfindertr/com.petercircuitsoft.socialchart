@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
 import 'package:socialchart/screens/screen_write/screen_write_controller.dart';
 
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
@@ -43,7 +44,7 @@ class ScreenWrite extends GetView<ScreenWriteController> {
               onPressed: controller.userText.isNotEmpty
                   ? () {
                       controller.addInsightCard().then((value) {
-                        Get.back(id: navKey?.index);
+                        Get.back(id: navKey?.index, result: "complete");
                         Get.snackbar("완료", "게시물이 업로드되었습니다.");
                       });
                     }
@@ -85,10 +86,10 @@ class ScreenWrite extends GetView<ScreenWriteController> {
                     ? Stack(
                         children: [
                           LinkPreview(
-                            //todo: image can be null(null check)
-                            imageUrl: controller.linkData!.image!,
-                            title: controller.linkData!.title!,
-                            description: controller.linkData!.description!,
+                            imageUrl: controller.linkData?.image,
+                            title: controller.linkData?.title,
+                            description: controller.linkData?.description,
+                            url: controller.previewLink!,
                           ),
                           Positioned(
                             top: 0,

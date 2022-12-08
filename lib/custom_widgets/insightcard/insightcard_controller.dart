@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
+import 'package:socialchart/models/model_insightcard_list.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/models/model_user_list.dart';
@@ -58,18 +59,32 @@ class InsightCardController extends GetxController {
     if (!scrapPressed) {
       scrapPressed = !scrapPressed;
       firestore.runTransaction((transaction) async {
+        //add user to scrap user list
         transaction.set(
-            scrapUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid),
-            ModelUserList(
-                userId: firebaseAuth.currentUser!.uid,
-                createdAt: Timestamp.now()));
-
+          scrapUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid),
+          ModelUserList(
+            userId: firebaseAuth.currentUser!.uid,
+            createdAt: Timestamp.now(),
+          ),
+        );
+        //increase scrapCounter
         transaction.set(
-            userInsightCardColRef()
-                .doc(cardId)
-                .collection(SHARD_COLLECTION_ID)
-                .doc(),
-            {"scrapCounter": 1});
+          userInsightCardColRef()
+              .doc(cardId)
+              .collection(SHARD_COLLECTION_ID)
+              .doc(),
+          {
+            "scrapCounter": 1,
+          },
+        );
+        //add insightcard to scapped insightcard list
+        transaction.set(
+          scrappedInsightCardListColRef(userId).doc(cardId),
+          ModelInsightCardList(
+            cardId: cardId,
+            createdAt: Timestamp.now(),
+          ),
+        );
       }).then((value) {
         currentScrapCounter++;
       }, onError: (e) => throw (e));
@@ -77,17 +92,25 @@ class InsightCardController extends GetxController {
       scrapPressed = !scrapPressed;
       firestore.runTransaction((transaction) async {
         transaction.delete(
-            scrapUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid));
-
+          scrapUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid),
+        );
         transaction.set(
-            userInsightCardColRef()
-                .doc(cardId)
-                .collection(SHARD_COLLECTION_ID)
-                .doc(),
-            {"scrapCounter": -1});
-      }).then((value) {
-        currentScrapCounter--;
-      }, onError: (e) => throw (e));
+          userInsightCardColRef()
+              .doc(cardId)
+              .collection(SHARD_COLLECTION_ID)
+              .doc(),
+          {
+            "scrapCounter": -1,
+          },
+        );
+        //delete insightcard from scapped insightcard list
+        transaction.delete(scrappedInsightCardListColRef(userId).doc(cardId));
+      }).then(
+        (value) {
+          currentScrapCounter--;
+        },
+        onError: (e) => throw (e),
+      );
     }
   }
 

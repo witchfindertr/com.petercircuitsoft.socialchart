@@ -62,25 +62,15 @@ class ScreenWriteController extends GetxController
                 ? []
                 : extractDetections(userText, _urlRegExp)
                     .where((element) => !_deletedLink.value.contains(element));
+        //if there is no link just return
         if (extractedLink.isEmpty) return;
         OgpDataExtract.execute(extractedLink.first).then((value) {
-          if (value?.title != null && value?.description != null) {
-            _linkData.value = value;
-            previewLink = extractedLink.first;
-          } else {
-            //do nothing!
-            deletedLink = extractedLink.first;
-          }
+          _linkData.value = value;
+          previewLink = extractedLink.first;
+        }, onError: (e) {
+          print(e);
+          deletedLink = extractedLink.first;
         });
-        // AnyLinkPreview.getMetadata(link: extractedLink.first).then((value) {
-        //   if (value != null) {
-        //     _linkData.value = value;
-        //     previewLink = extractedLink.first;
-        //   } else {
-        //     //do nothing!
-        //     deletedLink = extractedLink.first;
-        //   }
-        // });
       },
     );
   }

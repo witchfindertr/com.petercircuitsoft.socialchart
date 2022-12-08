@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:socialchart/models/model_chart_data.dart';
+import 'package:socialchart/models/model_insightcard_list.dart';
 import 'package:socialchart/models/model_user_list.dart';
 import 'package:socialchart/models/model_user_notice.dart';
 import 'package:socialchart/models/model_user_comment.dart';
@@ -13,6 +14,7 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 const SHARD_COLLECTION_ID = "_counter_shards_";
 
+//for user
 CollectionReference<ModelUserData> userDataColRef() {
   return firestore.collection("userData").withConverter(
       fromFirestore: (snapshot, options) =>
@@ -20,6 +22,26 @@ CollectionReference<ModelUserData> userDataColRef() {
       toFirestore: (value, options) => value.toJson());
 }
 
+CollectionReference<ModelUserNotice> userNoticeColRef(String userId) {
+  return firestore.collection("userData/$userId/userNotices").withConverter(
+        fromFirestore: (snapshot, options) =>
+            ModelUserNotice.fromJson(snapshot.data()!),
+        toFirestore: (value, options) => value.toJson(),
+      );
+}
+
+CollectionReference<ModelInsightCardList> scrappedInsightCardListColRef(
+    String userId) {
+  return firestore
+      .collection("userData/$userId/scrappedInsightCardList")
+      .withConverter(
+        fromFirestore: (snapshot, options) =>
+            ModelInsightCardList.fromJson(snapshot.data()!),
+        toFirestore: (value, options) => value.toJson(),
+      );
+}
+
+//for insightcard
 CollectionReference<ModelInsightCard> userInsightCardColRef() {
   return firestore.collection("userInsightCard").withConverter(
         fromFirestore: (snapshot, options) =>
@@ -32,21 +54,6 @@ CollectionReference<ModelUserComment> userCommentColRef(String cardId) {
   return firestore.collection("userInsightCard/$cardId/comments").withConverter(
         fromFirestore: (snapshot, options) =>
             ModelUserComment.fromJson(snapshot.data()!),
-        toFirestore: (value, options) => value.toJson(),
-      );
-}
-
-CollectionReference<ModelUserReport> userReportColRef() {
-  return firestore.collection("userReports").withConverter(
-      fromFirestore: (snapshot, options) =>
-          ModelUserReport.fromJson(snapshot.data()!),
-      toFirestore: ((value, options) => value.toJson()));
-}
-
-CollectionReference<ModelUserNotice> userNoticeColRef(String userId) {
-  return firestore.collection("userData/$userId/userNotices").withConverter(
-        fromFirestore: (snapshot, options) =>
-            ModelUserNotice.fromJson(snapshot.data()!),
         toFirestore: (value, options) => value.toJson(),
       );
 }
@@ -67,6 +74,14 @@ CollectionReference<ModelUserList> scrapUserListColRef(String cardId) {
           fromFirestore: ((snapshot, options) =>
               ModelUserList.fromJson(snapshot.data()!)),
           toFirestore: (value, options) => value.toJson());
+}
+
+//for report
+CollectionReference<ModelUserReport> userReportColRef() {
+  return firestore.collection("userReports").withConverter(
+      fromFirestore: (snapshot, options) =>
+          ModelUserReport.fromJson(snapshot.data()!),
+      toFirestore: ((value, options) => value.toJson()));
 }
 
 //for Chart

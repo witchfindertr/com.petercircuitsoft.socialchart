@@ -54,11 +54,12 @@ class InsightCardBody extends StatelessWidget {
                         bottom: BorderSide(color: Colors.black12)),
                   ),
                   child: LinkPreview(
-                    imageUrl: cardInfo.linkPreviewData!.image!,
-                    title: cardInfo.linkPreviewData!.title!,
+                    imageUrl: cardInfo.linkPreviewData?.image,
+                    title: cardInfo.linkPreviewData?.title,
                     description: cardInfo.linkPreviewData?.description,
                     tapCallback: () =>
                         launchUrl(Uri.parse(cardInfo.linkPreviewData!.url!)),
+                    url: cardInfo.linkPreviewData!.url!,
                   ),
                 )
               : const SizedBox(),

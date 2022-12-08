@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
@@ -27,8 +28,9 @@ class ScreenChart extends GetView<ScreenChartController> {
         body: InsightCardList(
           scrollController: controller.scrollController,
           sliverAppBar: MainSliverAppbar(
-              searchButtonVisible: false,
-              titleText: '${controller.chartId} 차트'),
+            searchButtonVisible: false,
+            titleText: '${controller.chartId} 차트',
+          ),
           scrollToTopEnable: true,
           navKey: navKey,
           chartId: controller.chartId,
@@ -40,9 +42,16 @@ class ScreenChart extends GetView<ScreenChartController> {
           // sliverHeader: Chart(),
         ),
         floatingActionButton: ElevatedButton(
-          onPressed: () {
-            Get.toNamed(ScreenWrite.routeName,
-                id: NavKeys.home.index, arguments: "TestChart");
+          onPressed: () async {
+            var result = await Get.toNamed(ScreenWrite.routeName,
+                id: NavKeys.home.index, arguments: controller.chartId);
+            if (result == "complete") {
+              //if complete => refresh the list
+              Get.find<InsightCardListController>(
+                      tag: "${navKey?.name}${controller.chartId}")
+                  .pagingController
+                  .refresh();
+            }
           },
           child: Icon(Icons.add),
           style: ButtonStyle(
