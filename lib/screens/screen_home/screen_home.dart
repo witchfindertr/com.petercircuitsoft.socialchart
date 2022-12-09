@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/app_constant.dart';
@@ -28,14 +29,55 @@ class ScreenHome extends GetView<ScreenHomeController> {
     return SafeArea(
       child: Scaffold(
         // appBar: MainAppBar(appBar: AppBar(), title: "Social Chart"),
-        body: InsightCardList(
-          scrollController: controller.scrollController,
-          sliverAppBar: MainSliverAppbar(
-            titleText: "Social Chart",
+        body: RefreshIndicator(
+          onRefresh: () => Future.sync(
+            () => controller.pagingController.refresh(),
           ),
-          navKey: navKey,
-          scrollToTopEnable: true,
+          child: CustomScrollView(
+            controller: controller.scrollController,
+            slivers: [
+              MainSliverAppbarEx(
+                titleText: 'Social Chart',
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                actions: [
+                  // addInterestedButton(),
+                ],
+              ),
+              PagedSliverList(
+                pagingController: controller.pagingController,
+                builderDelegate: PagedChildBuilderDelegate<
+                    QueryDocumentSnapshot<ModelInsightCard>>(
+                  itemBuilder: (context, item, index) {
+                    return GetBuilder(
+                      init: InsightCardController(
+                        userId: item.data().author.id,
+                        cardId: item.id,
+                        cardInfo: item.data(),
+                      ),
+                      tag: item.id,
+                      builder: (controller) {
+                        return InsightCard(
+                          navKey: navKey,
+                          showHeader: true,
+                          cardId: item.id,
+                          cardInfo: item.data(),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
+        // body: InsightCardList(
+        //   scrollController: controller.scrollController,
+        //   sliverAppBar: MainSliverAppbar(
+        //     titleText: "Social Chart",
+        //   ),
+        //   navKey: navKey,
+        //   scrollToTopEnable: true,
+        // ),
       ),
     );
   }
