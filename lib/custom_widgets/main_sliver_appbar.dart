@@ -2,6 +2,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchart/utils/etc.dart';
 
+class MainSliverAppbarEx extends SliverAppBar {
+  MainSliverAppbarEx({
+    required this.titleText,
+    super.actions,
+    super.centerTitle = false,
+    super.backgroundColor,
+    super.elevation = 0,
+    super.floating = true,
+    super.automaticallyImplyLeading = false,
+  });
+  final String titleText;
+
+  @override
+  // TODO: implement title
+  Widget? get title => LinearGradientMask(
+        child: Text(
+          titleText,
+          style: const TextStyle(
+              fontFamily: "NotoSansKR",
+              fontSize: 25,
+              fontWeight: FontWeight.w700),
+        ),
+      );
+}
+
 class MainSliverAppbar extends StatelessWidget {
   const MainSliverAppbar({
     super.key,

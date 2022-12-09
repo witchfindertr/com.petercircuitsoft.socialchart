@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
@@ -41,42 +42,52 @@ class InsightCardList extends StatelessWidget {
             onRefresh: () => Future.sync(
               () => controller.pagingController.refresh(),
             ),
-            child: CustomScrollView(
-              controller: scrollController,
-              slivers: [
-                sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox()),
-                persistentHeader ?? const SliverToBoxAdapter(child: SizedBox()),
-                // SliverPersistentHeader(
-                //   delegate: persistentHeader ?? const SizedBox(),
-                //   // pinned: true,
-                // ),
-                // SliverToBoxAdapter(
-                //   child: persistentHeaderDelegate ?? const SizedBox(),
-                // ),
-                PagedSliverList(
-                  pagingController: controller.pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<
-                      QueryDocumentSnapshot<ModelInsightCard>>(
-                    itemBuilder: ((context, item, index) {
-                      return GetBuilder(
-                        init: InsightCardController(
-                            userId: item.data().author.id,
-                            cardId: item.id,
-                            cardInfo: item.data()),
-                        tag: item.id,
-                        builder: (controller) {
-                          return InsightCard(
-                            navKey: navKey,
-                            showHeader: showCardHeader ?? true,
-                            cardId: item.id,
-                            cardInfo: item.data(),
+            child: NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scroll) {
+                // Make sure the page is not in an unstable state
+                if (!controller.streamController.isClosed) {
+                  controller.streamController.add(scroll);
+                }
+                return false;
+              },
+              child: CustomScrollView(
+                controller: scrollController,
+                slivers: [
+                  sliverAppBar ?? const SliverToBoxAdapter(child: SizedBox()),
+                  persistentHeader ??
+                      const SliverToBoxAdapter(child: SizedBox()),
+                  PagedSliverList(
+                    pagingController: controller.pagingController,
+                    builderDelegate: PagedChildBuilderDelegate<
+                        QueryDocumentSnapshot<ModelInsightCard>>(
+                      itemBuilder: ((context, item, index) {
+                        return LayoutBuilder(builder: (context, p1) {
+                          controller.itemsContexts.add(ItemContext(
+                            context: context,
+                            id: index,
+                          ));
+                          return GetBuilder(
+                            init: InsightCardController(
+                              userId: item.data().author.id,
+                              cardId: item.id,
+                              cardInfo: item.data(),
+                            ),
+                            tag: item.id,
+                            builder: (controller) {
+                              return InsightCard(
+                                navKey: navKey,
+                                showHeader: showCardHeader ?? true,
+                                cardId: item.id,
+                                cardInfo: item.data(),
+                              );
+                            },
                           );
-                        },
-                      );
-                    }),
+                        });
+                      }),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

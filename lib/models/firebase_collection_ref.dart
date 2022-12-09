@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:socialchart/models/model_chart_data.dart';
+import 'package:socialchart/models/model_chart_list.dart';
 import 'package:socialchart/models/model_insightcard_list.dart';
 import 'package:socialchart/models/model_user_list.dart';
 import 'package:socialchart/models/model_user_notice.dart';
@@ -37,6 +38,17 @@ CollectionReference<ModelInsightCardList> scrappedInsightCardListColRef(
       .withConverter(
         fromFirestore: (snapshot, options) =>
             ModelInsightCardList.fromJson(snapshot.data()!),
+        toFirestore: (value, options) => value.toJson(),
+      );
+}
+
+CollectionReference<ModelChartList> userInterestedCharListColRef(
+    String userId) {
+  return firestore
+      .collection("userData/$userId/interestedChartList")
+      .withConverter(
+        fromFirestore: (snapshot, options) =>
+            ModelChartList.fromJson(snapshot.data()!),
         toFirestore: (value, options) => value.toJson(),
       );
 }
@@ -85,9 +97,19 @@ CollectionReference<ModelUserReport> userReportColRef() {
 }
 
 //for Chart
-CollectionReference<ModelChartData> chartDataColRef(String chartId) {
-  return firestore.collection("chartData/$chartId").withConverter(
+CollectionReference<ModelChartData> chartDataColRef() {
+  return firestore.collection("chartData").withConverter(
       fromFirestore: ((snapshot, options) =>
           ModelChartData.fromJson(snapshot.data()!)),
       toFirestore: (value, options) => value.toJson());
+}
+
+CollectionReference<ModelUserList> interestedChartUserListColRef(
+    String chartId) {
+  return firestore
+      .collection("chartData/$chartId/interestedChartUserList")
+      .withConverter(
+          fromFirestore: ((snapshot, options) =>
+              ModelUserList.fromJson(snapshot.data()!)),
+          toFirestore: (value, options) => value.toJson());
 }
