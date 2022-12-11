@@ -1,17 +1,24 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
+import 'package:socialchart/models/model_chart_data.dart';
 import 'package:socialchart/models/model_chart_list.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/models/model_user_list.dart';
+
+import 'package:stream_transform/stream_transform.dart';
 
 class ScreenChartController extends GetxController {
   ScreenChartController({required this.chartId});
   final String chartId;
 
+  //for pagination
   PagingController<DocumentSnapshot<ModelInsightCard?>?,
           QueryDocumentSnapshot<ModelInsightCard>> pagingController =
       PagingController(firstPageKey: null, invisibleItemsThreshold: 10);
@@ -109,12 +116,68 @@ class ScreenChartController extends GetxController {
     }).then((value) => isChartAdded = !isChartAdded);
   }
 
+  //for chart cursor
+  StreamController<ScrollNotification> streamController =
+      StreamController<ScrollNotification>();
+  var _contextItems = Rx<List<ContextItem>>([]);
+
+  var _currentItemIndex = 0.obs;
+  int get currentItemIndex => _currentItemIndex.value;
+  set currentItemIndex(int value) => _currentItemIndex.value = value;
+
+  var _currentInsightCardData = Rxn<ModelInsightCard>();
+  ModelInsightCard? get currentInsightCardData => _currentInsightCardData.value;
+  set currentInsightCardData(ModelInsightCard? value) =>
+      _currentInsightCardData.value = value;
+
+  void _onScroll(ScrollNotification notification) {
+    for (var contextItem in _contextItems.value) {
+      final RenderObject? object = contextItem.context.findRenderObject();
+      if (object == null || !object.attached) {
+        return;
+      }
+      final RenderAbstractViewport viewport =
+          RenderAbstractViewport.of(object)!;
+      final double vpHeight = notification.metrics.viewportDimension;
+      final RevealedOffset vpOffset = viewport.getOffsetToReveal(object, 0.0);
+
+      final Size size = object.semanticBounds.size;
+      final double deltaTop = vpOffset.offset - notification.metrics.pixels;
+
+      final double deltaBottom = deltaTop + size.height;
+      bool isInViewport = false;
+
+      if (deltaTop < (0.2 * vpHeight) && deltaBottom > (0.2 * vpHeight)) {
+        // print(contextItem.index);
+        _currentInsightCardData.value =
+            pagingController.itemList?[contextItem.index].data();
+      }
+    }
+    contextItemLength = _contextItems.value.length;
+  }
+
+  void addContextItem(ContextItem contextItem) {
+    _contextItems.value
+        .removeWhere((element) => element.index == contextItem.index);
+    _contextItems.value.add(contextItem);
+  }
+
+  void removeContextItem(int index) {
+    _contextItems.value.removeWhere((element) => element.index == index);
+  }
+
+  var _contextItemLength = 0.obs;
+  int get contextItemLength => _contextItemLength.value;
+  set contextItemLength(int value) => _contextItemLength.value = value;
   @override
   void onInit() {
     // TODO: implement onInit
     pagingController.addPageRequestListener((pageKey) {
       fetchInsightCard(pageKey);
     });
+    streamController.stream
+        .audit(Duration(milliseconds: 200))
+        .listen(_onScroll);
     interestedChartUserListColRef(chartId)
         .doc(firebaseAuth.currentUser!.uid)
         .get()
@@ -132,6 +195,15 @@ class ScreenChartController extends GetxController {
   @override
   void onClose() {
     // TODO: implement onClose
+    streamController.close();
+    pagingController.dispose();
     super.onClose();
   }
+}
+
+class ContextItem {
+  final BuildContext context;
+  final int index;
+
+  ContextItem({required this.context, required this.index});
 }

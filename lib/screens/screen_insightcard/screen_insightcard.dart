@@ -42,9 +42,11 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
               controller: controller.scrollController,
               slivers: [
                 MainSliverAppbar(
-                    titleText: controller.isCurrentUser
-                        ? '내가 작성한 카드'
-                        : '${controller.authorData?.displayName ?? ""}님의 카드'),
+                  titleText: controller.isCurrentUser
+                      ? '내가 작성한 카드'
+                      : '${controller.authorData?.displayName ?? ""}님의 카드',
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                ),
                 SliverToBoxAdapter(
                   child: controller.cardInfo != null
                       ? InsightCard(

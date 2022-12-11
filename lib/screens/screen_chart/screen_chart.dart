@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
@@ -25,22 +26,6 @@ class ScreenChart extends GetView<ScreenChartController> {
   @override
   // TODO: implement tag
   String? get tag => navKey?.name;
-
-  Widget addInterestedButton() {
-    return CupertinoButton(
-      onPressed: () => controller.toggleAddChart(),
-      child: LinearGradientMask(
-        child: Obx(
-          () => Icon(
-            controller.isChartAdded
-                ? CupertinoIcons.check_mark
-                : CupertinoIcons.add,
-            size: 26,
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget floatingButton() {
     return ElevatedButton(
@@ -86,45 +71,70 @@ class ScreenChart extends GetView<ScreenChartController> {
           onRefresh: () => Future.sync(
             () => controller.pagingController.refresh(),
           ),
-          child: CustomScrollView(
-            controller: controller.scrollController,
-            slivers: [
-              MainSliverAppbarEx(
-                titleText: '${controller.chartId} 차트',
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                actions: [
-                  addInterestedButton(),
-                ],
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: ChartPersistentHeaderDelegate(time: Timestamp.now()),
-              ),
-              PagedSliverList(
-                pagingController: controller.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<
-                    QueryDocumentSnapshot<ModelInsightCard>>(
-                  itemBuilder: (context, item, index) {
-                    return GetBuilder(
-                      init: InsightCardController(
-                        userId: item.data().author.id,
-                        cardId: item.id,
-                        cardInfo: item.data(),
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification notification) {
+              if (!controller.streamController.isClosed) {
+                controller.streamController.add(notification);
+              }
+              return false;
+            },
+            child: CustomScrollView(
+              controller: controller.scrollController,
+              slivers: [
+                MainSliverAppbar(
+                  titleText: '${controller.chartId} 차트',
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  actions: [
+                    Obx(
+                      () => appbarAddButton(
+                        controller.toggleAddChart,
+                        controller.isChartAdded,
                       ),
-                      tag: item.id,
-                      builder: (controller) {
-                        return InsightCard(
-                          navKey: navKey,
-                          showHeader: false,
+                    ),
+                  ],
+                ),
+                Obx(() => SliverPersistentHeader(
+                    pinned: true,
+                    delegate: ChartPersistentHeaderDelegate(
+                        cardData: controller.currentInsightCardData
+                        // any: controller.currentItemIndex.toString()),
+                        ))),
+                PagedSliverList(
+                  pagingController: controller.pagingController,
+                  builderDelegate: PagedChildBuilderDelegate<
+                      QueryDocumentSnapshot<ModelInsightCard>>(
+                    itemBuilder: (context, item, index) {
+                      return GetBuilder(
+                        init: InsightCardController(
+                          userId: item.data().author.id,
                           cardId: item.id,
                           cardInfo: item.data(),
-                        );
-                      },
-                    );
-                  },
+                        ),
+                        tag: item.id,
+                        dispose: (state) {
+                          controller.removeContextItem(index);
+                        },
+                        builder: (getController) {
+                          return LayoutBuilder(
+                            builder: (p0, p1) {
+                              controller.addContextItem(
+                                  ContextItem(context: p0, index: index));
+                              return Container(
+                                  child: InsightCard(
+                                navKey: navKey,
+                                showHeader: false,
+                                cardId: item.id,
+                                cardInfo: item.data(),
+                              ));
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         floatingActionButton: floatingButton(),

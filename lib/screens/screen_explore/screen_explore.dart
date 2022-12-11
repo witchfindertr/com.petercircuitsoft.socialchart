@@ -26,6 +26,7 @@ class ScreenExplore extends GetView<ScreenExploreController> {
           scrollController: controller.scrollController,
           sliverAppBar: MainSliverAppbar(
             titleText: "Explore",
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           ),
           navKey: navKey,
           scrollToTopEnable: true,

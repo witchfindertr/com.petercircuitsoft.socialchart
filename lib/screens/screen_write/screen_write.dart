@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
@@ -38,22 +39,14 @@ class ScreenWrite extends GetView<ScreenWriteController> {
         centerTitle: false,
         automaticallyImplyLeading: false,
         actions: [
-          Obx(() {
-            return CupertinoButton(
-              disabledColor: Colors.black12,
-              onPressed: controller.userText.isNotEmpty
-                  ? () {
-                      controller.addInsightCard().then((value) {
-                        Get.back(id: navKey?.index, result: "complete");
-                        Get.snackbar("완료", "게시물이 업로드되었습니다.");
-                      });
-                    }
-                  : null,
-              child: LinearGradientMask(
-                child: Icon(CupertinoIcons.paperplane, size: 26),
-              ),
-            );
-          }),
+          Obx(() => appbarSendButton(controller.userText.isNotEmpty
+              ? () {
+                  controller.addInsightCard().then((value) {
+                    Get.back(id: navKey?.index, result: "complete");
+                    Get.snackbar("완료", "게시물이 업로드되었습니다.");
+                  });
+                }
+              : null)),
         ],
       ),
       body: SingleChildScrollView(

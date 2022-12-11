@@ -35,6 +35,7 @@ class ScreenNotice extends GetView<ScreenNoticeController> {
             slivers: [
               MainSliverAppbar(
                 titleText: 'Notice',
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               ),
               SliverToBoxAdapter(
                 child: const SizedBox(),

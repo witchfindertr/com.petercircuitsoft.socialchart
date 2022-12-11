@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
@@ -36,13 +37,16 @@ class ScreenProfile extends GetView<ScreenProfileController> {
             controller: controller.scrollController,
             slivers: [
               Obx(
-                () => MainSliverAppbarEx(
+                () => MainSliverAppbar(
                   titleText: controller.isCurrentUser
                       ? '내 프로필'
                       : '${controller.userData?.displayName ?? ""}님의 프로필',
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   actions: [
-                    // addInterestedButton(),
+                    appbarSearchButton(
+                      //todo get to search page
+                      () => print("search button pressed"),
+                    )
                   ],
                 ),
               ),
