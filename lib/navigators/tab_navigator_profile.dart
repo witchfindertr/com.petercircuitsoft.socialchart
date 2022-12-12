@@ -16,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile_binding.dart';
 import 'package:socialchart/screens/screen_test/page_test.dart';
 import 'package:socialchart/screens/screen_test/page_test_binding.dart';
+import 'package:socialchart/screens/screen_write/screen_write.dart';
+import 'package:socialchart/screens/screen_write/screen_write_binding.dart';
 
 class TabNavigatorProfile extends StatelessWidget {
   const TabNavigatorProfile({super.key, required this.observer});
@@ -70,6 +72,17 @@ class TabNavigatorProfile extends StatelessWidget {
               settings: settings,
             );
             break;
+          case ScreenWrite.routeName:
+            var chartId = settings.arguments as String;
+            return GetPageRoute(
+              routeName: ScreenWrite.routeName,
+              page: () => ScreenWrite(
+                navKey: NavKeys.profile,
+              ),
+              binding:
+                  ScreenWriteBinding(navKey: NavKeys.profile, chartId: chartId),
+              settings: settings,
+            );
           default:
             return null;
         }

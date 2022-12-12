@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
@@ -71,7 +72,7 @@ class InsightCardAuthor extends StatelessWidget {
           position: PopupMenuPosition.under,
           splashRadius: 1,
           itemBuilder: (BuildContext context) {
-            return userId != firebaseAuth.currentUser?.uid
+            return userId == firebaseAuth.currentUser?.uid
                 ? myMenu(context)
                 : userMenu(context);
           },
@@ -146,6 +147,10 @@ class InsightCardAuthor extends StatelessWidget {
             Icon(CupertinoIcons.hand_thumbsdown),
           ],
         ),
+        onTap: () {
+          Get.find<InsightCardController>(tag: cardId + navKey!.name)
+              .onDislikeMenuPress();
+        },
       ),
     ];
   }
@@ -177,6 +182,10 @@ class InsightCardAuthor extends StatelessWidget {
             Icon(CupertinoIcons.delete),
           ],
         ),
+        onTap: () {
+          Get.find<InsightCardController>(tag: cardId + navKey!.name)
+              .onDeletePress(context);
+        },
       ),
     ];
   }

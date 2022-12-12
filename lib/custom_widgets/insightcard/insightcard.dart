@@ -23,6 +23,7 @@ class InsightCard extends GetView<InsightCardController> {
     required this.cardInfo,
     this.trimLine,
   });
+
   final bool showHeader;
   final NavKeys? navKey;
   final String cardId;
@@ -31,7 +32,7 @@ class InsightCard extends GetView<InsightCardController> {
 
   @override
   // TODO: implement tag
-  String? get tag => cardId;
+  String? get tag => cardId + navKey!.name;
 
   @override
   Widget build(BuildContext context) {

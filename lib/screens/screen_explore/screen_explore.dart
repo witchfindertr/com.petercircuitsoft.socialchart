@@ -21,16 +21,17 @@ class ScreenExplore extends GetView<ScreenExploreController> {
         {'${navKey.index}$routeName': controller.scrollController}.entries);
     return SafeArea(
       child: Scaffold(
-        // appBar: MainAppBar(appBar: AppBar(), title: "Social Chart"),
-        body: InsightCardList(
-          scrollController: controller.scrollController,
-          sliverAppBar: MainSliverAppbar(
-            titleText: "Explore",
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          ),
-          navKey: navKey,
-          scrollToTopEnable: true,
-        ),
+        appBar: MainAppBar(appBar: AppBar(), title: "Explore"),
+        body: Text("explore"),
+        // body: InsightCardList(
+        //   scrollController: controller.scrollController,
+        //   sliverAppBar: MainSliverAppbar(
+        //     titleText: "Explore",
+        //     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        //   ),
+        //   navKey: navKey,
+        //   scrollToTopEnable: true,
+        // ),
       ),
     );
   }

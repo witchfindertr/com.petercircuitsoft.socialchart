@@ -1,16 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
-import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
-import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
@@ -31,7 +26,7 @@ class ScreenChart extends GetView<ScreenChartController> {
     return ElevatedButton(
       onPressed: () async {
         var result = await Get.toNamed(ScreenWrite.routeName,
-            id: NavKeys.home.index, arguments: controller.chartId);
+            id: navKey?.index, arguments: controller.chartId);
         if (result == "complete") {
           //if complete => refresh the list
           Get.find<InsightCardListController>(
@@ -93,12 +88,15 @@ class ScreenChart extends GetView<ScreenChartController> {
                     ),
                   ],
                 ),
-                Obx(() => SliverPersistentHeader(
+                Obx(
+                  () => SliverPersistentHeader(
                     pinned: true,
                     delegate: ChartPersistentHeaderDelegate(
-                        cardData: controller.currentInsightCardData
-                        // any: controller.currentItemIndex.toString()),
-                        ))),
+                      cardData: controller.currentInsightCardData,
+                      height: MediaQuery.of(context).size.height * 0.25,
+                    ),
+                  ),
+                ),
                 PagedSliverList(
                   pagingController: controller.pagingController,
                   builderDelegate: PagedChildBuilderDelegate<
@@ -119,13 +117,12 @@ class ScreenChart extends GetView<ScreenChartController> {
                             builder: (p0, p1) {
                               controller.addContextItem(
                                   ContextItem(context: p0, index: index));
-                              return Container(
-                                  child: InsightCard(
+                              return InsightCard(
                                 navKey: navKey,
                                 showHeader: false,
                                 cardId: item.id,
                                 cardInfo: item.data(),
-                              ));
+                              );
                             },
                           );
                         },

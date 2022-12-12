@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
@@ -51,13 +51,14 @@ class ScreenHome extends GetView<ScreenHomeController> {
                 builderDelegate: PagedChildBuilderDelegate<
                     QueryDocumentSnapshot<ModelInsightCard>>(
                   itemBuilder: (context, item, index) {
-                    return GetBuilder(
+                    return GetBuilder<InsightCardController>(
                       init: InsightCardController(
                         userId: item.data().author.id,
                         cardId: item.id,
                         cardInfo: item.data(),
+                        refreshFunction: () => controller.refreshList(),
                       ),
-                      tag: item.id,
+                      tag: item.id + navKey.name,
                       builder: (controller) {
                         return InsightCard(
                           navKey: navKey,

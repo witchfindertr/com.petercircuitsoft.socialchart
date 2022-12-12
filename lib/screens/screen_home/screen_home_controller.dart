@@ -25,12 +25,16 @@ class ScreenHomeController extends GetxController {
     QuerySnapshot<ModelInsightCard> loadedInsightCard;
     if (pageKey != null) {
       loadedInsightCard = await userInsightCardColRef()
+          .orderBy("isDeleted", descending: true)
+          .where("isDeleted", isNotEqualTo: true)
           .orderBy("createdAt", descending: true)
           .startAfterDocument(pageKey)
           .limit(_pageSize)
           .get();
     } else {
       loadedInsightCard = await userInsightCardColRef()
+          .orderBy("isDeleted", descending: true)
+          .where("isDeleted", isNotEqualTo: true)
           .orderBy("createdAt", descending: true)
           .limit(_pageSize)
           .get();
@@ -42,6 +46,10 @@ class ScreenHomeController extends GetxController {
       final nextPageKey = loadedInsightCard.docs.last;
       pagingController.appendPage(loadedInsightCard.docs, nextPageKey);
     }
+  }
+
+  void refreshList() {
+    pagingController.refresh();
   }
 
   @override

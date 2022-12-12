@@ -15,7 +15,8 @@ class InsightCardBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<InsightCardController>(tag: cardId);
+    var controller =
+        Get.find<InsightCardController>(tag: cardId + navKey!.name);
     final iconSize = MediaQuery.of(context).size.width * 0.05;
     return Container(
       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),

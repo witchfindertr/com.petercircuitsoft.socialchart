@@ -88,6 +88,15 @@ CollectionReference<ModelUserList> scrapUserListColRef(String cardId) {
           toFirestore: (value, options) => value.toJson());
 }
 
+CollectionReference<ModelUserList> dislikeUserListColRef(String cardId) {
+  return firestore
+      .collection("userInsightCard/$cardId/dislikeUserList")
+      .withConverter(
+          fromFirestore: ((snapshot, options) =>
+              ModelUserList.fromJson(snapshot.data()!)),
+          toFirestore: (value, options) => value.toJson());
+}
+
 //for report
 CollectionReference<ModelUserReport> userReportColRef() {
   return firestore.collection("userReports").withConverter(

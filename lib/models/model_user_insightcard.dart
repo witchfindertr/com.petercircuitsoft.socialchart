@@ -3,28 +3,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ModelInsightCard {
   ModelInsightCard({
     required this.createdAt,
+    this.deletedAt,
     required this.chartId,
     required this.cardType,
     required this.author,
     required this.userText,
     this.linkPreviewData,
+    this.isDeleted = false,
     this.commentCounter = 0,
     this.scrapCounter = 0,
     this.likeCounter = 0,
+    this.dislikeCounter = 0,
   });
   final Timestamp createdAt; //creation time
+  final Timestamp? deletedAt; //creation time
   final String chartId;
   final String cardType;
   final DocumentReference author; //userReference
   final String userText;
   final LinkPreviewData? linkPreviewData;
+  final bool? isDeleted;
   final int? commentCounter;
   final int? scrapCounter;
   final int? likeCounter;
+  final int? dislikeCounter;
 
   ModelInsightCard.fromJson(Map<String, dynamic?> json)
       : this(
           createdAt: json['createdAt']! as Timestamp,
+          deletedAt: json['deletedAt'] as Timestamp?,
           chartId: json['chartId']! as String,
           cardType: json['cardType'] as String,
           author: json['author'] as DocumentReference,
@@ -32,21 +39,26 @@ class ModelInsightCard {
           linkPreviewData: json['linkPreviewData'] != null
               ? LinkPreviewData.fromJson(json['linkPreviewData'])
               : null,
+          isDeleted: json['isDeleted'] as bool?,
           commentCounter: json['commentCount'] as int?,
           scrapCounter: json['scrapCounter'] as int?,
           likeCounter: json['likeCounter'] as int?,
+          dislikeCounter: json['dislikeCounter'] as int?,
         );
   Map<String, dynamic?> toJson() {
     return {
       'createdAt': createdAt,
+      'deletedAt': deletedAt,
       'chartId': chartId,
       'cardType': cardType,
       'author': author,
       'userText': userText,
       'linkPreviewData': linkPreviewData?.toJson(),
+      'isDeleted': isDeleted,
       'commentCount': commentCounter,
       'scrapCounter': scrapCounter,
       'likeCounter': likeCounter,
+      'dislikeCounter': dislikeCounter,
     };
   }
 }

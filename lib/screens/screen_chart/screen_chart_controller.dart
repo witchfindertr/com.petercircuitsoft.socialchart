@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
-import 'package:socialchart/models/model_chart_data.dart';
 import 'package:socialchart/models/model_chart_list.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/models/model_user_list.dart';
@@ -35,6 +34,8 @@ class ScreenChartController extends GetxController {
     if (pageKey != null) {
       loadedInsightCard = await userInsightCardColRef()
           .where("chartId", isEqualTo: chartId)
+          .orderBy("isDeleted", descending: true)
+          .where("isDeleted", isNotEqualTo: true)
           .orderBy("createdAt", descending: true)
           .startAfterDocument(pageKey)
           .limit(_pageSize)
@@ -42,6 +43,8 @@ class ScreenChartController extends GetxController {
     } else {
       loadedInsightCard = await userInsightCardColRef()
           .where("chartId", isEqualTo: chartId)
+          .orderBy("isDeleted", descending: true)
+          .where("isDeleted", isNotEqualTo: true)
           .orderBy("createdAt", descending: true)
           .limit(_pageSize)
           .get();
@@ -53,16 +56,20 @@ class ScreenChartController extends GetxController {
       final nextPageKey = loadedInsightCard.docs.last;
       pagingController.appendPage(loadedInsightCard.docs, nextPageKey);
     }
+    //update initial currentInsightCardData
+    if (pageKey == pagingController.firstPageKey) {
+      _currentInsightCardData.value = pagingController.itemList?[0].data();
+    }
   }
 
   ScrollController scrollController = ScrollController();
 
-  var _isChartAdded = false.obs;
+  final _isChartAdded = false.obs;
 
   bool get isChartAdded => _isChartAdded.value;
   set isChartAdded(bool value) => _isChartAdded.value = value;
 
-  var _insightCardDate = Rx<Timestamp>(Timestamp.now());
+  final _insightCardDate = Rx<Timestamp>(Timestamp.now());
 
   Timestamp get insightCardDate => _insightCardDate.value;
   set insightCardDate(Timestamp value) => _insightCardDate.value = value;
@@ -119,13 +126,13 @@ class ScreenChartController extends GetxController {
   //for chart cursor
   StreamController<ScrollNotification> streamController =
       StreamController<ScrollNotification>();
-  var _contextItems = Rx<List<ContextItem>>([]);
+  final _contextItems = Rx<List<ContextItem>>([]);
 
-  var _currentItemIndex = 0.obs;
+  final _currentItemIndex = 0.obs;
   int get currentItemIndex => _currentItemIndex.value;
   set currentItemIndex(int value) => _currentItemIndex.value = value;
 
-  var _currentInsightCardData = Rxn<ModelInsightCard>();
+  final _currentInsightCardData = Rxn<ModelInsightCard>();
   ModelInsightCard? get currentInsightCardData => _currentInsightCardData.value;
   set currentInsightCardData(ModelInsightCard? value) =>
       _currentInsightCardData.value = value;
@@ -145,9 +152,8 @@ class ScreenChartController extends GetxController {
       final double deltaTop = vpOffset.offset - notification.metrics.pixels;
 
       final double deltaBottom = deltaTop + size.height;
-      bool isInViewport = false;
 
-      if (deltaTop < (0.2 * vpHeight) && deltaBottom > (0.2 * vpHeight)) {
+      if (deltaTop < (0.15 * vpHeight) && deltaBottom > (0.15 * vpHeight)) {
         // print(contextItem.index);
         _currentInsightCardData.value =
             pagingController.itemList?[contextItem.index].data();
@@ -166,18 +172,20 @@ class ScreenChartController extends GetxController {
     _contextItems.value.removeWhere((element) => element.index == index);
   }
 
-  var _contextItemLength = 0.obs;
+  final _contextItemLength = 0.obs;
   int get contextItemLength => _contextItemLength.value;
   set contextItemLength(int value) => _contextItemLength.value = value;
+
   @override
   void onInit() {
-    // TODO: implement onInit
     pagingController.addPageRequestListener((pageKey) {
       fetchInsightCard(pageKey);
     });
+
     streamController.stream
-        .audit(Duration(milliseconds: 200))
+        .audit(const Duration(milliseconds: 200))
         .listen(_onScroll);
+
     interestedChartUserListColRef(chartId)
         .doc(firebaseAuth.currentUser!.uid)
         .get()
@@ -188,13 +196,11 @@ class ScreenChartController extends GetxController {
 
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
   }
 
   @override
   void onClose() {
-    // TODO: implement onClose
     streamController.close();
     pagingController.dispose();
     super.onClose();

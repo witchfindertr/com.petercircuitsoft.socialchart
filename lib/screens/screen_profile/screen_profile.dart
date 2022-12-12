@@ -70,7 +70,7 @@ class ScreenProfile extends GetView<ScreenProfileController> {
                         cardId: item.id,
                         cardInfo: item.data(),
                       ),
-                      tag: item.id,
+                      tag: item.id + navKey.name,
                       builder: (controller) {
                         return InsightCard(
                           navKey: navKey,

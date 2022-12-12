@@ -15,14 +15,6 @@ import 'package:socialchart/socialchart/socialchart_controller.dart';
 class ScreenWriteController extends GetxController
     with GetSingleTickerProviderStateMixin {
   ScreenWriteController({required this.chartId});
-  final insightCardCollectionRef =
-      firestore.collection("userInsightCard").withConverter(
-            fromFirestore: (snapshot, options) {
-              // print("Snapshot: ${snapshot.data()}");
-              return ModelInsightCard.fromJson(snapshot.data()!);
-            },
-            toFirestore: (value, options) => value.toJson(),
-          );
 
   static final _urlRegExp = RegExp(
     "(?!\\n)(?:^|\\s)$urlRegexContent" + "( |\n)",
@@ -95,7 +87,7 @@ class ScreenWriteController extends GetxController
     var loading = SocialChartController.to;
     loading.showFullScreenLoadingIndicator = true;
     try {
-      await insightCardCollectionRef.add(
+      await userInsightCardColRef().add(
         ModelInsightCard(
           createdAt: Timestamp.now(),
           chartId: chartId,

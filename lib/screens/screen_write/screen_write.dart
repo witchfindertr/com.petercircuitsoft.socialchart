@@ -30,10 +30,11 @@ class ScreenWrite extends GetView<ScreenWriteController> {
         title: LinearGradientMask(
           child: Text(
             "${controller.chartId} 차트",
-            style: TextStyle(
-                fontFamily: "NotoSansKR",
-                fontSize: 25,
-                fontWeight: FontWeight.w700),
+            style: const TextStyle(
+              fontFamily: "NotoSansKR",
+              fontSize: 25,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
         centerTitle: false,
