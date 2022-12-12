@@ -31,6 +31,7 @@ class MainSliverAppbar extends SliverAppBar {
 class MainAppbar extends AppBar {
   MainAppbar({
     required this.titleText,
+    super.leading,
     super.actions,
     super.centerTitle = false,
     super.backgroundColor,

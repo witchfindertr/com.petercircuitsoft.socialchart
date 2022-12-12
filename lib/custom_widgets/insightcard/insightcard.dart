@@ -74,6 +74,7 @@ class InsightCard extends GetView<InsightCardController> {
                 child: InsightCardAuthor(
                   navKey: navKey,
                   cardId: cardId,
+                  cardData: cardInfo,
                   userId: cardInfo.author.id,
                   userData: controller.userData.value,
                   elapsed:

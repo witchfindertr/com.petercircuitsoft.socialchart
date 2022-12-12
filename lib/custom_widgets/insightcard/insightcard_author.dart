@@ -8,7 +8,10 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/model_user_data.dart';
+import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/screens/modal_screen_modify/modal_screen_modify.dart';
+import 'package:socialchart/screens/modal_screen_modify/modal_screen_modify_binding.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 
 class InsightCardAuthor extends StatelessWidget {
@@ -16,12 +19,14 @@ class InsightCardAuthor extends StatelessWidget {
     super.key,
     this.userData,
     required this.cardId,
+    required this.cardData,
     required this.userId,
     required this.elapsed,
     this.navKey,
   });
   final NavKeys? navKey;
   final ModelUserData? userData;
+  final ModelInsightCard cardData;
   final String userId;
   final String cardId;
   final String elapsed;
@@ -169,6 +174,24 @@ class InsightCardAuthor extends StatelessWidget {
             Icon(CupertinoIcons.pencil_ellipsis_rectangle),
           ],
         ),
+        onTap: () async {
+          var result = await Get.to(
+            duration: Duration(milliseconds: 500),
+            fullscreenDialog: true,
+            binding: ModalScreenModifyBinding(
+              cardId: cardId,
+              cardData: cardData,
+              chartId: cardData.chartId,
+            ),
+            () => ModalScreenModify(
+              navKey: navKey,
+            ),
+          );
+          //todo make the code more cleaner
+          if (result == "complete")
+            Get.find<InsightCardController>(tag: cardId + navKey!.name)
+                .refreshFunction!();
+        },
       ),
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
