@@ -12,8 +12,6 @@ import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/socialchart/socialchart_controller.dart';
 
-enum CommentType { comment, reply }
-
 class ScreenInsightCardController extends GetxController {
   ScreenInsightCardController({required this.cardId});
   final String cardId;
@@ -30,14 +28,6 @@ class ScreenInsightCardController extends GetxController {
   final _scrollOffset = 0.0.obs;
   final _pageSize = 10;
   double get scrollOffset => _scrollOffset.value;
-
-  final _commentType = CommentType.comment.obs;
-  CommentType get commentType => _commentType.value;
-  set commentType(CommentType value) => _commentType.value = value;
-
-  final _replyTarget = Rxn<ModelUserComment>();
-  ModelUserComment? get replyTarget => _replyTarget.value;
-  set replyTarget(ModelUserComment? value) => _replyTarget.value = value;
 
   final _userComments = Rx<List<QueryDocumentSnapshot<ModelUserComment>>>([]);
 
@@ -90,7 +80,19 @@ class ScreenInsightCardController extends GetxController {
 
   final _targetComment = Rxn<ModelUserComment>();
   ModelUserComment? get targetComment => _targetComment.value;
-  set targetComment(ModelUserComment? value) => _targetComment.value = value;
+
+  final _targetCommentAuthor = Rxn<String>();
+  String? get targetCommentAuthor => _targetCommentAuthor.value;
+  void setTargetComment(ModelUserComment? userComment, String? userName) {
+    _targetComment.value = userComment;
+    _targetCommentAuthor.value = userName;
+    // print("${targetComment!.commentCreatedAt.toDate()}");
+  }
+
+  void clearTarget() {
+    _targetComment.value = null;
+    _targetCommentAuthor.value = null;
+  }
 
   FocusNode focusNode = FocusNode();
 
@@ -108,7 +110,8 @@ class ScreenInsightCardController extends GetxController {
     );
   }
 
-  void addReply() async {
+  //todo commentCounter function should be changed!
+  void addComment() async {
     SocialChartController.to.showFullScreenLoadingIndicator = true;
     textFieldEnabled = false;
     focusNode.unfocus();
@@ -124,6 +127,7 @@ class ScreenInsightCardController extends GetxController {
           .doc(cardId)
           .update({'commentCount': FieldValue.increment(1)});
       await refreshCardInfo();
+      textController.clear();
       Get.snackbar("성공", "댓글을 입력했습니다.");
     });
 

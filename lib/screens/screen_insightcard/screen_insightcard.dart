@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +13,7 @@ import 'package:socialchart/models/model_user_comment.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard_controller.dart';
 import 'package:socialchart/screens/screen_insightcard/widgets/comment.dart';
+import 'package:socialchart/screens/screen_insightcard/widgets/comment_controller.dart';
 
 class ScreenInsightCard extends GetView<ScreenInsightCardController> {
   const ScreenInsightCard({super.key, required this.navKey});
@@ -23,7 +21,6 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
   final NavKeys navKey;
 
   @override
-  // TODO: implement tag
   String? get tag => navKey.name;
 
   static const routeName = "/ScreenInsightCard";
@@ -76,8 +73,16 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
                   builderDelegate: PagedChildBuilderDelegate<
                       QueryDocumentSnapshot<ModelUserComment>>(
                     itemBuilder: ((context, item, index) {
-                      return Comment(
-                        userComment: item.data(),
+                      return GetBuilder(
+                        init: CommentController(
+                            commentId: item.id, commentData: item.data()),
+                        tag: item.id,
+                        builder: (commentController) {
+                          return Comment(
+                            commentId: item.id,
+                            commentPresseCallback: controller.setTargetComment,
+                          );
+                        },
                       );
                     }),
                     noItemsFoundIndicatorBuilder: (context) {
@@ -109,43 +114,73 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
           ),
         ),
         bottomSheet: Container(
-          width: double.infinity,
-          height: kMinInteractiveDimensionCupertino + 10,
           decoration: const BoxDecoration(
               border: Border(top: BorderSide(color: Colors.black26))),
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              userAvatar(
-                padding: 0,
-                url: AuthController.to.currentUser?.profileImageUrl,
-                radius: 21,
-                unique: AuthController.to.firebaseUser.value!.uid,
-              ),
-              const SizedBox(width: 10),
-              Flexible(
-                child: TextField(
-                  focusNode: controller.focusNode,
-                  controller: controller.textController,
-                  enabled: controller.textFieldEnabled,
-                  // onTap: controller.scrollToEnd,
-                  decoration: const InputDecoration(
-                    hintText: "댓글을 입력하세요.",
-                    contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                  ),
+              Obx(
+                () => Container(
+                  child: controller.targetComment != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${controller.targetCommentAuthor} 님의 글뭉치에 댓글다는 중...",
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                            InkWell(
+                              onTap: () => controller.clearTarget(),
+                              child: Text(
+                                "취소",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .merge(
+                                        TextStyle(fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
                 ),
               ),
-              const SizedBox(width: 10),
-              CupertinoButton(
-                  padding: const EdgeInsets.all(0),
-                  child: const Icon(CupertinoIcons.paperplane),
-                  onPressed: () {
-                    controller.addReply();
-                  })
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  userAvatar(
+                    padding: 0,
+                    url: AuthController.to.currentUser?.profileImageUrl,
+                    radius: 21,
+                    unique: AuthController.to.firebaseUser.value!.uid,
+                  ),
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: TextField(
+                      focusNode: controller.focusNode,
+                      controller: controller.textController,
+                      enabled: controller.textFieldEnabled,
+                      // onTap: controller.scrollToEnd,
+                      decoration: const InputDecoration(
+                        hintText: "댓글을 입력하세요.",
+                        contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  CupertinoButton(
+                      padding: const EdgeInsets.all(0),
+                      child: const Icon(CupertinoIcons.paperplane),
+                      onPressed: () {
+                        controller.addComment();
+                      })
+                ],
+              ),
             ],
           ),
         ),
