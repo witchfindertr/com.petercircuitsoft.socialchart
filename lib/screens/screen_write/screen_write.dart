@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
 import 'package:socialchart/app_constant.dart';
-import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
 import 'package:socialchart/screens/screen_write/screen_write_controller.dart';
 
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';

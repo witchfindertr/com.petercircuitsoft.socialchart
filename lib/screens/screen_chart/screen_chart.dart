@@ -5,7 +5,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
-import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
@@ -15,9 +14,12 @@ import 'package:socialchart/screens/screen_chart/screen_chart_controller.dart';
 import 'package:socialchart/screens/screen_write/screen_write.dart';
 
 class ScreenChart extends GetView<ScreenChartController> {
-  const ScreenChart({super.key, this.navKey});
+  const ScreenChart({
+    super.key,
+    required this.navKey,
+  });
   static const routeName = "/ScreenChart";
-  final NavKeys? navKey;
+  final NavKeys navKey;
   @override
   // TODO: implement tag
   String? get tag => navKey?.name;
@@ -29,10 +31,7 @@ class ScreenChart extends GetView<ScreenChartController> {
             id: navKey?.index, arguments: controller.chartId);
         if (result == "complete") {
           //if complete => refresh the list
-          Get.find<InsightCardListController>(
-                  tag: "${navKey?.name}${controller.chartId}")
-              .pagingController
-              .refresh();
+          controller.pagingController.refresh();
         }
       },
       child: Icon(Icons.add),
@@ -108,7 +107,7 @@ class ScreenChart extends GetView<ScreenChartController> {
                           cardId: item.id,
                           cardInfo: item.data(),
                         ),
-                        tag: item.id,
+                        tag: item.id + routeName,
                         dispose: (state) {
                           controller.removeContextItem(index);
                         },
@@ -118,6 +117,7 @@ class ScreenChart extends GetView<ScreenChartController> {
                               controller.addContextItem(
                                   ContextItem(context: p0, index: index));
                               return InsightCard(
+                                routeName: routeName,
                                 navKey: navKey,
                                 showHeader: false,
                                 cardId: item.id,

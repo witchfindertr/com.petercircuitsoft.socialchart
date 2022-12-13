@@ -18,6 +18,7 @@ class InsightCardAuthor extends StatelessWidget {
   const InsightCardAuthor({
     super.key,
     this.userData,
+    required this.tag,
     required this.cardId,
     required this.cardData,
     required this.userId,
@@ -26,6 +27,7 @@ class InsightCardAuthor extends StatelessWidget {
   });
   final NavKeys? navKey;
   final ModelUserData? userData;
+  final String tag;
   final ModelInsightCard cardData;
   final String userId;
   final String cardId;
@@ -153,8 +155,7 @@ class InsightCardAuthor extends StatelessWidget {
           ],
         ),
         onTap: () {
-          Get.find<InsightCardController>(tag: cardId + navKey!.name)
-              .onDislikeMenuPress();
+          Get.find<InsightCardController>(tag: tag).onDislikeMenuPress();
         },
       ),
     ];
@@ -189,8 +190,7 @@ class InsightCardAuthor extends StatelessWidget {
           );
           //todo make the code more cleaner
           if (result == "complete")
-            Get.find<InsightCardController>(tag: cardId + navKey!.name)
-                .refreshFunction!();
+            Get.find<InsightCardController>(tag: tag).refreshFunction!();
         },
       ),
       PopupMenuItem<String>(
@@ -206,8 +206,7 @@ class InsightCardAuthor extends StatelessWidget {
           ],
         ),
         onTap: () {
-          Get.find<InsightCardController>(tag: cardId + navKey!.name)
-              .onDeletePress(context);
+          Get.find<InsightCardController>(tag: tag).onDeletePress(context);
         },
       ),
     ];

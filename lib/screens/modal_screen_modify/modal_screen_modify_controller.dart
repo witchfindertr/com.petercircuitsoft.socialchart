@@ -104,26 +104,19 @@ class ModalScreenModifyController extends GetxController
     var loading = SocialChartController.to;
     loading.showFullScreenLoadingIndicator = true;
     try {
-      await userInsightCardColRef().doc(cardId).set(
-            ModelInsightCard(
-              createdAt: Timestamp.now(),
-              chartId: chartId,
-              cardType: "sample",
-              author: firestore
-                  .collection("userData")
-                  .doc(AuthController.to.firebaseUser.value?.uid),
-              userText: userText,
-              linkPreviewData: _linkData.value != null
-                  ? LinkPreviewData(
-                      url: _linkData.value?.url,
-                      description: _linkData.value?.description,
-                      image: _linkData.value?.image,
-                      title: _linkData.value?.title,
-                    )
-                  : null,
-            ),
-            SetOptions(merge: true),
-          );
+      await userInsightCardColRef().doc(cardId).update(
+        {
+          "userText": userText,
+          "linkPreviewData": _linkData.value != null
+              ? LinkPreviewData(
+                  url: _linkData.value?.url,
+                  description: _linkData.value?.description,
+                  image: _linkData.value?.image,
+                  title: _linkData.value?.title,
+                )
+              : null,
+        },
+      );
       loading.showFullScreenLoadingIndicator = false;
     } catch (e) {
       print(e.toString());

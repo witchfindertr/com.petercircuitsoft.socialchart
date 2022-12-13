@@ -33,52 +33,50 @@ class Comment extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(CommentController(userId: userComment.author),
         tag: userComment.author);
-    return Obx(
-      () => Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: userAvatar(
-                padding: 0,
-                radius: 25,
-                unique: controller.userId,
-                url: controller.userData?.profileImageUrl,
-              ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: userAvatar(
+              padding: 0,
+              radius: 25,
+              unique: controller.userId,
+              url: controller.userData?.profileImageUrl,
             ),
-            const SizedBox(width: 20),
-            Flexible(
-                child: Container(
-              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-              decoration: BoxDecoration(
-                  color: Colors.transparent.withOpacity(0.04),
-                  borderRadius: const BorderRadius.all(Radius.circular(15))),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    controller.userData?.displayName ?? "로딩중..",
-                    style: Theme.of(context).textTheme.bodyText1,
-                    maxLines: 10,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    timeago.format(userComment.createdAt.toDate(),
-                        locale: 'kr', allowFromNow: true),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    userComment.comment,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  )
-                ],
-              ),
-            ))
-          ],
-        ),
+          ),
+          const SizedBox(width: 20),
+          Flexible(
+              child: Container(
+            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+            decoration: BoxDecoration(
+                color: Colors.transparent.withOpacity(0.04),
+                borderRadius: const BorderRadius.all(Radius.circular(15))),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  controller.userData?.displayName ?? "로딩중..",
+                  style: Theme.of(context).textTheme.bodyText1,
+                  maxLines: 10,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  timeago.format(userComment.createdAt.toDate(),
+                      locale: 'kr', allowFromNow: true),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  userComment.comment,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                )
+              ],
+            ),
+          ))
+        ],
       ),
     );
   }

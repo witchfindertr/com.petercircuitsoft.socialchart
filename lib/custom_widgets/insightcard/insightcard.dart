@@ -17,22 +17,24 @@ import 'package:timeago/timeago.dart' as timeago;
 class InsightCard extends GetView<InsightCardController> {
   const InsightCard({
     super.key,
-    this.navKey,
     this.showHeader = true,
+    this.trimLine,
+    required this.navKey,
+    required this.routeName,
     required this.cardId,
     required this.cardInfo,
-    this.trimLine,
   });
 
   final bool showHeader;
-  final NavKeys? navKey;
+  final NavKeys navKey;
+  final String routeName;
   final String cardId;
   final ModelInsightCard cardInfo;
   final int? trimLine;
 
   @override
   // TODO: implement tag
-  String? get tag => cardId + navKey!.name;
+  String? get tag => cardId + routeName;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +74,7 @@ class InsightCard extends GetView<InsightCardController> {
                   }
                 },
                 child: InsightCardAuthor(
+                  tag: cardId + routeName,
                   navKey: navKey,
                   cardId: cardId,
                   cardData: cardInfo,
@@ -91,6 +94,7 @@ class InsightCard extends GetView<InsightCardController> {
                 endIndent: 10,
               ),
               InsightCardBottom(
+                tag: cardId + routeName,
                 cardId: cardId,
                 navKey: navKey,
               ),

@@ -9,6 +9,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/model_user_comment.dart';
@@ -49,11 +50,25 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
                 ),
                 SliverToBoxAdapter(
                   child: controller.cardInfo != null
-                      ? InsightCard(
-                          cardId: controller.cardId,
-                          cardInfo: controller.cardInfo!,
-                          navKey: navKey,
-                          trimLine: 100)
+                      ? GetBuilder<InsightCardController>(
+                          init: InsightCardController(
+                            userId: controller.cardInfo!.author.id,
+                            cardId: controller.cardId,
+                            cardInfo: controller.cardInfo!,
+                            refreshFunction: () =>
+                                controller.pagingController.refresh(),
+                          ),
+                          tag: controller.cardId + routeName,
+                          builder: (insigtCardController) {
+                            return InsightCard(
+                              routeName: routeName,
+                              navKey: navKey,
+                              showHeader: true,
+                              cardId: controller.cardId,
+                              cardInfo: controller.cardInfo!,
+                            );
+                          },
+                        )
                       : const SizedBox(),
                 ),
                 PagedSliverList(
@@ -128,7 +143,9 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
               CupertinoButton(
                   padding: const EdgeInsets.all(0),
                   child: const Icon(CupertinoIcons.paperplane),
-                  onPressed: () => {controller.addReply()})
+                  onPressed: () {
+                    controller.addReply();
+                  })
             ],
           ),
         ),

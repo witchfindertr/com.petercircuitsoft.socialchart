@@ -14,7 +14,7 @@ import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/screen_home/screen_home_controller.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
-import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
+
 import 'package:socialchart/utils/etc.dart';
 
 class ScreenHome extends GetView<ScreenHomeController> {
@@ -58,9 +58,10 @@ class ScreenHome extends GetView<ScreenHomeController> {
                         cardInfo: item.data(),
                         refreshFunction: () => controller.refreshList(),
                       ),
-                      tag: item.id + navKey.name,
+                      tag: item.id + routeName,
                       builder: (controller) {
                         return InsightCard(
+                          routeName: routeName,
                           navKey: navKey,
                           showHeader: true,
                           cardId: item.id,

@@ -8,15 +8,19 @@ import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.da
 import 'package:socialchart/models/model_user_insightcard.dart';
 
 class InsightCardBottom extends StatelessWidget {
-  const InsightCardBottom(
-      {super.key, required this.cardId, required this.navKey});
+  const InsightCardBottom({
+    super.key,
+    required this.cardId,
+    required this.navKey,
+    required this.tag,
+  });
   final String cardId;
+  final String tag;
   final NavKeys? navKey;
 
   @override
   Widget build(BuildContext context) {
-    var controller =
-        Get.find<InsightCardController>(tag: cardId + navKey!.name);
+    var controller = Get.find<InsightCardController>(tag: tag);
     final iconSize = MediaQuery.of(context).size.width * 0.05;
     return Container(
       padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),

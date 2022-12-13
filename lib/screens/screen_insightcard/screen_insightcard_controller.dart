@@ -12,6 +12,8 @@ import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/socialchart/socialchart_controller.dart';
 
+enum CommentType { comment, reply }
+
 class ScreenInsightCardController extends GetxController {
   ScreenInsightCardController({required this.cardId});
   final String cardId;
@@ -29,6 +31,14 @@ class ScreenInsightCardController extends GetxController {
   final _pageSize = 10;
   double get scrollOffset => _scrollOffset.value;
 
+  final _commentType = CommentType.comment.obs;
+  CommentType get commentType => _commentType.value;
+  set commentType(CommentType value) => _commentType.value = value;
+
+  final _replyTarget = Rxn<ModelUserComment>();
+  ModelUserComment? get replyTarget => _replyTarget.value;
+  set replyTarget(ModelUserComment? value) => _replyTarget.value = value;
+
   final _userComments = Rx<List<QueryDocumentSnapshot<ModelUserComment>>>([]);
 
   List<QueryDocumentSnapshot<ModelUserComment>> get userComments =>
@@ -38,15 +48,17 @@ class ScreenInsightCardController extends GetxController {
     QuerySnapshot<ModelUserComment> loadedUserComment;
     if (pageKey != null) {
       loadedUserComment = await userCommentColRef(cardId)
-          .orderBy("createdAt", descending: true)
+          .where("isDeleted", isEqualTo: false)
           .orderBy("commentCreatedAt", descending: true)
+          .orderBy("createdAt")
           .startAfterDocument(pageKey)
           .limit(_pageSize)
           .get();
     } else {
       loadedUserComment = await userCommentColRef(cardId)
-          .orderBy("createdAt", descending: true)
+          .where("isDeleted", isEqualTo: false)
           .orderBy("commentCreatedAt", descending: true)
+          .orderBy("createdAt")
           .limit(_pageSize)
           .get();
     }
@@ -123,6 +135,7 @@ class ScreenInsightCardController extends GetxController {
   Future<void> refreshCardInfo() async {
     var result = await userInsightCardColRef().doc(cardId).get();
     _cardInfo.value = result.data();
+    pagingController.refresh();
   }
 
   @override

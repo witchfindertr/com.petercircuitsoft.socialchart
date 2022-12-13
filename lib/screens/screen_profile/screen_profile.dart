@@ -11,7 +11,6 @@ import 'package:socialchart/navigators/navigator_main/navigator_main_controller.
 import 'package:socialchart/screens/screen_profile/widgets/profile_persistent_header_delegate.dart';
 import './widgets/user_profile.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
-import 'package:socialchart/custom_widgets/insightcard/insightcard_list.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile_controller.dart';
 
 class ScreenProfile extends GetView<ScreenProfileController> {
@@ -70,9 +69,10 @@ class ScreenProfile extends GetView<ScreenProfileController> {
                         cardId: item.id,
                         cardInfo: item.data(),
                       ),
-                      tag: item.id + navKey.name,
+                      tag: item.id + routeName,
                       builder: (controller) {
                         return InsightCard(
+                          routeName: routeName,
                           navKey: navKey,
                           showHeader: true,
                           cardId: item.id,

@@ -10,10 +10,10 @@ class ModelInsightCard {
     required this.userText,
     this.linkPreviewData,
     this.isDeleted = false,
-    this.commentCounter = 0,
-    this.scrapCounter = 0,
-    this.likeCounter = 0,
-    this.dislikeCounter = 0,
+    this.commentCounter,
+    this.scrapCounter,
+    this.likeCounter,
+    this.dislikeCounter,
   });
   final Timestamp createdAt; //creation time
   final Timestamp? deletedAt; //creation time

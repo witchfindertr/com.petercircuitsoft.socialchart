@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
 import 'package:socialchart/app_constant.dart';
-import 'package:socialchart/custom_widgets/insightcard/insightcard_list_controller.dart';
+
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/screens/modal_screen_modify/modal_screen_modify_controller.dart';
