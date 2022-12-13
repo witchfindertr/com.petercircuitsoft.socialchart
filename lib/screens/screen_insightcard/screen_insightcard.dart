@@ -74,14 +74,15 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
                       QueryDocumentSnapshot<ModelUserComment>>(
                     itemBuilder: ((context, item, index) {
                       return GetBuilder(
-                        init: CommentController(
-                            commentId: item.id, commentData: item.data()),
+                        init: CommentController(commentData: item.data()),
                         tag: item.id,
                         builder: (commentController) {
-                          return Comment(
-                            commentId: item.id,
-                            commentPresseCallback: controller.setTargetComment,
-                          );
+                          return Obx(() => Comment(
+                                commentId: item.id,
+                                commentPresseCallback:
+                                    controller.setTargetComment,
+                                selected: controller.targetCommentId == item.id,
+                              ));
                         },
                       );
                     }),

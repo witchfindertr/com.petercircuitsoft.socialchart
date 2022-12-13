@@ -9,10 +9,15 @@ class Comment extends GetView<CommentController> {
   const Comment({
     super.key,
     required this.commentId,
+    required this.selected,
     this.commentPresseCallback,
   });
   final String commentId;
-  final void Function(ModelUserComment?, String?)? commentPresseCallback;
+  final bool selected;
+  final void Function(
+      {String? commentId,
+      ModelUserComment? userComment,
+      String? author})? commentPresseCallback;
   @override
   // TODO: implement tag
   String? get tag => commentId;
@@ -41,14 +46,19 @@ class Comment extends GetView<CommentController> {
               child: GestureDetector(
                 onTap: () {
                   if (commentPresseCallback != null) {
-                    commentPresseCallback!(controller.commentData,
-                        controller.userData?.displayName);
+                    commentPresseCallback!(
+                      commentId: commentId,
+                      userComment: controller.commentData,
+                      author: controller.userData?.displayName,
+                    );
                   }
                 },
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                   decoration: BoxDecoration(
-                      color: Colors.transparent.withOpacity(0.04),
+                      color: selected
+                          ? Colors.transparent.withOpacity(0.1)
+                          : Colors.transparent.withOpacity(0.04),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(15))),
                   child: Column(

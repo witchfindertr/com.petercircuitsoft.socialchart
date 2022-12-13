@@ -5,10 +5,8 @@ import 'package:socialchart/models/model_user_data.dart';
 
 class CommentController extends GetxController {
   CommentController({
-    required this.commentId,
     required this.commentData,
   });
-  final String commentId;
   final ModelUserComment commentData;
 
   final _userData = Rxn<ModelUserData>();

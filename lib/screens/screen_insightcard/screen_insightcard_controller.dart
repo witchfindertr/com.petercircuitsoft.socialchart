@@ -78,20 +78,26 @@ class ScreenInsightCardController extends GetxController {
   ModelInsightCard? get cardInfo => _cardInfo.value;
   // set cardInfo(InsightCardModel? value) => _cardInfo.value = value;
 
+  final _targetCommentId = Rxn<String>();
+  String? get targetCommentId => _targetCommentId.value;
+
   final _targetComment = Rxn<ModelUserComment>();
   ModelUserComment? get targetComment => _targetComment.value;
 
   final _targetCommentAuthor = Rxn<String>();
   String? get targetCommentAuthor => _targetCommentAuthor.value;
-  void setTargetComment(ModelUserComment? userComment, String? userName) {
+  void setTargetComment(
+      {String? commentId, ModelUserComment? userComment, String? author}) {
+    _targetCommentId.value = commentId;
     _targetComment.value = userComment;
-    _targetCommentAuthor.value = userName;
+    _targetCommentAuthor.value = author;
     // print("${targetComment!.commentCreatedAt.toDate()}");
   }
 
   void clearTarget() {
     _targetComment.value = null;
     _targetCommentAuthor.value = null;
+    _targetCommentId.value = null;
   }
 
   FocusNode focusNode = FocusNode();
