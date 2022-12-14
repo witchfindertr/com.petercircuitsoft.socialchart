@@ -103,7 +103,6 @@ class ScreenChart extends GetView<ScreenChartController> {
                     itemBuilder: (context, item, index) {
                       return GetBuilder(
                         init: InsightCardController(
-                          userId: item.data().author.id,
                           cardId: item.id,
                           cardInfo: item.data(),
                         ),
@@ -121,7 +120,7 @@ class ScreenChart extends GetView<ScreenChartController> {
                                 navKey: navKey,
                                 showHeader: false,
                                 cardId: item.id,
-                                cardInfo: item.data(),
+                                cardData: item.data(),
                               );
                             },
                           );

@@ -4,6 +4,8 @@ import 'package:detectable_text_field/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_body.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_body_controller.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 
@@ -108,15 +110,26 @@ class ModalScreenModifyController extends GetxController
         {
           "userText": userText,
           "linkPreviewData": _linkData.value != null
-              ? LinkPreviewData(
-                  url: _linkData.value?.url,
-                  description: _linkData.value?.description,
-                  image: _linkData.value?.image,
-                  title: _linkData.value?.title,
-                )
+              ? {
+                  "url": _linkData.value?.url,
+                  "description": _linkData.value?.description,
+                  "image": _linkData.value?.image,
+                  "title": _linkData.value?.title,
+                }
               : null,
         },
       );
+      var bodyContoller = Get.find<InsightCardBodyController>(tag: cardId);
+      bodyContoller.linkPreview = _linkData.value != null
+          ? LinkPreviewData(
+              url: _linkData.value?.url,
+              description: _linkData.value?.description,
+              image: _linkData.value?.image,
+              title: _linkData.value?.title,
+            )
+          : null;
+      bodyContoller.userText = userText;
+
       loading.showFullScreenLoadingIndicator = false;
     } catch (e) {
       print(e.toString());

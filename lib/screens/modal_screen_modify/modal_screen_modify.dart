@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +5,6 @@ import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
 import 'package:socialchart/app_constant.dart';
 
-import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/screens/modal_screen_modify/modal_screen_modify_controller.dart';
 
@@ -19,12 +17,8 @@ class ModalScreenModify extends GetView<ModalScreenModifyController> {
     super.key,
     this.navKey,
   });
-  // static const routeName = "/ScreenWrite";
-  final NavKeys? navKey;
 
-  // @override
-  // // TODO: implement tag
-  // String? get tag => navKey?.name;
+  final NavKeys? navKey;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +88,7 @@ class ModalScreenModify extends GetView<ModalScreenModifyController> {
                             right: 0,
                             child: CupertinoButton(
                               minSize: 10,
-                              padding: EdgeInsets.all(0),
+                              padding: const EdgeInsets.all(0),
                               onPressed: () {
                                 controller.deletedLink =
                                     controller.previewLink!;

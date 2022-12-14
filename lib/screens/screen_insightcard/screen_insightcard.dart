@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
@@ -42,14 +43,13 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
                 MainSliverAppbar(
                   titleText: controller.isCurrentUser
                       ? '내가 작성한 카드'
-                      : '${controller.authorData?.displayName ?? ""}님의 카드',
+                      : '${controller.cardAuthor?.displayName ?? ""}님의 카드',
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 ),
                 SliverToBoxAdapter(
                   child: controller.cardInfo != null
                       ? GetBuilder<InsightCardController>(
                           init: InsightCardController(
-                            userId: controller.cardInfo!.author.id,
                             cardId: controller.cardId,
                             cardInfo: controller.cardInfo!,
                             refreshFunction: () =>
@@ -62,7 +62,7 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
                               navKey: navKey,
                               showHeader: true,
                               cardId: controller.cardId,
-                              cardInfo: controller.cardInfo!,
+                              cardData: controller.cardInfo!,
                             );
                           },
                         )
@@ -73,17 +73,23 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
                   builderDelegate: PagedChildBuilderDelegate<
                       QueryDocumentSnapshot<ModelUserComment>>(
                     itemBuilder: ((context, item, index) {
-                      return GetBuilder(
-                        init: CommentController(commentData: item.data()),
-                        tag: item.id,
-                        builder: (commentController) {
-                          return Obx(() => Comment(
-                                commentId: item.id,
-                                commentPresseCallback:
-                                    controller.setTargetComment,
-                                selected: controller.targetCommentId == item.id,
-                              ));
-                        },
+                      return AutoScrollTag(
+                        key: ValueKey(index),
+                        controller: controller.scrollController,
+                        index: index,
+                        child: GetBuilder(
+                          init: CommentController(commentData: item.data()),
+                          tag: item.id,
+                          builder: (commentController) {
+                            return Obx(() => Comment(
+                                  index: index,
+                                  userComment: item.data(),
+                                  commentPresseCallback:
+                                      controller.setTargetComment,
+                                  selected: controller.targetIndex == index,
+                                ));
+                          },
+                        ),
                       );
                     }),
                     noItemsFoundIndicatorBuilder: (context) {
@@ -124,12 +130,12 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
             children: [
               Obx(
                 () => Container(
-                  child: controller.targetComment != null
+                  child: controller.targetIndex != null
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "${controller.targetCommentAuthor} 님의 글뭉치에 댓글다는 중...",
+                              "${controller.targetCommentAuthor} 님의 글뭉치에 답글다는 중...",
                               style: Theme.of(context).textTheme.caption,
                             ),
                             InkWell(

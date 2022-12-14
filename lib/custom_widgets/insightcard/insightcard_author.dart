@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/controllers/user_data_fetcher.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_author_controller.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/model_user_data.dart';
@@ -13,82 +15,89 @@ import 'package:socialchart/navigators/navigator_main/navigator_main_controller.
 import 'package:socialchart/screens/modal_screen_modify/modal_screen_modify.dart';
 import 'package:socialchart/screens/modal_screen_modify/modal_screen_modify_binding.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class InsightCardAuthor extends StatelessWidget {
   const InsightCardAuthor({
     super.key,
-    this.userData,
     required this.tag,
     required this.cardId,
     required this.cardData,
-    required this.userId,
-    required this.elapsed,
+    // required this.elapsed,
     this.navKey,
   });
   final NavKeys? navKey;
-  final ModelUserData? userData;
   final String tag;
   final ModelInsightCard cardData;
-  final String userId;
   final String cardId;
-  final String elapsed;
+  // final String elapsed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: ListTile(
-        contentPadding: EdgeInsets.all(0),
-        minLeadingWidth: 50,
-        horizontalTitleGap: 5,
-        dense: true,
-        leading: GestureDetector(
-          child: Container(
-            width: 48,
-            height: 48,
-            alignment: Alignment.center,
-            child: userAvatar(
-                url: userData?.profileImageUrl, unique: userId, radius: 48),
-          ),
-          onTap: () {
-            print(Get.routing.current);
-            if (ModalRoute.of(context)!.settings.name ==
-                ScreenProfile.routeName) {
-              return;
-            }
-            if (userId != firebaseAuth.currentUser!.uid) {
-              Get.toNamed(
-                ScreenProfile.routeName,
-                id: navKey?.index,
-                arguments: userId,
-              );
-            } else {
-              NavigatorMainController.to.currentIndex = NavKeys.profile;
-              Get.toNamed('/', id: NavKeys.profile.index);
-            }
-          },
-        ),
-        title: Text(
-          userData != null ? userData!.displayName! : "Undefined",
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle: Text(
-          elapsed,
-        ),
-        trailing: PopupMenuButton(
-          position: PopupMenuPosition.under,
-          splashRadius: 1,
-          itemBuilder: (BuildContext context) {
-            return userId == firebaseAuth.currentUser?.uid
-                ? myMenu(context)
-                : userMenu(context);
-          },
-        ),
-      ),
-    );
+    var user = Get.put(UserDataFetcher(userId: cardData.author.id),
+        tag: cardData.author.id);
+    return GetBuilder(
+        init: InsightCardAuthorController(cardId: cardId, cardData: cardData),
+        builder: (controller) {
+          return Container(
+            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+            child: ListTile(
+              contentPadding: const EdgeInsets.all(0),
+              minLeadingWidth: 50,
+              horizontalTitleGap: 5,
+              dense: true,
+              leading: GestureDetector(
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  alignment: Alignment.center,
+                  child: userAvatar(
+                      url: user.userData?.profileImageUrl,
+                      unique: cardData.author.id,
+                      radius: 48),
+                ),
+                onTap: () {
+                  print(Get.routing.current);
+                  if (ModalRoute.of(context)!.settings.name ==
+                      ScreenProfile.routeName) {
+                    return;
+                  }
+                  if (cardData.author.id != firebaseAuth.currentUser!.uid) {
+                    Get.toNamed(
+                      ScreenProfile.routeName,
+                      id: navKey?.index,
+                      arguments: cardData.author.id,
+                    );
+                  } else {
+                    NavigatorMainController.to.currentIndex = NavKeys.profile;
+                    Get.toNamed('/', id: NavKeys.profile.index);
+                  }
+                },
+              ),
+              title: Text(
+                user.userData != null
+                    ? user.userData!.displayName!
+                    : "Undefined",
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Text(
+                timeago.format(cardData.createdAt.toDate(), locale: "kr"),
+              ),
+              trailing: PopupMenuButton(
+                position: PopupMenuPosition.under,
+                splashRadius: 1,
+                itemBuilder: (BuildContext context) {
+                  return cardData.author.id == firebaseAuth.currentUser?.uid
+                      ? myMenu(context, controller)
+                      : userMenu(context, controller);
+                },
+              ),
+            ),
+          );
+        });
   }
 
-  userMenu(BuildContext context) {
+  userMenu(BuildContext context, InsightCardAuthorController controller) {
     return <PopupMenuEntry<String>>[
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
@@ -155,13 +164,13 @@ class InsightCardAuthor extends StatelessWidget {
           ],
         ),
         onTap: () {
-          Get.find<InsightCardController>(tag: tag).onDislikeMenuPress();
+          controller.onDislikeMenuPress();
         },
       ),
     ];
   }
 
-  myMenu(BuildContext context) {
+  myMenu(BuildContext context, InsightCardAuthorController controller) {
     return <PopupMenuEntry<String>>[
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
@@ -177,7 +186,7 @@ class InsightCardAuthor extends StatelessWidget {
         ),
         onTap: () async {
           var result = await Get.to(
-            duration: Duration(milliseconds: 500),
+            // duration: Duration(milliseconds: 500),
             fullscreenDialog: true,
             binding: ModalScreenModifyBinding(
               cardId: cardId,
@@ -206,7 +215,7 @@ class InsightCardAuthor extends StatelessWidget {
           ],
         ),
         onTap: () {
-          Get.find<InsightCardController>(tag: tag).onDeletePress(context);
+          controller.onDeletePress(context);
         },
       ),
     ];

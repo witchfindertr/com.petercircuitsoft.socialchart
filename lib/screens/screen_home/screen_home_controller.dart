@@ -14,7 +14,7 @@ class ScreenHomeController extends GetxController {
           QueryDocumentSnapshot<ModelInsightCard>> pagingController =
       PagingController(firstPageKey: null, invisibleItemsThreshold: 10);
 
-  final _pageSize = 10;
+  final int _pageSize = 10;
 
   final _insightCards = Rx<List<QueryDocumentSnapshot<ModelInsightCard>>>([]);
 

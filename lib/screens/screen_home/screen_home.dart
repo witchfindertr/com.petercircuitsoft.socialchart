@@ -53,7 +53,6 @@ class ScreenHome extends GetView<ScreenHomeController> {
                   itemBuilder: (context, item, index) {
                     return GetBuilder<InsightCardController>(
                       init: InsightCardController(
-                        userId: item.data().author.id,
                         cardId: item.id,
                         cardInfo: item.data(),
                         refreshFunction: () => controller.refreshList(),
@@ -65,7 +64,7 @@ class ScreenHome extends GetView<ScreenHomeController> {
                           navKey: navKey,
                           showHeader: true,
                           cardId: item.id,
-                          cardInfo: item.data(),
+                          cardData: item.data(),
                         );
                       },
                     );

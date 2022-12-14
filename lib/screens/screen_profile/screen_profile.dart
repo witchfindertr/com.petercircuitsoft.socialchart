@@ -65,7 +65,6 @@ class ScreenProfile extends GetView<ScreenProfileController> {
                   itemBuilder: (context, item, index) {
                     return GetBuilder(
                       init: InsightCardController(
-                        userId: item.data().author.id,
                         cardId: item.id,
                         cardInfo: item.data(),
                       ),
@@ -76,7 +75,7 @@ class ScreenProfile extends GetView<ScreenProfileController> {
                           navKey: navKey,
                           showHeader: true,
                           cardId: item.id,
-                          cardInfo: item.data(),
+                          cardData: item.data(),
                         );
                       },
                     );

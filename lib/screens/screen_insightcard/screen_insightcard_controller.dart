@@ -5,12 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/controllers/insightcard_data_fetcher.dart';
+import 'package:socialchart/controllers/user_data_fetcher.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_bottom_controller.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_comment.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
-import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/socialchart/socialchart_controller.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class ScreenInsightCardController extends GetxController {
   ScreenInsightCardController({required this.cardId});
@@ -18,7 +21,11 @@ class ScreenInsightCardController extends GetxController {
 
   // Controllers
   var textController = TextEditingController();
-  var scrollController = ScrollController();
+  var scrollController = AutoScrollController(
+    //todo : need to figure out the height of the comment input widget height
+    viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, 70),
+  );
+  var autoScrollController = AutoScrollController();
 
   PagingController<DocumentSnapshot<ModelUserComment?>?,
           QueryDocumentSnapshot<ModelUserComment>> pagingController =
@@ -71,33 +78,32 @@ class ScreenInsightCardController extends GetxController {
   final _isCurrentUser = false.obs;
   bool get isCurrentUser => _isCurrentUser.value;
 
-  final _authorData = Rxn<ModelUserData>();
-  ModelUserData? get authorData => _authorData.value;
+  final _cardAuthor = Rxn<ModelUserData>();
+  ModelUserData? get cardAuthor => _cardAuthor.value;
 
   final _cardInfo = Rxn<ModelInsightCard>();
   ModelInsightCard? get cardInfo => _cardInfo.value;
-  // set cardInfo(InsightCardModel? value) => _cardInfo.value = value;
 
-  final _targetCommentId = Rxn<String>();
-  String? get targetCommentId => _targetCommentId.value;
-
-  final _targetComment = Rxn<ModelUserComment>();
-  ModelUserComment? get targetComment => _targetComment.value;
+  final _targetIndex = Rxn<int>();
+  int? get targetIndex => _targetIndex.value;
 
   final _targetCommentAuthor = Rxn<String>();
   String? get targetCommentAuthor => _targetCommentAuthor.value;
-  void setTargetComment(
-      {String? commentId, ModelUserComment? userComment, String? author}) {
-    _targetCommentId.value = commentId;
-    _targetComment.value = userComment;
-    _targetCommentAuthor.value = author;
-    // print("${targetComment!.commentCreatedAt.toDate()}");
+  void setTargetComment({required int index, String? author}) {
+    var userId = pagingController.itemList?[index].data().author;
+    var user = Get.put(UserDataFetcher(userId: userId!), tag: userId);
+    _targetIndex.value = index;
+    _targetCommentAuthor.value = user.userData?.displayName;
+
+    //scroll to index
+    scrollController.scrollToIndex(index,
+        preferPosition: AutoScrollPosition.end);
+    print("clicked");
   }
 
   void clearTarget() {
-    _targetComment.value = null;
+    _targetIndex.value = null;
     _targetCommentAuthor.value = null;
-    _targetCommentId.value = null;
   }
 
   FocusNode focusNode = FocusNode();
@@ -122,18 +128,25 @@ class ScreenInsightCardController extends GetxController {
     textFieldEnabled = false;
     focusNode.unfocus();
     var now = Timestamp.now();
+    var commentCreatedAt =
+        targetIndex != null && pagingController.itemList != null
+            ? pagingController.itemList![targetIndex!].data().commentCreatedAt
+            : now;
     await userCommentColRef(cardId)
         .add(ModelUserComment(
             author: firebaseAuth.currentUser!.uid,
             comment: textController.text,
             createdAt: now,
-            commentCreatedAt: targetComment?.commentCreatedAt ?? now))
+            commentCreatedAt: commentCreatedAt))
         .then((value) async {
       await userInsightCardColRef()
           .doc(cardId)
           .update({'commentCount': FieldValue.increment(1)});
       await refreshCardInfo();
+      Get.find<InsightCardBottomController>(tag: cardId)
+          .currentCommentCounter++;
       textController.clear();
+      _targetIndex.value = null;
       Get.snackbar("성공", "댓글을 입력했습니다.");
     });
 
@@ -168,7 +181,7 @@ class ScreenInsightCardController extends GetxController {
     _isCurrentUser.value = cardInfo?.author.id == firebaseAuth.currentUser?.uid;
     if (!isCurrentUser) {
       var userData = await userDataColRef().doc(cardInfo?.author.id).get();
-      _authorData.value = userData.data();
+      _cardAuthor.value = userData.data();
     }
 
     super.onInit();
