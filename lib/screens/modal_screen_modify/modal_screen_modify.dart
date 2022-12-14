@@ -90,8 +90,7 @@ class ModalScreenModify extends GetView<ModalScreenModifyController> {
                               minSize: 10,
                               padding: const EdgeInsets.all(0),
                               onPressed: () {
-                                controller.deletedLink =
-                                    controller.previewLink!;
+                                controller.deletedLink(controller.previewLink!);
                                 controller.previewLink = null;
                               },
                               child: Icon(Icons.cancel, color: Colors.black45),

@@ -46,7 +46,10 @@ class ModalScreenModifyController extends GetxController
   OgpData? get linkData => _linkData.value;
   // set linkData(OgpData? value) => _linkData.value = value;
 
-  set deletedLink(String value) => _deletedLink.value.add(value);
+  void deletedLink(String value) {
+    _deletedLink.value.add(value);
+    _linkData.value = null;
+  }
 
   @override
   void onInit() {
@@ -67,7 +70,7 @@ class ModalScreenModifyController extends GetxController
           previewLink = extractedLink.first;
         }, onError: (e) {
           print(e);
-          deletedLink = extractedLink.first;
+          deletedLink(extractedLink.first);
         });
       },
     );
