@@ -68,6 +68,8 @@ dependencies:
   stream_transform: ^2.1.0
   fl_chart: ^0.55.2
   scroll_to_index: ^3.0.1
+  social_login_buttons: ^1.0.7
+  flutter_native_splash: ^2.2.16
 
 dev_dependencies:
   flutter_test:

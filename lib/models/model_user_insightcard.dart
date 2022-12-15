@@ -4,6 +4,7 @@ class ModelInsightCard {
   ModelInsightCard({
     required this.createdAt,
     this.deletedAt,
+    this.lastModifiedAt,
     required this.chartId,
     required this.cardType,
     required this.author,
@@ -17,6 +18,7 @@ class ModelInsightCard {
   });
   final Timestamp createdAt; //creation time
   final Timestamp? deletedAt; //creation time
+  final Timestamp? lastModifiedAt; //creation time
   final String chartId;
   final String cardType;
   final DocumentReference author; //userReference
@@ -32,6 +34,7 @@ class ModelInsightCard {
       : this(
           createdAt: json['createdAt']! as Timestamp,
           deletedAt: json['deletedAt'] as Timestamp?,
+          lastModifiedAt: json['lastModifiedAt'] as Timestamp?,
           chartId: json['chartId']! as String,
           cardType: json['cardType'] as String,
           author: json['author'] as DocumentReference,
@@ -49,6 +52,7 @@ class ModelInsightCard {
     return {
       'createdAt': createdAt,
       'deletedAt': deletedAt,
+      'lastModifiedAt': lastModifiedAt,
       'chartId': chartId,
       'cardType': cardType,
       'author': author,

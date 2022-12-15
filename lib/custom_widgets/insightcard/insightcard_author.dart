@@ -12,8 +12,8 @@ import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
-import 'package:socialchart/screens/modal_screen_modify/modal_screen_modify.dart';
-import 'package:socialchart/screens/modal_screen_modify/modal_screen_modify_binding.dart';
+import 'package:socialchart/screens/modal_screen_write_modify/modal_screen_write_modify.dart';
+import 'package:socialchart/screens/modal_screen_write_modify/modal_screen_write_modify_binding.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -37,7 +37,9 @@ class InsightCardAuthor extends StatelessWidget {
     var user = Get.put(UserDataFetcher(userId: cardData.author.id),
         tag: cardData.author.id);
     return GetBuilder(
-        init: InsightCardAuthorController(cardId: cardId, cardData: cardData),
+        init: InsightCardAuthorController(
+            cardId: cardId, cardData: cardData, cardTag: tag),
+        tag: cardId,
         builder: (controller) {
           return Container(
             padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -188,12 +190,9 @@ class InsightCardAuthor extends StatelessWidget {
           var result = await Get.to(
             // duration: Duration(milliseconds: 500),
             fullscreenDialog: true,
-            binding: ModalScreenModifyBinding(
-              cardId: cardId,
-              cardData: cardData,
-              chartId: cardData.chartId,
-            ),
-            () => ModalScreenModify(
+            binding: ModalScreenWriteModifyBinding(
+                cardId: cardId, cardData: cardData, chartId: cardData.chartId),
+            () => ModalScreenWriteModify(
               navKey: navKey,
             ),
           );

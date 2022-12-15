@@ -1,5 +1,6 @@
 /**Flutter basic */
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 
 /**Firebase */
@@ -16,12 +17,15 @@ import 'package:socialchart/utils/timeago_custom_messages.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   timeago.setLocaleMessages("kr", KrCustomMessages());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await GetStorage.init();
+  FlutterNativeSplash.remove();
   runApp(
     GetMaterialApp(
       title: 'SocialChart',

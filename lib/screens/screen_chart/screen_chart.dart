@@ -9,6 +9,8 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/screens/modal_screen_write_modify/modal_screen_write_modify.dart';
+import 'package:socialchart/screens/modal_screen_write_modify/modal_screen_write_modify_binding.dart';
 import 'package:socialchart/screens/screen_chart/chart/chart_persistent_header_delegate.dart';
 import 'package:socialchart/screens/screen_chart/screen_chart_controller.dart';
 import 'package:socialchart/screens/screen_write/screen_write.dart';
@@ -27,8 +29,12 @@ class ScreenChart extends GetView<ScreenChartController> {
   Widget floatingButton() {
     return ElevatedButton(
       onPressed: () async {
-        var result = await Get.toNamed(ScreenWrite.routeName,
-            id: navKey?.index, arguments: controller.chartId);
+        var result = await Get.to(
+          binding: ModalScreenWriteModifyBinding(chartId: controller.chartId),
+          fullscreenDialog: true,
+          () => ModalScreenWriteModify(),
+          // arguments: controller.chartId,
+        );
         if (result == "complete") {
           //if complete => refresh the list
           controller.pagingController.refresh();

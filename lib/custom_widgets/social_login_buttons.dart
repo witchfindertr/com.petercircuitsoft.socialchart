@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
@@ -8,25 +9,37 @@ class SocialLoginButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthController authController = Get.find();
     return Container(
-        child: Center(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      SizedBox(
-          width: 200,
-          child: ElevatedButton(
+      width: 270,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SocialLoginButton(
+              buttonType: SocialLoginButtonType.google,
               onPressed: () {
                 FocusScope.of(context).unfocus();
                 authController.signInWithGoogle();
               },
-              child: Text("Continue with Google"))),
-      SizedBox(
-          width: 200,
-          child: ElevatedButton(
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            // child: ElevatedButton(
+            //     onPressed: () {
+            //       FocusScope.of(context).unfocus();
+            //       authController.signInWithGoogle();
+            //     },
+            //     child: Text("Continue with Google"))),
+            SocialLoginButton(
+              buttonType: SocialLoginButtonType.apple,
               onPressed: () {
                 FocusScope.of(context).unfocus();
                 authController.signInWithApple();
               },
-              child: Text("Continue with Apple"))),
-    ])));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

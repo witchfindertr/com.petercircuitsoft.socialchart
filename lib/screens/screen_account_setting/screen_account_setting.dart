@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/controllers/auth_controller.dart';
 import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/screens/screen_account_setting/screen_account_setting_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -45,7 +46,7 @@ class ScreenAccountSetting extends GetView<ScreenAccountSettingController> {
                           children: [
                             CupertinoButton(
                               child: Text("로그아웃"),
-                              onPressed: () => {},
+                              onPressed: () => AuthController.to.signOut(),
                             ),
                             CupertinoButton(
                               child: Text("계정삭제"),

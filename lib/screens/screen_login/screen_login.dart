@@ -18,57 +18,74 @@ class ScreenLogin extends GetView<ScreenLoginController> {
   // TODO: implement tag
   String? get tag => navKey?.name;
 
+  static var safeAreaHeight = Get.context!.mediaQuerySize.height -
+      Get.context!.mediaQueryPadding.top -
+      Get.context!.mediaQueryPadding.bottom;
+
   @override
   Widget build(BuildContext context) {
-    var _scaffoldKey = GlobalKey<ScaffoldState>();
-    var width = MediaQuery.of(context).size.width;
     return SafeArea(
-        child: Scaffold(
-      key: _scaffoldKey,
-      body: SingleChildScrollView(
-        reverse: true,
-        child: Center(
+      child: Scaffold(
+        body:
+            // reverse: true,
+            SingleChildScrollView(
+                child: SizedBox(
+          height: safeAreaHeight,
           child: Column(
             children: [
-              Container(
-                  child: Image.asset(
-                "assets/images/Logo_Light.png",
-                height: 150,
-                fit: BoxFit.scaleDown,
-              )),
+              Expanded(
+                flex: 3,
+                child: Image.asset(
+                  "assets/images/Logo_Light.png",
+                  width: 200,
+                  fit: BoxFit.contain,
+                ),
+              ),
               Container(
                 // height: 190,
 
                 child: EmailLoginForm(),
               ),
               Container(
-                height: 60,
+                // height: 60,
                 // alignment: Alignment.bottomCenter,
-                child: Text.rich(TextSpan(text: "뭔가 문제가 있으신가요?", children: [
+                child: Text.rich(
                   TextSpan(
-                      style: TextStyle(color: Colors.blue),
-                      text: "👉신고하기 🎉",
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          FocusScope.of(context).unfocus();
-                          Get.toNamed(ScreenReport.routeName,
-                              id: navKey?.index);
-                        }),
-                ])),
+                    text: "뭔가 문제가 있으신가요?",
+                    children: [
+                      TextSpan(
+                        style: TextStyle(color: Colors.blue),
+                        text: "👉신고하기 🎉",
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            FocusScope.of(context).unfocus();
+                            Get.toNamed(ScreenReport.routeName,
+                                id: navKey?.index);
+                          },
+                      ),
+                    ],
+                  ),
+                ),
               ),
+              SizedBox(height: 50),
               Container(
-                // height: 144,
-                // color: Colors.blue,
+                // fit: FlexFit.loose,
+                // flex: 1,
+                // color: Colors.amber,
+                // alignment: FractionalOffset.bottomCenter,
                 child: SocialLoginButtons(),
               ),
-              Container(
-                color: Colors.amber,
-                child: TermsOfService(),
+              Expanded(
+                child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: TermsOfService(),
+                ),
               ),
             ],
+            // ),
           ),
-        ),
+        )),
       ),
-    ));
+    );
   }
 }

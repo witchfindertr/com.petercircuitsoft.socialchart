@@ -68,17 +68,17 @@ class TabNavigatorHome extends StatelessWidget {
                   navKey: NavKeys.home, chartId: args.toString()),
               settings: settings,
             );
-          case ScreenWrite.routeName:
-            var chartId = settings.arguments as String;
-            return GetPageRoute(
-              routeName: ScreenWrite.routeName,
-              page: () => ScreenWrite(
-                navKey: NavKeys.home,
-              ),
-              binding:
-                  ScreenWriteBinding(navKey: NavKeys.home, chartId: chartId),
-              settings: settings,
-            );
+          // case ScreenWrite.routeName:
+          //   var chartId = settings.arguments as String;
+          //   return GetPageRoute(
+          //     routeName: ScreenWrite.routeName,
+          //     page: () => ScreenWrite(
+          //       navKey: NavKeys.home,
+          //     ),
+          //     binding:
+          //         ScreenWriteBinding(navKey: NavKeys.home, chartId: chartId),
+          //     settings: settings,
+          //   );
           default:
             return null;
         }

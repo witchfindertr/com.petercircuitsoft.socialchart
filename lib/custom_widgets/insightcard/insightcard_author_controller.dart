@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/models/model_user_list.dart';
@@ -11,9 +12,11 @@ class InsightCardAuthorController extends GetxController {
   InsightCardAuthorController({
     required this.cardId,
     required this.cardData,
+    required this.cardTag,
   });
 
   final String cardId;
+  final String cardTag;
   final ModelInsightCard cardData;
 
   void onDislikeMenuPress() {
@@ -93,11 +96,13 @@ class InsightCardAuthorController extends GetxController {
               userInsightCardColRef()
                   .doc(cardId)
                   .update({"isDeleted": true, "deletedAt": Timestamp.now()});
-              // if (refreshFunction != null) {
-              //   refreshFunction!();
-              // } else {
-              //   print("paging controller is null");
-              // }
+              var cardController =
+                  Get.find<InsightCardController>(tag: cardTag);
+              if (cardController != null) {
+                cardController.refreshFunction!();
+              } else {
+                print("paging controller is null");
+              }
               Get.snackbar("완료", "삭제되었습니다.");
             },
             child: const Text('삭제'),
