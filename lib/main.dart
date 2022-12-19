@@ -1,5 +1,6 @@
 /**Flutter basic */
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 
@@ -25,11 +26,25 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await GetStorage.init();
-  FlutterNativeSplash.remove();
+  Future.delayed(
+    const Duration(seconds: 1),
+    () => FlutterNativeSplash.remove(),
+  );
   runApp(
     GetMaterialApp(
       title: 'SocialChart',
-      theme: ThemeData(fontFamily: "NotoSansKR"),
+      theme: ThemeData(
+        fontFamily: "NotoSansKR",
+        appBarTheme:
+            AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.grey[900],
+        cardColor: Colors.grey[800],
+        canvasColor: Colors.grey[900],
+        appBarTheme: AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
+      ),
       initialRoute: "/",
       getPages: [
         GetPage(

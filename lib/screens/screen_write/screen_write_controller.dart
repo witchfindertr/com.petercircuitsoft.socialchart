@@ -98,7 +98,7 @@ class ScreenWriteController extends GetxController
           userText: userText,
           linkPreviewData: _linkData.value != null
               ? LinkPreviewData(
-                  url: _linkData.value?.url,
+                  url: _linkData.value!.url!,
                   description: _linkData.value?.description,
                   image: _linkData.value?.image,
                   title: _linkData.value?.title,

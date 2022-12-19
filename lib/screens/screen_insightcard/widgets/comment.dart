@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:socialchart/controllers/user_data_fetcher.dart';
 import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/model_user_comment.dart';
-import 'package:socialchart/screens/screen_insightcard/widgets/comment_controller.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Comment extends StatelessWidget {
@@ -58,9 +57,9 @@ class Comment extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                   decoration: BoxDecoration(
-                      color: selected
-                          ? Colors.transparent.withOpacity(0.1)
-                          : Colors.transparent.withOpacity(0.04),
+                      color: Theme.of(context)
+                          .primaryColor
+                          .withOpacity(selected ? 0.4 : 0.1),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(15))),
                   child: Column(

@@ -3,20 +3,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
+import 'package:socialchart/models/model_user_insightcard.dart';
+
 class LinkPreview extends StatelessWidget {
   const LinkPreview({
     super.key,
-    required this.imageUrl,
-    required this.title,
-    this.description,
+    required this.linkPreviewData,
+    this.setImageSize,
     this.tapCallback,
-    required this.url,
   });
-  final String? imageUrl;
-  final String? title;
-  final String? description;
+  final LinkPreviewData? linkPreviewData;
+  final void Function(int, int)? setImageSize;
   final VoidCallback? tapCallback;
-  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +22,15 @@ class LinkPreview extends StatelessWidget {
       onTap: tapCallback ?? () => {},
       child: SizedBox(
         width: double.infinity,
-        child: imageUrl != null
+        child: linkPreviewData?.image != null
             ? CachedNetworkImage(
-                imageUrl: imageUrl!,
+                imageUrl: linkPreviewData!.image!,
                 width: 50,
+                height: linkPreviewData?.size_x == null
+                    ? null
+                    : (linkPreviewData!.size_x! > 800)
+                        ? MediaQuery.of(context).size.height * 0.25 + 60
+                        : MediaQuery.of(context).size.width * 0.2,
                 imageBuilder: (context, imageProvider) {
                   Completer<ui.Image> completer = Completer<ui.Image>();
                   imageProvider.resolve(const ImageConfiguration()).addListener(
@@ -40,91 +43,101 @@ class LinkPreview extends StatelessWidget {
                   return FutureBuilder<ui.Image>(
                     future: completer.future,
                     builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        ui.Image image = snapshot.data!;
-                        if (image.width > 800) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Image(
-                                image: imageProvider,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.2,
-                                fit: BoxFit.fitWidth,
-                              ),
-                              Text(
-                                title!,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                description ?? "",
+                      if (!snapshot.hasData) {
+                        if (setImageSize != null) setImageSize!(0, 0);
+                        return SizedBox();
+                      }
+                      ui.Image image = snapshot.data!;
+                      if (setImageSize != null) {
+                        setImageSize!(image.width, image.height);
+                      }
+                      if (image.width > 800) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Image(
+                              image: imageProvider,
+                              height: MediaQuery.of(context).size.height * 0.25,
+                              fit: BoxFit.fitWidth,
+                            ),
+                            Text(
+                              overflow: TextOverflow.ellipsis,
+                              linkPreviewData?.title ?? "No title",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              maxLines: 1,
+                            ),
+                            Expanded(
+                              child: Text(
+                                linkPreviewData?.description ??
+                                    "No description",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.black.withOpacity(0.5)),
-                              ),
-                            ],
-                          );
-                        }
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.width * 0.2,
-                          child: Row(
-                            children: [
-                              Image(
-                                  image: imageProvider,
-                                  fit: BoxFit.fitHeight,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.2),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Text(
-                                        title!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6,
-                                      ),
-                                      Expanded(
-                                        child: Center(
-                                          child: Text(
-                                            description ?? "",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  fontWeight: FontWeight.w300,
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                            ),
+                          ],
                         );
                       }
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.1,
+                        child: Row(
+                          children: [
+                            Image(
+                                image: imageProvider,
+                                fit: BoxFit.fitHeight,
+                                width: MediaQuery.of(context).size.width * 0.2),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text(
+                                      maxLines: 1,
+                                      linkPreviewData?.title ?? "No title",
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          linkPreviewData?.description ??
+                                              "No description",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+
                       return SizedBox();
                     },
                   );
                 },
               )
             : SizedBox(
-                height: MediaQuery.of(context).size.width * 0.2,
+                height: MediaQuery.of(context).size.height * 0.1,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        title ?? "미리보기가 없습니다.",
+                        linkPreviewData?.title ?? "미리보기가 없습니다.",
                         style: Theme.of(context).textTheme.headline6?.merge(
-                            title == null
+                            linkPreviewData?.title == null
                                 ? Theme.of(context).textTheme.bodyText2
                                 : null),
                         textAlign: TextAlign.center,
@@ -132,7 +145,9 @@ class LinkPreview extends StatelessWidget {
                       Expanded(
                         child: Center(
                           child: Text(
-                            description ?? url,
+                            linkPreviewData?.description ??
+                                linkPreviewData?.url ??
+                                "No URL: Something wrong!",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.bodySmall,

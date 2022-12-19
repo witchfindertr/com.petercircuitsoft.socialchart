@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_body_controller.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
-import 'package:socialchart/screens/screen_write/widgets/link_preview.dart';
+import 'package:socialchart/screens/modal_screen_write_modify/widgets/link_preview.dart';
+import 'package:socialchart/screens/screen_write/widgets/_link_preview.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -21,6 +22,8 @@ class InsightCardBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // var controller =
+    //     Get.put(InsightCardBodyController(cardId: cardId, cardData: cardData),tag:cardId);
     return GetBuilder(
       init: InsightCardBodyController(cardId: cardId, cardData: cardData),
       tag: cardId,
@@ -62,12 +65,9 @@ class InsightCardBody extends StatelessWidget {
                             bottom: BorderSide(color: Colors.black12)),
                       ),
                       child: LinkPreview(
-                        imageUrl: controller.linkPreview?.image,
-                        title: controller.linkPreview?.title,
-                        description: controller.linkPreview?.description,
+                        linkPreviewData: controller.cardData.linkPreviewData,
                         tapCallback: () =>
-                            launchUrl(Uri.parse(controller.linkPreview!.url!)),
-                        url: controller.linkPreview!.url!,
+                            launchUrl(Uri.parse(controller.linkPreview!.url)),
                       ),
                     )
                   : const SizedBox(),

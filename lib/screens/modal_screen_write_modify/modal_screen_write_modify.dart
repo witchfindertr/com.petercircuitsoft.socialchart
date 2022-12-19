@@ -10,7 +10,8 @@ import 'package:socialchart/screens/modal_screen_write_modify/modal_screen_write
 
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:detectable_text_field/widgets/detectable_text_field.dart';
-import 'package:socialchart/screens/screen_write/widgets/link_preview.dart';
+import 'package:socialchart/screens/modal_screen_write_modify/widgets/link_preview.dart';
+import 'package:socialchart/screens/screen_write/widgets/_link_preview.dart';
 
 class ModalScreenWriteModify extends GetView<ModalScreenWriteModifyController> {
   const ModalScreenWriteModify({
@@ -82,14 +83,12 @@ class ModalScreenWriteModify extends GetView<ModalScreenWriteModifyController> {
                 },
               ),
               Obx(
-                () => controller.previewLink != null
+                () => controller.linkPreviewData?.url != null
                     ? Stack(
                         children: [
                           LinkPreview(
-                            imageUrl: controller.linkData?.image,
-                            title: controller.linkData?.title,
-                            description: controller.linkData?.description,
-                            url: controller.previewLink!,
+                            linkPreviewData: controller.linkPreviewData,
+                            setImageSize: controller.setImageSize,
                           ),
                           Positioned(
                             top: 0,
@@ -98,8 +97,8 @@ class ModalScreenWriteModify extends GetView<ModalScreenWriteModifyController> {
                               minSize: 10,
                               padding: const EdgeInsets.all(0),
                               onPressed: () {
-                                controller.deletedLink(controller.previewLink!);
-                                controller.previewLink = null;
+                                controller.deletedLink(
+                                    controller.linkPreviewData!.url);
                               },
                               child: Icon(Icons.cancel, color: Colors.black45),
                             ),

@@ -48,16 +48,12 @@ class InsightCardBottom extends StatelessWidget {
                         size: iconSize,
                         color: controller.likePressed
                             ? Colors.red
-                            : Colors.black87,
+                            : Theme.of(context).iconTheme.color,
                       ),
                     ),
                     Text(
                       controller.currentLikeCounter.toString(),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontFamily: "Sans",
-                        color: Colors.black87,
-                      ),
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ],
                 ),
@@ -72,17 +68,11 @@ class InsightCardBottom extends StatelessWidget {
                         size: iconSize,
                         color: controller.scrapPressed
                             ? Colors.red
-                            : Colors.black87,
+                            : Theme.of(context).iconTheme.color,
                       ),
                     ),
-                    Text(
-                      controller.currentScrapCounter.toString(),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontFamily: "Sans",
-                        color: Colors.black87,
-                      ),
-                    ),
+                    Text(controller.currentScrapCounter.toString(),
+                        style: Theme.of(context).textTheme.bodyText2),
                   ],
                 ),
                 Row(
@@ -96,31 +86,20 @@ class InsightCardBottom extends StatelessWidget {
                         }
                       },
                       alignment: Alignment.center,
-                      child: Icon(
-                        CupertinoIcons.chat_bubble,
-                        size: iconSize,
-                        color: Colors.black87,
-                      ),
+                      child: Icon(CupertinoIcons.chat_bubble,
+                          size: iconSize,
+                          color: Theme.of(context).iconTheme.color),
                     ),
-                    Text(
-                      (controller.currentCommentCounter ?? 0).toString(),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontFamily: "Sans",
-                        color: Colors.black87,
-                      ),
-                    ),
+                    Text((controller.currentCommentCounter ?? 0).toString(),
+                        style: Theme.of(context).textTheme.bodyText2),
                   ],
                 ),
                 CupertinoButton(
                   padding: const EdgeInsets.all(0),
                   onPressed: () => controller.onSharePress(),
                   alignment: Alignment.center,
-                  child: Icon(
-                    CupertinoIcons.share,
-                    size: iconSize,
-                    color: Colors.black87,
-                  ),
+                  child: Icon(CupertinoIcons.share,
+                      size: iconSize, color: Theme.of(context).iconTheme.color),
                 ),
               ],
             ),

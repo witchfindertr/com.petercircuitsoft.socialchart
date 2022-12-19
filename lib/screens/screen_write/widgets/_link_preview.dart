@@ -3,8 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
-class LinkPreview extends StatelessWidget {
-  const LinkPreview({
+class TLinkPreview extends StatelessWidget {
+  const TLinkPreview({
     super.key,
     required this.imageUrl,
     required this.title,
@@ -23,11 +23,12 @@ class LinkPreview extends StatelessWidget {
     return GestureDetector(
       onTap: tapCallback ?? () => {},
       child: SizedBox(
-        width: double.infinity,
+        // width: double.infinity,
         child: imageUrl != null
             ? CachedNetworkImage(
                 imageUrl: imageUrl!,
                 width: 50,
+                height: MediaQuery.of(context).size.height * 0.2,
                 imageBuilder: (context, imageProvider) {
                   Completer<ui.Image> completer = Completer<ui.Image>();
                   imageProvider.resolve(const ImageConfiguration()).addListener(

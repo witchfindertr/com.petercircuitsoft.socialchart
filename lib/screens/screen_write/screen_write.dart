@@ -9,7 +9,7 @@ import 'package:socialchart/screens/screen_write/screen_write_controller.dart';
 
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:detectable_text_field/widgets/detectable_text_field.dart';
-import 'package:socialchart/screens/screen_write/widgets/link_preview.dart';
+import 'package:socialchart/screens/screen_write/widgets/_link_preview.dart';
 
 class ScreenWrite extends GetView<ScreenWriteController> {
   const ScreenWrite({super.key, this.navKey});
@@ -78,7 +78,7 @@ class ScreenWrite extends GetView<ScreenWriteController> {
                 () => controller.previewLink != null
                     ? Stack(
                         children: [
-                          LinkPreview(
+                          TLinkPreview(
                             imageUrl: controller.linkData?.image,
                             title: controller.linkData?.title,
                             description: controller.linkData?.description,

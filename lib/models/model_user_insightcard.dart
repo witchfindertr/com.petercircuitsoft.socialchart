@@ -70,26 +70,37 @@ class ModelInsightCard {
 //for the subcollection
 class LinkPreviewData {
   LinkPreviewData({
-    this.url,
+    required this.url,
     this.image,
+    this.size_x,
+    this.size_y,
     this.title,
     this.description,
   });
-  final String? url;
+  final String url;
   final String? image;
+  int? size_x;
+  int? size_y;
   final String? title;
   final String? description;
 
+  set setX(int? value) => size_x = value;
+  set setY(int? value) => size_y = value;
   LinkPreviewData.fromJson(Map<String, dynamic> json)
       : this(
-            description: json['description'],
-            image: json['image'],
-            title: json['title'],
-            url: json['url']);
+          description: json['description'] as String?,
+          image: json['image'] as String?,
+          size_x: json['size_x'] as int?,
+          size_y: json['size_y'] as int?,
+          title: json['title'] as String?,
+          url: json['url'] as String,
+        );
 
   Map<String, dynamic> toJson() => {
         "url": url,
         "image": image,
+        "size_x": size_x,
+        "size_y": size_y,
         "title": title,
         "description": description,
       };

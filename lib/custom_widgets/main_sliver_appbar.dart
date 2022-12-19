@@ -4,7 +4,8 @@ import 'package:socialchart/custom_widgets/gradient_mask.dart';
 import 'package:socialchart/utils/etc.dart';
 
 class MainSliverAppbar extends SliverAppBar {
-  MainSliverAppbar({
+  const MainSliverAppbar({
+    super.key,
     required this.titleText,
     super.actions,
     super.centerTitle = false,

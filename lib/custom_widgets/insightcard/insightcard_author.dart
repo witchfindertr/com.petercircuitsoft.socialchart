@@ -69,6 +69,7 @@ class InsightCardAuthor extends StatelessWidget {
                       ScreenProfile.routeName,
                       id: navKey?.index,
                       arguments: cardData.author.id,
+                      preventDuplicates: true,
                     );
                   } else {
                     NavigatorMainController.to.currentIndex = NavKeys.profile;

@@ -15,7 +15,8 @@ import './insightcard_body.dart';
 import './insightcard_bottom.dart';
 import './insightcard_header.dart';
 
-class InsightCard extends GetView<InsightCardController> {
+class InsightCard extends StatelessWidget {
+  //GetView<InsightCardController> {
   const InsightCard({
     super.key,
     this.showHeader = true,
@@ -35,7 +36,7 @@ class InsightCard extends GetView<InsightCardController> {
 
   @override
   // TODO: implement tag
-  String? get tag => cardId + routeName;
+  // String? get tag => cardId + routeName;
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +56,12 @@ class InsightCard extends GetView<InsightCardController> {
                 ? GestureDetector(
                     child: InsightCardHeader(),
                     behavior: HitTestBehavior.opaque,
-                    onTap: () => Get.toNamed(ScreenChart.routeName,
-                        id: navKey.index, arguments: cardData.chartId),
+                    onTap: () => Get.toNamed(
+                      preventDuplicates: true,
+                      ScreenChart.routeName,
+                      id: navKey.index,
+                      arguments: cardData.chartId,
+                    ),
                   )
                 : const SizedBox(),
             const Divider(

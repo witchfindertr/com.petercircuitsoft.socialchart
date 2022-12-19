@@ -31,30 +31,55 @@ class ModalScreenWriteModifyController extends GetxController
   var textController = TextEditingController();
 
   final _userText = Rx<String>("");
-  final _previewLink = Rxn<String>();
+  // final _previewLink = Rxn<String>();
 
-  final _linkData = Rxn<OgpData>();
+  // final _linkData = Rxn<OgpData>();
 
   final _deletedLink = Rx<List<String>>([]);
+
+  final _linkPreviewData = Rxn<LinkPreviewData>();
+  LinkPreviewData? get linkPreviewData => _linkPreviewData.value;
+  set linkPreviewData(LinkPreviewData? value) => _linkPreviewData.value = value;
+
+  void setImageSize(int x, int y) {
+    if (linkPreviewData != null) {
+      linkPreviewData!.size_x = x;
+      linkPreviewData!.size_y = y;
+    }
+  }
 
   String get userText => _userText.value;
   set userText(String value) => _userText.value = value;
 
-  String? get previewLink => _previewLink.value;
-  set previewLink(String? value) => _previewLink.value = value;
+  // String? get previewLink => _previewLink.value;
+  // set previewLink(String? value) => _previewLink.value = value;
 
-  OgpData? get linkData => _linkData.value;
+  // OgpData? get linkData => _linkData.value;
   // set linkData(OgpData? value) => _linkData.value = value;
 
   void deletedLink(String value) {
+    //current rul added on the delete list
     _deletedLink.value.add(value);
-    _linkData.value = null;
+    //delete current url
+    linkPreviewData = null;
   }
 
   @override
   void onInit() {
-    // TODO: implement onInit
-
+    // modify post
+    if (cardData != null) {
+      _userText.value = cardData!.userText;
+      textController.text = cardData!.userText;
+      if (cardData!.linkPreviewData?.url != null) {
+        linkPreviewData = cardData!.linkPreviewData;
+        // OgpDataExtract.execute(cardData!.linkPreviewData!.url!).then(
+        //   (value) {
+        //     _linkData.value = value;
+        //     previewLink = cardData!.linkPreviewData!.url!;
+        //   },
+        // );
+      }
+    }
     ever(
       _userText,
       (userText) async {
@@ -64,28 +89,24 @@ class ModalScreenWriteModifyController extends GetxController
                 : extractDetections(userText, _urlRegExp)
                     .where((element) => !_deletedLink.value.contains(element));
         //if there is no link just return
-        if (extractedLink.isEmpty) return;
+        if (extractedLink.isEmpty || linkPreviewData != null) return;
         OgpDataExtract.execute(extractedLink.first).then((value) {
-          _linkData.value = value;
-          previewLink = extractedLink.first;
+          //update linkPreviewData
+          linkPreviewData = LinkPreviewData(
+            url: extractedLink.first,
+            description: value?.description,
+            image: value?.image,
+            title: value?.title,
+          );
+          // _linkData.value = value;
+          // previewLink = extractedLink.first;
         }, onError: (e) {
           print(e);
           deletedLink(extractedLink.first);
         });
       },
     );
-    if (cardData != null) {
-      _userText.value = cardData!.userText;
-      textController.text = cardData!.userText;
-      if (cardData!.linkPreviewData?.url != null) {
-        OgpDataExtract.execute(cardData!.linkPreviewData!.url!).then(
-          (value) {
-            _linkData.value = value;
-            previewLink = cardData!.linkPreviewData!.url!;
-          },
-        );
-      }
-    }
+
     super.onInit();
   }
 
@@ -113,25 +134,21 @@ class ModalScreenWriteModifyController extends GetxController
         {
           "userText": userText,
           "lastModifiedAt": Timestamp.now(),
-          "linkPreviewData": _linkData.value != null
+          "linkPreviewData": linkPreviewData != null
               ? {
-                  "url": _linkData.value?.url,
-                  "description": _linkData.value?.description,
-                  "image": _linkData.value?.image,
-                  "title": _linkData.value?.title,
+                  "url": linkPreviewData!.url,
+                  "description": linkPreviewData!.description,
+                  "image": linkPreviewData!.image,
+                  "title": linkPreviewData!.title,
+                  "size_x": linkPreviewData!.size_x,
+                  "size_y": linkPreviewData!.size_y,
                 }
               : null,
         },
       );
+      //for body update after modification
       var bodyContoller = Get.find<InsightCardBodyController>(tag: cardId);
-      bodyContoller.linkPreview = _linkData.value != null
-          ? LinkPreviewData(
-              url: _linkData.value?.url,
-              description: _linkData.value?.description,
-              image: _linkData.value?.image,
-              title: _linkData.value?.title,
-            )
-          : null;
+      bodyContoller.linkPreview = linkPreviewData;
       bodyContoller.userText = userText;
 
       loading.showFullScreenLoadingIndicator = false;
@@ -157,14 +174,7 @@ class ModalScreenWriteModifyController extends GetxController
               .collection("userData")
               .doc(AuthController.to.firebaseUser.value?.uid),
           userText: userText,
-          linkPreviewData: _linkData.value != null
-              ? LinkPreviewData(
-                  url: _linkData.value?.url,
-                  description: _linkData.value?.description,
-                  image: _linkData.value?.image,
-                  title: _linkData.value?.title,
-                )
-              : null,
+          linkPreviewData: linkPreviewData,
         ),
       );
       loading.showFullScreenLoadingIndicator = false;

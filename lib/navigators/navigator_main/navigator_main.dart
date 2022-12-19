@@ -33,6 +33,8 @@ class NavigatorMain extends GetView<NavigatorMainController> {
       ),
       bottomNavigationBar: Obx(() => controller.isBottomTabVisible
           ? BottomNavigationBar(
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
               type: BottomNavigationBarType.fixed,
               items: const [
                 BottomNavigationBarItem(
