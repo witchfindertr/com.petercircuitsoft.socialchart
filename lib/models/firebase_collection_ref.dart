@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:socialchart/models/model_chart_data.dart';
 import 'package:socialchart/models/model_chart_list.dart';
 import 'package:socialchart/models/model_insightcard_list.dart';
+import 'package:socialchart/models/model_report_card.dart';
 import 'package:socialchart/models/model_user_list.dart';
 import 'package:socialchart/models/model_user_notice.dart';
 import 'package:socialchart/models/model_user_comment.dart';
@@ -118,7 +119,17 @@ CollectionReference<ModelUserList> interestedChartUserListColRef(
   return firestore
       .collection("chartData/$chartId/interestedChartUserList")
       .withConverter(
-          fromFirestore: ((snapshot, options) =>
-              ModelUserList.fromJson(snapshot.data()!)),
-          toFirestore: (value, options) => value.toJson());
+        fromFirestore: ((snapshot, options) =>
+            ModelUserList.fromJson(snapshot.data()!)),
+        toFirestore: (value, options) => value.toJson(),
+      );
+}
+
+//insight card report
+CollectionReference<ModelReportCard> reportCardColRef() {
+  return firestore.collection("cardReports").withConverter(
+        fromFirestore: (snapshot, options) =>
+            ModelReportCard.fromJson(snapshot.data()!),
+        toFirestore: (value, options) => value.toJson(),
+      );
 }

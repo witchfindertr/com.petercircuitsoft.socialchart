@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:socialchart/custom_widgets/main_appbar.dart';
-import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
+import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/screen_explore/screen_explore_controller.dart';
 
@@ -21,7 +19,11 @@ class ScreenExplore extends GetView<ScreenExploreController> {
         {'${navKey.index}$routeName': controller.scrollController}.entries);
     return SafeArea(
       child: Scaffold(
-        appBar: MainAppBar(appBar: AppBar(), title: "Explore"),
+        appBar: MainAppbar(
+          titleText: "Explore",
+          elevation: 0,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        ),
         body: Text("explore"),
         // body: InsightCardList(
         //   scrollController: controller.scrollController,

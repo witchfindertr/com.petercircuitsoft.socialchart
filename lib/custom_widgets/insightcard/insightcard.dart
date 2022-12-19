@@ -56,12 +56,14 @@ class InsightCard extends StatelessWidget {
                 ? GestureDetector(
                     child: InsightCardHeader(),
                     behavior: HitTestBehavior.opaque,
-                    onTap: () => Get.toNamed(
-                      preventDuplicates: true,
-                      ScreenChart.routeName,
-                      id: navKey.index,
-                      arguments: cardData.chartId,
-                    ),
+                    onTap: () {
+                      Get.toNamed(
+                        preventDuplicates: true,
+                        ScreenChart.routeName,
+                        id: navKey.index,
+                        arguments: cardData.chartId,
+                      );
+                    },
                   )
                 : const SizedBox(),
             const Divider(

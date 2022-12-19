@@ -11,7 +11,6 @@ import 'package:socialchart/screens/modal_screen_write_modify/modal_screen_write
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:socialchart/screens/modal_screen_write_modify/widgets/link_preview.dart';
-import 'package:socialchart/screens/screen_write/widgets/_link_preview.dart';
 
 class ModalScreenWriteModify extends GetView<ModalScreenWriteModifyController> {
   const ModalScreenWriteModify({
@@ -27,6 +26,7 @@ class ModalScreenWriteModify extends GetView<ModalScreenWriteModifyController> {
       appBar: MainAppbar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: true,
+        centerTitle: true,
         leading: LinearGradientMask(
           child: CupertinoButton(
             onPressed: () => Navigator.pop(context),

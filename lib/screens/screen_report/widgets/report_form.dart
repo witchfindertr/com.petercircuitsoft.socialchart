@@ -27,34 +27,35 @@ class ReportForm extends StatelessWidget {
             ReportTextFormField(
                 textController: controller.textController, maxLine: 10),
             ElevatedButton(
-                onPressed: () {
-                  var loading = SocialChartController.to;
-                  loading.showFullScreenLoadingIndicator = true;
+              onPressed: () {
+                var loading = SocialChartController.to;
+                loading.showFullScreenLoadingIndicator = true;
 
-                  if (controller.key.currentState!.validate()) {
-                    //todo 전송
-                    controller
-                        .sendReport(controller.emailController.text,
-                            controller.textController.text)
-                        .then((value) {
-                      loading.showFullScreenLoadingIndicator = false;
-                      Get.snackbar("전송 완료", "말씀해주신 내용이 전송되었어요.");
-                      // Navigator.popUntil(context, (route) => route.isFirst);
-                      controller.textController.clear();
-                      controller.emailController.clear();
-                    }).catchError((onError) {
-                      print("에러요!${onError}");
-                      Get.snackbar("에러요!", "죄송해요. 뭔가 잘못되었어요.");
-                      loading.showFullScreenLoadingIndicator = false;
-                    });
-                  } else {
+                if (controller.key.currentState!.validate()) {
+                  //todo 전송
+                  controller
+                      .sendReport(controller.emailController.text,
+                          controller.textController.text)
+                      .then((value) {
                     loading.showFullScreenLoadingIndicator = false;
-                    if (!Get.isSnackbarOpen) {
-                      Get.snackbar("오류", "입력에 오류가 있어요.", isDismissible: true);
-                    }
+                    Get.snackbar("전송 완료", "말씀해주신 내용이 전송되었어요.");
+                    // Navigator.popUntil(context, (route) => route.isFirst);
+                    controller.textController.clear();
+                    controller.emailController.clear();
+                  }).catchError((onError) {
+                    print("에러요!${onError}");
+                    Get.snackbar("에러요!", "죄송해요. 뭔가 잘못되었어요.");
+                    loading.showFullScreenLoadingIndicator = false;
+                  });
+                } else {
+                  loading.showFullScreenLoadingIndicator = false;
+                  if (!Get.isSnackbarOpen) {
+                    Get.snackbar("오류", "입력에 오류가 있어요.", isDismissible: true);
                   }
-                },
-                child: Text("전송하기")),
+                }
+              },
+              child: Text("전송하기"),
+            ),
           ],
         ),
       ),

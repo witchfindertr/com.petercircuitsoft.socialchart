@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 
-import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
@@ -42,6 +42,8 @@ class ScreenHome extends GetView<ScreenHomeController> {
               MainSliverAppbar(
                 titleText: 'Social Chart',
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                systemOverlayStyle:
+                    SystemUiOverlayStyle(statusBarColor: Colors.amber),
                 actions: [
                   appbarSearchButton(() => print("search pressed")),
                 ],

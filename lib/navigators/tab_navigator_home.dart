@@ -13,10 +13,6 @@ import 'package:socialchart/screens/screen_insightcard/screen_insightcard_bindin
 import 'package:socialchart/screens/screen_profile/screen_profile.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile_binding.dart';
-import 'package:socialchart/screens/screen_write/screen_write.dart';
-import 'package:socialchart/screens/screen_write/screen_write_binding.dart';
-
-import 'package:navigation_history_observer/navigation_history_observer.dart';
 
 class TabNavigatorHome extends StatelessWidget {
   const TabNavigatorHome({super.key, required this.observer});

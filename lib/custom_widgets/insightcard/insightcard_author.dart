@@ -12,6 +12,8 @@ import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/screens/modal_screen_report/modal_screen_report.dart';
+import 'package:socialchart/screens/modal_screen_report/modal_screen_report_binding.dart';
 import 'package:socialchart/screens/modal_screen_write_modify/modal_screen_write_modify.dart';
 import 'package:socialchart/screens/modal_screen_write_modify/modal_screen_write_modify_binding.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile.dart';
@@ -114,6 +116,9 @@ class InsightCardAuthor extends StatelessWidget {
             Icon(CupertinoIcons.exclamationmark_triangle),
           ],
         ),
+        onTap: () => Get.to(() => ModalScreenReport(),
+            binding: ModalScreenReportBinding(cardId: cardId),
+            fullscreenDialog: true),
       ),
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,

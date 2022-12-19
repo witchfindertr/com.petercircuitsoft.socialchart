@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:socialchart/navigators/tab_navigator_explore.dart';
 import 'package:socialchart/navigators/tab_navigator_home.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/navigators/tab_navigator_notice.dart';
-import 'package:socialchart/navigators/tab_navigator_observer.dart';
 import 'package:socialchart/navigators/tab_navigator_profile.dart';
 // import 'package:cupertino_icons/cupertino_icons.dart';
 

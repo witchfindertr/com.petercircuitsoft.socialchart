@@ -24,6 +24,7 @@ class ScreenLogin extends GetView<ScreenLoginController> {
 
   @override
   Widget build(BuildContext context) {
+    var isDark = Theme.of(context).brightness == Brightness.dark;
     return SafeArea(
       child: Scaffold(
         body:
@@ -36,7 +37,9 @@ class ScreenLogin extends GetView<ScreenLoginController> {
               Expanded(
                 flex: 3,
                 child: Image.asset(
-                  "assets/images/Logo_Light.png",
+                  isDark
+                      ? "assets/images/Logo_Dark.png"
+                      : "assets/images/Logo_Light.png",
                   width: 200,
                   fit: BoxFit.contain,
                 ),

@@ -1,3 +1,4 @@
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:socialchart/app_constant.dart';
@@ -13,6 +14,7 @@ class SocialChart extends GetView<SocialChartController> {
 
   @override
   Widget build(BuildContext context) {
+    FlutterNativeSplash.remove();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(

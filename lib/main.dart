@@ -1,4 +1,6 @@
 /**Flutter basic */
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -20,30 +22,32 @@ import 'package:timeago/timeago.dart' as timeago;
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
   timeago.setLocaleMessages("kr", KrCustomMessages());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await GetStorage.init();
-  Future.delayed(
+  await Future.delayed(
     const Duration(seconds: 1),
     () => FlutterNativeSplash.remove(),
   );
+
   runApp(
     GetMaterialApp(
       title: 'SocialChart',
       theme: ThemeData(
         fontFamily: "NotoSansKR",
-        appBarTheme:
-            AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light),
+        appBarTheme: const AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle.light,
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.grey[900],
         cardColor: Colors.grey[800],
         canvasColor: Colors.grey[900],
-        appBarTheme: AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
+        appBarTheme: const AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+        ),
       ),
       initialRoute: "/",
       getPages: [

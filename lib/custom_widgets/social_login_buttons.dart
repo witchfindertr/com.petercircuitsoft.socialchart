@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
@@ -8,33 +9,35 @@ class SocialLoginButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthController authController = Get.find();
+    var isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
-      width: 270,
+      width: MediaQuery.of(context).size.width * 0.7,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SocialLoginButton(
-              buttonType: SocialLoginButtonType.google,
-              onPressed: () {
-                FocusScope.of(context).unfocus();
-                authController.signInWithGoogle();
-              },
-            ),
+            CupertinoButton(
+                padding: EdgeInsets.zero,
+                child: Image.asset(
+                  isDark
+                      ? "assets/images/social_login_buttons/apple_dark.png"
+                      : "assets/images/social_login_buttons/apple_light.png",
+                ),
+                onPressed: () {
+                  authController.signInWithApple();
+                }),
             SizedBox(
               height: 10,
             ),
-            // child: ElevatedButton(
-            //     onPressed: () {
-            //       FocusScope.of(context).unfocus();
-            //       authController.signInWithGoogle();
-            //     },
-            //     child: Text("Continue with Google"))),
-            SocialLoginButton(
-              buttonType: SocialLoginButtonType.apple,
+            CupertinoButton(
+              padding: EdgeInsets.zero,
+              child: Image.asset(
+                isDark
+                    ? "assets/images/social_login_buttons/google_dark.png"
+                    : "assets/images/social_login_buttons/google_light.png",
+              ),
               onPressed: () {
-                FocusScope.of(context).unfocus();
-                authController.signInWithApple();
+                authController.signInWithGoogle();
               },
             ),
           ],

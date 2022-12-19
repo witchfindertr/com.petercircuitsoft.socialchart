@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/controllers/auth_controller.dart';
-import 'package:socialchart/custom_widgets/main_appbar.dart';
 import 'package:socialchart/screens/screen_account_setting/screen_account_setting_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 
 class ScreenAccountSetting extends GetView<ScreenAccountSettingController> {
   final NavKeys? navKey;
@@ -21,8 +21,7 @@ class ScreenAccountSetting extends GetView<ScreenAccountSettingController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MainAppBar(
-            title: "설정", appBar: AppBar(), searchButtonVisible: false),
+        appBar: MainAppbar(titleText: "설정"),
         body: Column(
           children: [
             ListTile(
