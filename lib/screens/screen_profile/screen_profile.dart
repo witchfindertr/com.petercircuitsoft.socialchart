@@ -8,19 +8,19 @@ import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
-import 'package:socialchart/screens/screen_profile/widgets/profile_persistent_header_delegate.dart';
 import './widgets/user_profile.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/screens/screen_profile/screen_profile_controller.dart';
 
 class ScreenProfile extends GetView<ScreenProfileController> {
-  const ScreenProfile({super.key, required this.navKey});
+  const ScreenProfile({super.key, required this.navKey, required this.userId});
   final NavKeys navKey;
+  final String userId;
   static const routeName = "/ScreenProfile";
 
   @override
   // TODO: implement tag
-  String? get tag => navKey.name;
+  String? get tag => userId;
 
   @override
   Widget build(BuildContext context) {

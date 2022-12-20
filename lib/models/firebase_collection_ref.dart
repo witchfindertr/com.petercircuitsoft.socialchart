@@ -54,6 +54,30 @@ CollectionReference<ModelChartList> userInterestedCharListColRef(
       );
 }
 
+CollectionReference<ModelUserList> followerListColRef(String userId) {
+  return firestore.collection("userData/$userId/followerList").withConverter(
+        fromFirestore: (snapshot, options) =>
+            ModelUserList.fromJson(snapshot.data()!),
+        toFirestore: (value, options) => value.toJson(),
+      );
+}
+
+CollectionReference<ModelUserList> followingListColRef(String userId) {
+  return firestore.collection("userData/$userId/followingList").withConverter(
+        fromFirestore: (snapshot, options) =>
+            ModelUserList.fromJson(snapshot.data()!),
+        toFirestore: (value, options) => value.toJson(),
+      );
+}
+
+CollectionReference<ModelUserList> blockedUserListColRef(String userId) {
+  return firestore.collection("userData/$userId/blockedUserList").withConverter(
+        fromFirestore: (snapshot, options) =>
+            ModelUserList.fromJson(snapshot.data()!),
+        toFirestore: (value, options) => value.toJson(),
+      );
+}
+
 //for insightcard
 CollectionReference<ModelInsightCard> userInsightCardColRef() {
   return firestore.collection("userInsightCard").withConverter(

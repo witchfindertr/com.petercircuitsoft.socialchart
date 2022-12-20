@@ -50,7 +50,8 @@ class TabNavigatorHome extends StatelessWidget {
             var args = settings.arguments;
             return GetPageRoute(
               routeName: ScreenProfile.routeName,
-              page: () => ScreenProfile(navKey: NavKeys.home),
+              page: () =>
+                  ScreenProfile(navKey: NavKeys.home, userId: args.toString()),
               binding: ScreenProfileBinding(
                   navKey: NavKeys.home, userId: args.toString()),
               settings: settings,

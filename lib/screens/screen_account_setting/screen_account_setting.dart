@@ -21,7 +21,10 @@ class ScreenAccountSetting extends GetView<ScreenAccountSettingController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MainAppbar(titleText: "설정"),
+        appBar: MainAppbar(
+          titleText: "설정",
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        ),
         body: Column(
           children: [
             ListTile(

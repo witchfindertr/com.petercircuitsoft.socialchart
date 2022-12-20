@@ -140,11 +140,12 @@ class InsightCardAuthor extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '팔로우/언팔',
+              controller.amIfollowing ? "팔로우 취소" : "팔로우",
             ),
             Icon(CupertinoIcons.person_crop_circle_badge_plus),
           ],
         ),
+        onTap: () => controller.toggleFollowButton(cardData.author.id),
       ),
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
@@ -158,6 +159,43 @@ class InsightCardAuthor extends StatelessWidget {
             Icon(CupertinoIcons.person_crop_circle_badge_xmark),
           ],
         ),
+        onTap: () async {
+          controller.blockUser(cardData.author.id).then(
+            (value) {
+              if (value) {
+                Get.snackbar(
+                  "차단",
+                  "차단 리스트에 등록했습니다.",
+                  animationDuration: 500.milliseconds,
+                  mainButton: TextButton(
+                    onPressed: () {
+                      userDB.unBlockUser(cardData.author.id).then(
+                        (value) {
+                          if (value) {
+                            Get.back(closeOverlays: true);
+                            Get.snackbar(
+                              "취소",
+                              "취소되었습니다.",
+                              animationDuration: 500.milliseconds,
+                            );
+                          }
+                        },
+                      );
+                    },
+                    child: Text("취소"),
+                  ),
+                  messageText: Row(
+                    children: [
+                      Text("차단 리스트에 등록했습니다."),
+                    ],
+                  ),
+                );
+              } else {
+                Get.snackbar("오류", "무언가 문제가 발생했어요.");
+              }
+            },
+          );
+        },
       ),
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,

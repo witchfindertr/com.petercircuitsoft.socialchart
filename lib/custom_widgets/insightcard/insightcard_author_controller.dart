@@ -19,6 +19,10 @@ class InsightCardAuthorController extends GetxController {
   final String cardTag;
   final ModelInsightCard cardData;
 
+  final _amIfollowing = false.obs;
+  bool get amIfollowing => _amIfollowing.value;
+  set amIfollowing(bool value) => _amIfollowing.value = value;
+
   void onDislikeMenuPress() {
     firestore.runTransaction(
       (transaction) async {
@@ -112,9 +116,38 @@ class InsightCardAuthorController extends GetxController {
     );
   }
 
+  void toggleFollowButton(String userId) async {
+    var result = amIfollowing
+        ? await userDB.unFollowing(userId)
+        : await userDB.following(userId);
+    if (result) {
+      amIfollowing = !amIfollowing;
+      if (Get.isSnackbarOpen) {
+        Get.back(closeOverlays: true);
+      }
+      Get.snackbar(
+          duration: Duration(seconds: 1),
+          "성공",
+          "팔로우${amIfollowing ? " " : "를 취소"}했습니다.");
+    } else {
+      if (Get.isSnackbarOpen) {
+        Get.back(closeOverlays: true);
+      }
+      Get.snackbar(duration: Duration(seconds: 1), "실패", "뭔가 문제가 있어요.");
+    }
+  }
+
+  Future<bool> blockUser(String userId) async {
+    return userDB.blockUser(userId);
+  }
+
   @override
   void onInit() {
-    // TODO: implement onInit
+    userDB.checkAmIfollowing(cardData.author.id).then(
+      (value) {
+        amIfollowing = value;
+      },
+    );
     super.onInit();
   }
 }

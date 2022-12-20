@@ -7,6 +7,7 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
 import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
+import 'package:socialchart/models/model_user_list.dart';
 
 class ScreenProfileController extends GetxController {
   ScreenProfileController({required this.userId});
@@ -63,9 +64,12 @@ class ScreenProfileController extends GetxController {
   set isCurrentUser(bool value) => _isCurrentUser.value = value;
 
   final Rxn<ModelUserData?> _userData = Rxn<ModelUserData?>();
-
   ModelUserData? get userData => _userData.value;
   set userData(ModelUserData? value) => _userData.value = value;
+
+  final _amIfollowing = false.obs;
+  bool get amIfollowing => _amIfollowing.value;
+  set amIfollowing(bool value) => _amIfollowing.value = value;
 
   var isloading = true.obs;
   bool get isLoading => isloading.value;
@@ -83,6 +87,42 @@ class ScreenProfileController extends GetxController {
     }
   }
 
+  Future<bool> checkAmIfollowing(String userId) {
+    return followingListColRef(firebaseAuth.currentUser!.uid)
+        .doc(userId)
+        .get()
+        .then((value) {
+      if (value.exists)
+        return true;
+      else
+        return false;
+    }, onError: (e) {
+      print(e);
+      return false;
+    });
+  }
+
+  void toggleFollowButton(String userId) async {
+    var result = amIfollowing
+        ? await userDB.unFollowing(userId)
+        : await userDB.following(userId);
+    if (result) {
+      amIfollowing = !amIfollowing;
+      if (Get.isSnackbarOpen) {
+        Get.back(closeOverlays: true);
+      }
+      Get.snackbar(
+          duration: Duration(seconds: 1),
+          "성공",
+          "팔로우${amIfollowing ? " " : "를 취소"}했습니다.");
+    } else {
+      if (Get.isSnackbarOpen) {
+        Get.back(closeOverlays: true);
+      }
+      Get.snackbar(duration: Duration(seconds: 1), "실패", "뭔가 문제가 있어요.");
+    }
+  }
+
   @override
   void onInit() async {
     pagingController.addPageRequestListener((pageKey) {
@@ -91,6 +131,11 @@ class ScreenProfileController extends GetxController {
     isLoading = true;
     if (userId == firebaseAuth.currentUser?.uid) _isCurrentUser.value = true;
     await getUserData();
+    userDB.checkAmIfollowing(userId).then(
+      (value) {
+        amIfollowing = value;
+      },
+    );
     isLoading = false;
 
     super.onInit();

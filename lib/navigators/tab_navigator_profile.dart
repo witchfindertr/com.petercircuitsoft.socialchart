@@ -35,6 +35,7 @@ class TabNavigatorProfile extends StatelessWidget {
             return GetPageRoute(
               settings: settings,
               page: () => ScreenProfile(
+                userId: firebaseAuth.currentUser!.uid,
                 navKey: NavKeys.profile,
               ),
               binding: ScreenProfileBinding(
