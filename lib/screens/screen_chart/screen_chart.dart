@@ -102,8 +102,14 @@ class ScreenChart extends GetView<ScreenChartController> {
                     ),
                   ),
                 ),
-                PagedSliverList(
+                PagedSliverList.separated(
                   pagingController: controller.pagingController,
+                  separatorBuilder: (context, index) {
+                    return Container(
+                      color: Theme.of(context).backgroundColor,
+                      height: 10,
+                    );
+                  },
                   builderDelegate: PagedChildBuilderDelegate<
                       QueryDocumentSnapshot<ModelInsightCard>>(
                     itemBuilder: (context, item, index) {

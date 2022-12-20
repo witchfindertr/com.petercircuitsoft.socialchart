@@ -43,10 +43,13 @@ class InsightCard extends StatelessWidget {
     var user = Get.put(UserDataFetcher(userId: cardData.author.id),
         tag: cardData.author.id);
     return Card(
-      shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(0)),
-          side: BorderSide(color: Colors.blueGrey.withOpacity(0.3))),
-      margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+      color: Theme.of(context).scaffoldBackgroundColor,
+      shape: Border.symmetric(
+        horizontal: BorderSide(
+          color: Theme.of(context).highlightColor,
+        ),
+      ),
+      margin: const EdgeInsets.all(0),
       semanticContainer: true,
       child: Padding(
         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),

@@ -60,9 +60,10 @@ class MainAppbar extends AppBar {
         child: Text(
           titleText,
           style: const TextStyle(
-              fontFamily: "NotoSansKR",
-              fontSize: 25,
-              fontWeight: FontWeight.w700),
+            fontFamily: "NotoSansKR",
+            fontSize: 25,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       );
 }

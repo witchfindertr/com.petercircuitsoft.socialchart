@@ -58,8 +58,14 @@ class ScreenProfile extends GetView<ScreenProfileController> {
                   ),
                 ),
               ),
-              PagedSliverList(
+              PagedSliverList.separated(
                 pagingController: controller.pagingController,
+                separatorBuilder: (context, index) {
+                  return Container(
+                    color: Theme.of(context).backgroundColor,
+                    height: 8,
+                  );
+                },
                 builderDelegate: PagedChildBuilderDelegate<
                     QueryDocumentSnapshot<ModelInsightCard>>(
                   itemBuilder: (context, item, index) {

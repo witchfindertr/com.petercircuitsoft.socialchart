@@ -40,8 +40,14 @@ class ScreenNotice extends GetView<ScreenNoticeController> {
               SliverToBoxAdapter(
                 child: const SizedBox(),
               ),
-              PagedSliverList(
+              PagedSliverList.separated(
                 pagingController: controller.pagingController,
+                separatorBuilder: (context, index) {
+                  return Container(
+                    color: Theme.of(context).backgroundColor,
+                    height: 8,
+                  );
+                },
                 builderDelegate: PagedChildBuilderDelegate<
                     QueryDocumentSnapshot<ModelUserNotice>>(
                   itemBuilder: ((context, item, index) {

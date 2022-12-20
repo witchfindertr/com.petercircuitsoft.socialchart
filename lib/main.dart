@@ -39,10 +39,12 @@ void main() async {
         appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
+        backgroundColor: Colors.grey[200],
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.grey[900],
+        backgroundColor: Colors.black,
         cardColor: Colors.grey[800],
         canvasColor: Colors.grey[900],
         appBarTheme: const AppBarTheme(
