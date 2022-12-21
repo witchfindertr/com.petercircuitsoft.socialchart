@@ -7,7 +7,7 @@ enum NavKeys { home, explore, notice, profile, login, fullscreen }
 
 FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 FirebaseStorage firestorage = FirebaseStorage.instance;
-String? myId = firebaseAuth.currentUser?.uid;
+String? currentUserId = firebaseAuth.currentUser?.uid;
 //userDBFunction instance;
 UserDB userDB = UserDB.instance;
 // Map<TabItem, BottomTabs> bottomTabConstant = {

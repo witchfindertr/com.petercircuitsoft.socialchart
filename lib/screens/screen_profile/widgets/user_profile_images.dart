@@ -62,7 +62,7 @@ class UserProfileImages extends StatelessWidget {
                           child: Hero(
                             tag: userId + "background",
                             child: Container(
-                              color: Theme.of(context).scaffoldBackgroundColor,
+                              color: Colors.black,
                               // width: double.infinity,
                               height: MediaQuery.of(context).size.height,
                               child: isURL(userData?.backgroundImageUrl)
@@ -118,8 +118,7 @@ class UserProfileImages extends StatelessWidget {
                                   child: Hero(
                                     tag: userId + "image",
                                     child: Container(
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor,
+                                      color: Colors.black,
                                       height:
                                           MediaQuery.of(context).size.height,
                                       child: isURL(userData?.profileImageUrl)
@@ -142,9 +141,10 @@ class UserProfileImages extends StatelessWidget {
                                 children: [
                                   CupertinoButton(
                                     color: Theme.of(context)
-                                        .secondaryHeaderColor
-                                        .withOpacity(0.8),
-                                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                        .canvasColor
+                                        .withOpacity(0.9),
+                                    minSize: 0,
+                                    padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
                                     onPressed: () {
@@ -164,10 +164,11 @@ class UserProfileImages extends StatelessWidget {
                                   ),
                                   SizedBox(width: 10),
                                   CupertinoButton(
+                                    minSize: 0,
                                     color: Theme.of(context)
-                                        .secondaryHeaderColor
-                                        .withOpacity(0.8),
-                                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                        .canvasColor
+                                        .withOpacity(0.9),
+                                    padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
                                     onPressed: () {
@@ -188,10 +189,11 @@ class UserProfileImages extends StatelessWidget {
                               ),
                             )
                           : CupertinoButton(
+                              minSize: 0,
                               color: Theme.of(context)
-                                  .secondaryHeaderColor
-                                  .withOpacity(0.8),
-                              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                  .canvasColor
+                                  .withOpacity(0.9),
+                              padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
                               child: Obx(() => Text(

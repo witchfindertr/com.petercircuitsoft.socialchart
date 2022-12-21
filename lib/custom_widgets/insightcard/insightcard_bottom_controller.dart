@@ -83,7 +83,7 @@ class InsightCardBottomController extends GetxController {
         firebaseAuth;
         //add insightcard to scapped insightcard list
         transaction.set(
-          scrappedInsightCardListColRef(myId!).doc(cardId),
+          scrappedInsightCardListColRef(currentUserId!).doc(cardId),
           ModelInsightCardList(
             cardId: cardId,
             createdAt: Timestamp.now(),
@@ -108,7 +108,8 @@ class InsightCardBottomController extends GetxController {
           },
         );
         //delete insightcard from scapped insightcard list
-        transaction.delete(scrappedInsightCardListColRef(myId!).doc(cardId));
+        transaction
+            .delete(scrappedInsightCardListColRef(currentUserId!).doc(cardId));
       }).then(
         (value) {
           currentScrapCounter--;

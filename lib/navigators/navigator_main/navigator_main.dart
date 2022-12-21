@@ -31,24 +31,29 @@ class NavigatorMain extends GetView<NavigatorMainController> {
       ),
       bottomNavigationBar: Obx(() => controller.isBottomTabVisible
           ? BottomNavigationBar(
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
+              // showSelectedLabels: false,
+              // showUnselectedLabels: false,
+
               type: BottomNavigationBarType.fixed,
               items: const [
                 BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.home),
+                  icon: Icon(CupertinoIcons.house),
+                  activeIcon: Icon(CupertinoIcons.house_fill),
                   label: "홈",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.search),
+                  icon: Icon(CupertinoIcons.news),
+                  activeIcon: Icon(CupertinoIcons.news_solid),
                   label: "탐색",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(CupertinoIcons.bell),
+                  activeIcon: Icon(CupertinoIcons.bell_fill),
                   label: "알림",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(CupertinoIcons.person),
+                  activeIcon: Icon(CupertinoIcons.person_fill),
                   label: "내정보",
                 ),
               ],
@@ -57,7 +62,7 @@ class NavigatorMain extends GetView<NavigatorMainController> {
                 controller.onBottomTabTap(index);
               },
             )
-          : Container(height: 0)),
+          : SizedBox(height: 0)),
     );
   }
 }

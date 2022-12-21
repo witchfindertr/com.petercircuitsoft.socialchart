@@ -107,7 +107,7 @@ class ScreenChart extends GetView<ScreenChartController> {
                   separatorBuilder: (context, index) {
                     return Container(
                       color: Theme.of(context).backgroundColor,
-                      height: 10,
+                      height: 8,
                     );
                   },
                   builderDelegate: PagedChildBuilderDelegate<

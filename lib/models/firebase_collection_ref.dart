@@ -78,6 +78,14 @@ CollectionReference<ModelUserList> blockedUserListColRef(String userId) {
       );
 }
 
+CollectionReference<ModelInsightCardList> blockedCardListColRef(String userId) {
+  return firestore.collection("userData/$userId/blockedCardList").withConverter(
+        fromFirestore: (snapshot, options) =>
+            ModelInsightCardList.fromJson(snapshot.data()!),
+        toFirestore: (value, options) => value.toJson(),
+      );
+}
+
 //for insightcard
 CollectionReference<ModelInsightCard> userInsightCardColRef() {
   return firestore.collection("userInsightCard").withConverter(

@@ -75,7 +75,7 @@ class ScreenProfileController extends GetxController {
   bool get isLoading => isloading.value;
   set isLoading(bool value) => isloading.value = value;
 
-  Future<void> getUserData() {
+  Future<void> fetchProfileUserData() {
     try {
       return userDataColRef().doc(userId).get().then(
         (value) {
@@ -87,20 +87,20 @@ class ScreenProfileController extends GetxController {
     }
   }
 
-  Future<bool> checkAmIfollowing(String userId) {
-    return followingListColRef(firebaseAuth.currentUser!.uid)
-        .doc(userId)
-        .get()
-        .then((value) {
-      if (value.exists)
-        return true;
-      else
-        return false;
-    }, onError: (e) {
-      print(e);
-      return false;
-    });
-  }
+  // Future<bool> checkAmIfollowing(String userId) {
+  //   return followingListColRef(firebaseAuth.currentUser!.uid)
+  //       .doc(userId)
+  //       .get()
+  //       .then((value) {
+  //     if (value.exists)
+  //       return true;
+  //     else
+  //       return false;
+  //   }, onError: (e) {
+  //     print(e);
+  //     return false;
+  //   });
+  // }
 
   void toggleFollowButton(String userId) async {
     var result = amIfollowing
@@ -108,6 +108,8 @@ class ScreenProfileController extends GetxController {
         : await userDB.following(userId);
     if (result) {
       amIfollowing = !amIfollowing;
+      Get.find<ScreenProfileController>(tag: currentUserId)
+          .fetchProfileUserData();
       if (Get.isSnackbarOpen) {
         Get.back(closeOverlays: true);
       }
@@ -130,7 +132,7 @@ class ScreenProfileController extends GetxController {
     });
     isLoading = true;
     if (userId == firebaseAuth.currentUser?.uid) _isCurrentUser.value = true;
-    await getUserData();
+    await fetchProfileUserData();
     userDB.checkAmIfollowing(userId).then(
       (value) {
         amIfollowing = value;

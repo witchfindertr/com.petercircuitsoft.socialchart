@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_body_controller.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/screens/modal_screen_write_modify/widgets/link_preview.dart';
-import 'package:socialchart/screens/screen_write/widgets/_link_preview.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -35,6 +34,7 @@ class InsightCardBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               DetectableText(
+                basicStyle: Theme.of(context).textTheme.bodyMedium,
                 text: controller.userText!.trim(),
                 detectionRegExp: hashTagUrlRegExp,
                 onTap: ((p0) {
@@ -51,14 +51,20 @@ class InsightCardBody extends StatelessWidget {
                 trimMode: TrimMode.Line,
                 trimLines: trimLine ?? 8,
                 trimCollapsedText: "더보기",
-                moreStyle: TextStyle(color: Colors.blue, fontSize: 13),
-                lessStyle: TextStyle(color: Colors.blue),
+                moreStyle: Theme.of(context)
+                    .textTheme
+                    .caption!
+                    .merge(const TextStyle(color: Colors.blue)),
+                lessStyle: Theme.of(context)
+                    .textTheme
+                    .caption!
+                    .merge(const TextStyle(color: Colors.blue)),
               ),
               controller.linkPreview != null
                   ? Container(
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.all(2),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         // border: Border.all(color: Colors.black12),
                         border: Border(
                             top: BorderSide(color: Colors.black12),

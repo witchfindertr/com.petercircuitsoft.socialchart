@@ -50,9 +50,9 @@ class ScreenNotice extends GetView<ScreenNoticeController> {
                 },
                 builderDelegate: PagedChildBuilderDelegate<
                     QueryDocumentSnapshot<ModelUserNotice>>(
-                  itemBuilder: ((context, item, index) {
+                  itemBuilder: (context, item, index) {
                     return Text(item.data().insightCardId);
-                  }),
+                  },
                   noItemsFoundIndicatorBuilder: (context) {
                     return Container(
                       padding: EdgeInsets.all(10),

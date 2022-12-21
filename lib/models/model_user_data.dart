@@ -10,8 +10,8 @@ class ModelUserData {
     this.introductionMessage,
     this.userUrl,
     this.belong,
-    this.followerCount = 0,
-    this.followingCount = 0,
+    this.followerCounter = 0,
+    this.followingCounter = 0,
   });
   final Timestamp createdAt; //creation time
   final String userEmail;
@@ -21,8 +21,8 @@ class ModelUserData {
   final String? introductionMessage; // user text reported
   final String? userUrl;
   final String? belong;
-  final int? followerCount;
-  final int? followingCount;
+  final int? followerCounter;
+  final int? followingCounter;
   ModelUserData.fromJson(Map<String, Object?> json)
       : this(
           createdAt: json['createdAt']! as Timestamp,
@@ -33,8 +33,8 @@ class ModelUserData {
           introductionMessage: json['introductionMessage'] as String?,
           userUrl: json['userUrl'] as String?,
           belong: json['belong'] as String?,
-          followerCount: json['followerCount'] as int?,
-          followingCount: json['followingCount'] as int?,
+          followerCounter: json['followerCounter'] as int?,
+          followingCounter: json['followingCounter'] as int?,
         );
   Map<String, Object?> toJson() {
     return {
@@ -46,8 +46,8 @@ class ModelUserData {
       'introductionMessage': introductionMessage,
       'userUrl': userUrl,
       'belong': belong,
-      'followerCount': followerCount,
-      'followingCount': followingCount,
+      'followerCounter': followerCounter,
+      'followingCounter': followingCounter,
     };
   }
 }

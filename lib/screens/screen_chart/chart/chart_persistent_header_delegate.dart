@@ -42,7 +42,7 @@ class ChartPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
         children: [
           InsightCardHeader(),
           SizedBox(
-            height: height - 39,
+            height: height - 41,
             child: Listener(
               onPointerSignal: (event) {
                 // if (event is PointerScrollEvent) {

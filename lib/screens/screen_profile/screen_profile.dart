@@ -29,9 +29,10 @@ class ScreenProfile extends GetView<ScreenProfileController> {
     return SafeArea(
       child: Scaffold(
         body: RefreshIndicator(
-          onRefresh: () => Future.sync(
-            () => controller.pagingController.refresh(),
-          ),
+          onRefresh: () => Future.sync(() {
+            controller.pagingController.refresh();
+            controller.fetchProfileUserData();
+          }),
           child: CustomScrollView(
             controller: controller.scrollController,
             slivers: [

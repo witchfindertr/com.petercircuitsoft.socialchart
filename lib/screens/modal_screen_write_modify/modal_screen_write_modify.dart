@@ -23,19 +23,17 @@ class ModalScreenWriteModify extends GetView<ModalScreenWriteModifyController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppbar(
+      appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 0,
         automaticallyImplyLeading: true,
         centerTitle: true,
-        leading: LinearGradientMask(
-          child: CupertinoButton(
-            onPressed: () => Navigator.pop(context),
-            child: Icon(
-              CupertinoIcons.xmark,
-            ),
-          ),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).textTheme.bodyMedium!.color),
+        title: Text(
+          "${controller.chartId} 차트",
+          style: Theme.of(context).textTheme.headline6,
         ),
-        titleText: "${controller.chartId} 차트",
         actions: [
           Obx(
             () => appbarSendButton(controller.userText.isNotEmpty
@@ -67,9 +65,10 @@ class ModalScreenWriteModify extends GetView<ModalScreenWriteModifyController> {
           child: Column(
             children: [
               DetectableTextField(
+                basicStyle: Theme.of(context).textTheme.bodyMedium,
                 keyboardType: TextInputType.multiline,
                 detectionRegExp: hashTagUrlRegExp,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "자신의 인사이트를 공유해보세요!",
                   border: InputBorder.none,
                 ),

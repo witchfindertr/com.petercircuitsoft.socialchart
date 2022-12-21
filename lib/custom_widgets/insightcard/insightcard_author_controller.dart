@@ -141,6 +141,10 @@ class InsightCardAuthorController extends GetxController {
     return userDB.blockUser(userId);
   }
 
+  Future<bool> blockCard(String cardId) async {
+    return userDB.blockCard(cardId);
+  }
+
   @override
   void onInit() {
     userDB.checkAmIfollowing(cardData.author.id).then(

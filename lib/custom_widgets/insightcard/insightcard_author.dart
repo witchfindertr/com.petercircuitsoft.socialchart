@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +7,6 @@ import 'package:socialchart/controllers/user_data_fetcher.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_author_controller.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
 import 'package:socialchart/custom_widgets/user_avata.dart';
-import 'package:socialchart/models/model_user_data.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
 import 'package:socialchart/screens/modal_screen_report/modal_screen_report.dart';
@@ -22,14 +19,14 @@ import 'package:timeago/timeago.dart' as timeago;
 class InsightCardAuthor extends StatelessWidget {
   const InsightCardAuthor({
     super.key,
-    required this.tag,
+    required this.routeName,
     required this.cardId,
     required this.cardData,
     // required this.elapsed,
     this.navKey,
   });
   final NavKeys? navKey;
-  final String tag;
+  final String routeName;
   final ModelInsightCard cardData;
   final String cardId;
   // final String elapsed;
@@ -40,7 +37,7 @@ class InsightCardAuthor extends StatelessWidget {
         tag: cardData.author.id);
     return GetBuilder(
         init: InsightCardAuthorController(
-            cardId: cardId, cardData: cardData, cardTag: tag),
+            cardId: cardId, cardData: cardData, cardTag: cardId + routeName),
         tag: cardId,
         builder: (controller) {
           return Container(
@@ -106,7 +103,7 @@ class InsightCardAuthor extends StatelessWidget {
     return <PopupMenuEntry<String>>[
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
-        value: "1",
+        value: "reportCard",
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -122,7 +119,7 @@ class InsightCardAuthor extends StatelessWidget {
       ),
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
-        value: "2",
+        value: "blockCard",
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -132,6 +129,12 @@ class InsightCardAuthor extends StatelessWidget {
             Icon(CupertinoIcons.eye_slash),
           ],
         ),
+        onTap: () => controller.blockCard(cardId).then((value) {
+          if (value) {
+          } else {
+            Get.snackbar("오류", "뭔가 문제f가 발생했어요.");
+          }
+        }),
       ),
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
@@ -142,21 +145,25 @@ class InsightCardAuthor extends StatelessWidget {
             Text(
               controller.amIfollowing ? "팔로우 취소" : "팔로우",
             ),
-            Icon(CupertinoIcons.person_crop_circle_badge_plus),
+            Icon(
+              controller.amIfollowing
+                  ? CupertinoIcons.person_badge_minus
+                  : CupertinoIcons.person_badge_plus,
+            ),
           ],
         ),
         onTap: () => controller.toggleFollowButton(cardData.author.id),
       ),
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
-        value: "2",
+        value: "blockUser",
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               '사용자 차단',
             ),
-            Icon(CupertinoIcons.person_crop_circle_badge_xmark),
+            Icon(CupertinoIcons.hand_raised_slash),
           ],
         ),
         onTap: () async {
@@ -199,7 +206,7 @@ class InsightCardAuthor extends StatelessWidget {
       ),
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
-        value: "2",
+        value: "dislikeCard",
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -220,12 +227,15 @@ class InsightCardAuthor extends StatelessWidget {
     return <PopupMenuEntry<String>>[
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
-        value: "1",
+        value: "modifyCard",
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               '카드 수정',
+            ),
+            SizedBox(
+              width: 30,
             ),
             Icon(CupertinoIcons.pencil_ellipsis_rectangle),
           ],
@@ -242,17 +252,21 @@ class InsightCardAuthor extends StatelessWidget {
           );
           //todo make the code more cleaner
           if (result == "complete")
-            Get.find<InsightCardController>(tag: tag).refreshFunction!();
+            Get.find<InsightCardController>(tag: cardId + routeName)
+                .refreshFunction!();
         },
       ),
       PopupMenuItem<String>(
         textStyle: Theme.of(context).textTheme.bodyMedium,
-        value: "2",
+        value: "deleteCard",
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '카드 삭제   ',
+              '카드 삭제',
+            ),
+            SizedBox(
+              width: 30,
             ),
             Icon(CupertinoIcons.delete),
           ],

@@ -17,8 +17,10 @@ class ModalScreenProfileSetting
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Text("프로필 수정", style: TextStyle(color: Colors.black)),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).textTheme.bodyMedium!.color),
+        title: Text("프로필 수정", style: Theme.of(context).textTheme.headline6),
+        elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
           CupertinoButton(

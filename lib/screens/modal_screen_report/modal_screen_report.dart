@@ -13,19 +13,24 @@ class ModalScreenReport extends GetView<ModalScreenReportController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppbar(
+      appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: true,
         centerTitle: true,
-        leading: LinearGradientMask(
-          child: CupertinoButton(
-            onPressed: () => Navigator.pop(context),
-            child: Icon(
-              CupertinoIcons.xmark,
-            ),
-          ),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).textTheme.bodyMedium!.color),
+        // leading: LinearGradientMask(
+        //   child: CupertinoButton(
+        //     onPressed: () => Navigator.pop(context),
+        //     child: Icon(
+        //       CupertinoIcons.xmark,
+        //     ),
+        //   ),
+        // ),
+        title: Text(
+          "게시물 신고하기",
+          style: Theme.of(context).textTheme.headline6,
         ),
-        titleText: "게시물 신고하기",
         actions: [
           // Obx(
           appbarSendButton(

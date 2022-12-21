@@ -86,7 +86,7 @@ class InsightCard extends StatelessWidget {
                 }
               },
               child: InsightCardAuthor(
-                tag: cardId + routeName,
+                routeName: routeName,
                 navKey: navKey,
                 cardId: cardId,
                 cardData: cardData,

@@ -18,6 +18,7 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).scaffoldBackgroundColor,
       margin: EdgeInsets.all(0),
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(0)),
@@ -46,10 +47,11 @@ class UserProfile extends StatelessWidget {
             width: double.infinity,
             margin: EdgeInsets.all(10),
             child: Text(
-                isCurrentUser
-                    ? "내 인사이트 카드"
-                    : '${userData?.displayName}님의 인사이트 카드',
-                style: Theme.of(context).textTheme.headline5),
+              isCurrentUser
+                  ? "내 인사이트 카드"
+                  : '${userData?.displayName}님의 인사이트 카드',
+              style: Theme.of(context).textTheme.headline5,
+            ),
           ),
         ],
       ),

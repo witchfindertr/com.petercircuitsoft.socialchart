@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/models/firebase_collection_ref.dart';
+import 'package:socialchart/models/model_insightcard_list.dart';
 import 'package:socialchart/models/model_user_list.dart';
 
 class UserDB {
@@ -158,6 +159,23 @@ class UserDB {
         transaction.delete(
           blockedUserListColRef(currentUserId).doc(userId),
         );
+      },
+    ).then((value) => true, onError: (e) {
+      print(e);
+      return false;
+    });
+  }
+
+  Future<bool> blockCard(String cardId) {
+    return firestore.runTransaction(
+      (transaction) async {
+        var result = await transaction
+            .get(blockedCardListColRef(currentUserId).doc(cardId));
+        if (result.exists) {
+          throw ("there is no card in the list");
+        }
+        transaction.set(blockedCardListColRef(currentUserId).doc(cardId),
+            ModelInsightCardList(cardId: cardId, createdAt: Timestamp.now()));
       },
     ).then((value) => true, onError: (e) {
       print(e);

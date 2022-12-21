@@ -43,6 +43,9 @@ void main() async {
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
+        primaryColor: Colors.white,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            selectedItemColor: Colors.blue.shade400),
         scaffoldBackgroundColor: Colors.grey[900],
         backgroundColor: Colors.black,
         cardColor: Colors.grey[800],

@@ -60,7 +60,7 @@ class UserProfileInfo extends StatelessWidget {
                   isURL(userLink) ? launchUrl(Uri.parse(userLink!)) : null;
                 }),
             Text(
-              "팔로워 ${userData?.followerCount ?? 0}명 / 팔로잉 ${userData?.followingCount ?? 0}명",
+              "팔로워 ${userData?.followerCounter ?? 0}명 / 팔로잉 ${userData?.followingCounter ?? 0}명",
               style: Theme.of(context).textTheme.caption!.merge(
                   userData?.userUrl == null
                       ? const TextStyle(color: Colors.grey)
