@@ -35,7 +35,7 @@ class NavigatorMain extends GetView<NavigatorMainController> {
               // showUnselectedLabels: false,
 
               type: BottomNavigationBarType.fixed,
-              items: const [
+              items: [
                 BottomNavigationBarItem(
                   icon: Icon(CupertinoIcons.house),
                   activeIcon: Icon(CupertinoIcons.house_fill),
@@ -47,7 +47,20 @@ class NavigatorMain extends GetView<NavigatorMainController> {
                   label: "탐색",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.bell),
+                  icon: Stack(
+                    children: [
+                      Icon(CupertinoIcons.bell),
+                      Positioned(
+                        // draw a red marble
+                        top: 0.0,
+                        right: 0.0,
+                        child: controller.hasNotice
+                            ? const Icon(Icons.brightness_1,
+                                size: 8.0, color: Colors.redAccent)
+                            : const SizedBox(),
+                      ),
+                    ],
+                  ),
                   activeIcon: Icon(CupertinoIcons.bell_fill),
                   label: "알림",
                 ),

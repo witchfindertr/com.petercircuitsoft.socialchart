@@ -30,7 +30,12 @@ class NavigatorMainController extends GetxController {
 
   Map<String, ScrollController> scrollControllerMap = {};
 
+  final _hasNotice = true.obs;
+  bool get hasNotice => _hasNotice.value;
+  set hasNotice(bool value) => _hasNotice.value = value;
+
   void onBottomTabTap(int index) {
+    if (index == NavKeys.notice.index) hasNotice = false;
     if (currentIndex.index != index) {
       currentIndex = NavKeys.values[index];
       return;
@@ -59,6 +64,7 @@ class NavigatorMainController extends GetxController {
         keyboardVisibilityController.onChange.listen((bool visible) {
       _isBottomTabVisible.value = !visible;
     });
+    //todo get the notice counter and update hasNotice
   }
 
   @override
