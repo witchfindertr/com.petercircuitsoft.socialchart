@@ -96,7 +96,7 @@ class InsightCardBottomController extends GetxController {
       scrapPressed = !scrapPressed;
       firestore.runTransaction((transaction) async {
         transaction.delete(
-          scrapUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid),
+          scrapUserListColRef(cardId).doc(currentUserId!),
         );
         transaction.set(
           userInsightCardColRef()

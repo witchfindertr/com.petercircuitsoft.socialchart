@@ -15,6 +15,7 @@ class ModelInsightCard {
     this.scrapCounter,
     this.likeCounter,
     this.dislikeCounter,
+    this.blockedUserId,
   });
   final Timestamp createdAt; //creation time
   final Timestamp? deletedAt; //creation time
@@ -29,6 +30,7 @@ class ModelInsightCard {
   final int? scrapCounter;
   final int? likeCounter;
   final int? dislikeCounter;
+  final List? blockedUserId;
 
   ModelInsightCard.fromJson(Map<String, dynamic?> json)
       : this(
@@ -47,6 +49,7 @@ class ModelInsightCard {
           scrapCounter: json['scrapCounter'] as int?,
           likeCounter: json['likeCounter'] as int?,
           dislikeCounter: json['dislikeCounter'] as int?,
+          blockedUserId: json['blockedUserId'] as List?,
         );
   Map<String, dynamic?> toJson() {
     return {
@@ -63,6 +66,7 @@ class ModelInsightCard {
       'scrapCounter': scrapCounter,
       'likeCounter': likeCounter,
       'dislikeCounter': dislikeCounter,
+      'blockedUserId': blockedUserId,
     };
   }
 }

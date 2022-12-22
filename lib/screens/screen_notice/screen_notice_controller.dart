@@ -24,13 +24,13 @@ class ScreenNoticeController extends GetxController {
   void fetchUserNotice(DocumentSnapshot<Object?>? pageKey) async {
     QuerySnapshot<ModelUserNotice> loadedUserNotice;
     if (pageKey != null) {
-      loadedUserNotice = await userNoticeColRef(firebaseAuth.currentUser!.uid)
+      loadedUserNotice = await userNoticeColRef(currentUserId!)
           .orderBy("createdAt", descending: true)
           .startAfterDocument(pageKey)
           .limit(_pageSize)
           .get();
     } else {
-      loadedUserNotice = await userNoticeColRef(firebaseAuth.currentUser!.uid)
+      loadedUserNotice = await userNoticeColRef(currentUserId!)
           .orderBy("createdAt", descending: true)
           .limit(_pageSize)
           .get();

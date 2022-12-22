@@ -167,19 +167,27 @@ class UserDB {
   }
 
   Future<bool> blockCard(String cardId) {
-    return firestore.runTransaction(
-      (transaction) async {
-        var result = await transaction
-            .get(blockedCardListColRef(currentUserId).doc(cardId));
-        if (result.exists) {
-          throw ("there is no card in the list");
-        }
-        transaction.set(blockedCardListColRef(currentUserId).doc(cardId),
-            ModelInsightCardList(cardId: cardId, createdAt: Timestamp.now()));
+    return userInsightCardColRef().doc(cardId).update(
+      {
+        "blockedUserId": FieldValue.arrayUnion([currentUserId]),
       },
     ).then((value) => true, onError: (e) {
       print(e);
       return false;
     });
+    // return firestore.runTransaction(
+    //   (transaction) async {
+    //     var result = await transaction
+    //         .get(blockedCardListColRef(currentUserId).doc(cardId));
+    //     if (result.exists) {
+    //       throw ("there is no card in the list");
+    //     }
+    //     transaction.set(blockedCardListColRef(currentUserId).doc(cardId),
+    //         ModelInsightCardList(cardId: cardId, createdAt: Timestamp.now()));
+    //   },
+    // ).then((value) => true, onError: (e) {
+    //   print(e);
+    //   return false;
+    // });
   }
 }

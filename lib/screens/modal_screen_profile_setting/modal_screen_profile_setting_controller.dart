@@ -80,8 +80,7 @@ class ModalScreenProfileSettingController extends GetxController {
           onError: (e) => print(e),
         );
     SocialChartController.to.showFullScreenLoadingIndicator = false;
-    Get.find<ScreenProfileController>(tag: NavKeys.profile.name)
-        .fetchProfileUserData();
+    Get.find<ScreenProfileController>(tag: userId).fetchProfileUserData();
   }
 
   Future setUserImage(ImageSource imageSource) async {
