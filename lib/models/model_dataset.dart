@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ModelDataSet {
   const ModelDataSet({
+    required this.id,
     required this.createdAt,
     required this.name,
     required this.dataType,
     this.description,
     required this.data,
   });
+  final String id;
   final Timestamp createdAt; //creation time
   final String name;
   final String dataType; //user Id
@@ -16,6 +18,7 @@ class ModelDataSet {
 
   ModelDataSet.fromJson(Map<String, Object?> json)
       : this(
+          id: json['id'] as String,
           createdAt: json['createdAt'] as Timestamp,
           name: json['name'] as String,
           dataType: json['dataType'] as String,
@@ -24,6 +27,7 @@ class ModelDataSet {
         );
   Map<String, Object?> toJson() {
     return {
+      'id': id,
       'createdAt': createdAt,
       'name': name,
       'dataType': dataType,

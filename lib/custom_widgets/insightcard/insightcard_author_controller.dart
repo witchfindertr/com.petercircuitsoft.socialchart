@@ -26,13 +26,13 @@ class InsightCardAuthorController extends GetxController {
   void onDislikeMenuPress() {
     firestore.runTransaction(
       (transaction) async {
-        final dislikeUser = await transaction.get(
-            dislikeUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid));
+        final dislikeUser = await transaction
+            .get(dislikeUserListColRef(cardId).doc(currentUserId));
         if (!dislikeUser.exists) {
           transaction.set(
             dislikeUser.reference,
             ModelUserList(
-              userId: firebaseAuth.currentUser!.uid,
+              userId: currentUserId!,
               createdAt: Timestamp.now(),
             ),
           );

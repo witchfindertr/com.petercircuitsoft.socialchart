@@ -24,8 +24,7 @@ class ModalScreenProfileSettingController extends GetxController {
       {required this.userId, required this.userData});
   final ImagePicker imagePicker = ImagePicker();
 
-  Reference storageRef =
-      firestorage.ref("/userImage/${firebaseAuth.currentUser!.uid}");
+  Reference storageRef = firestorage.ref("/userImage/${currentUserId}");
 
   final displayNameFieldController = TextEditingController();
   final introductinoFieldController = TextEditingController();
@@ -72,10 +71,7 @@ class ModalScreenProfileSettingController extends GetxController {
       userUpdateData["backgroundImageUrl"] = backgroundNewImageUrl;
     }
 
-    await userDataColRef()
-        .doc(firebaseAuth.currentUser!.uid)
-        .update(userUpdateData)
-        .then(
+    await userDataColRef().doc(currentUserId).update(userUpdateData).then(
           (value) {},
           onError: (e) => print(e),
         );

@@ -57,7 +57,9 @@ class InsightCard extends StatelessWidget {
           children: <Widget>[
             showHeader
                 ? GestureDetector(
-                    child: InsightCardHeader(),
+                    child: InsightCardHeader(
+                      chartId: cardData.chartId,
+                    ),
                     behavior: HitTestBehavior.opaque,
                     onTap: () {
                       Get.toNamed(

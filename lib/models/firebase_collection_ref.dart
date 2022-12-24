@@ -43,7 +43,7 @@ CollectionReference<ModelInsightCardList> scrappedInsightCardListColRef(
       );
 }
 
-CollectionReference<ModelChartList> userInterestedCharListColRef(
+CollectionReference<ModelChartList> userInterestedChartListColRef(
     String userId) {
   return firestore
       .collection("userData/$userId/interestedChartList")
@@ -139,10 +139,10 @@ CollectionReference<ModelUserReport> userReportColRef() {
 }
 
 //for Chart
-CollectionReference<ModelChartData> chartDataColRef() {
+CollectionReference<ModelChartInfo> chartInfoColRef() {
   return firestore.collection("chartData").withConverter(
       fromFirestore: ((snapshot, options) =>
-          ModelChartData.fromJson(snapshot.data()!)),
+          ModelChartInfo.fromJson(snapshot.data()!)),
       toFirestore: (value, options) => value.toJson());
 }
 

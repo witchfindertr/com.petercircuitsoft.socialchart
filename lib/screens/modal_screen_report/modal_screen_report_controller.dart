@@ -34,7 +34,7 @@ class ModalScreenReportController extends GetxController {
         createdAt: Timestamp.now(),
         cardId: cardId,
         reportIndex: reportItem.index,
-        reporterId: firebaseAuth.currentUser!.uid,
+        reporterId: currentUserId!,
         extraUserText: textController.text,
       ),
     );

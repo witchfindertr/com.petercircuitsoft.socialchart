@@ -83,37 +83,32 @@ class ScreenChartController extends GetxController {
     firestore.runTransaction((transaction) async {
       if (isChartAdded) {
         //delete user to the list on chart collection
-        transaction.delete(interestedChartUserListColRef(chartId)
-            .doc(firebaseAuth.currentUser!.uid));
+        transaction
+            .delete(interestedChartUserListColRef(chartId).doc(currentUserId));
         //decrease interested user counter
         transaction.set(
-            chartDataColRef()
+            chartInfoColRef()
                 .doc(chartId)
                 .collection(SHARD_COLLECTION_ID)
                 .doc(),
             {"interestedUserCounter": -1});
         //delete chart id from the user interested chart list
-        transaction.delete(
-            userInterestedCharListColRef(firebaseAuth.currentUser!.uid)
-                .doc(chartId));
+        transaction.delete(userInterestedChartListColRef(currentUserId!).doc());
       } else {
         //add user to the list on chart collection
         transaction.set(
-            interestedChartUserListColRef(chartId)
-                .doc(firebaseAuth.currentUser!.uid),
-            ModelUserList(
-                createdAt: timeStamp, userId: firebaseAuth.currentUser!.uid));
+            interestedChartUserListColRef(chartId).doc(currentUserId),
+            ModelUserList(createdAt: timeStamp, userId: currentUserId!));
         //increase interested user counter
         transaction.set(
-            chartDataColRef()
+            chartInfoColRef()
                 .doc(chartId)
                 .collection(SHARD_COLLECTION_ID)
                 .doc(),
             {"interestedUserCounter": 1});
         //add chart id to the interested chart list
         transaction.set(
-          userInterestedCharListColRef(firebaseAuth.currentUser!.uid)
-              .doc(chartId),
+          userInterestedChartListColRef(currentUserId!).doc(),
           ModelChartList(
             chartId: chartId,
             createdAt: timeStamp,
@@ -187,7 +182,7 @@ class ScreenChartController extends GetxController {
         .listen(_onScroll);
 
     interestedChartUserListColRef(chartId)
-        .doc(firebaseAuth.currentUser!.uid)
+        .doc(currentUserId)
         .get()
         .then((value) => isChartAdded = value.exists, onError: (e) => print(e));
 

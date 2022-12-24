@@ -64,9 +64,9 @@ class InsightCardBottomController extends GetxController {
       firestore.runTransaction((transaction) async {
         //add user to scrap user list
         transaction.set(
-          scrapUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid),
+          scrapUserListColRef(cardId).doc(currentUserId),
           ModelUserList(
-            userId: firebaseAuth.currentUser!.uid,
+            userId: currentUserId!,
             createdAt: Timestamp.now(),
           ),
         );
@@ -125,10 +125,9 @@ class InsightCardBottomController extends GetxController {
       firestore.runTransaction(
         (transaction) async {
           transaction.set(
-              likeUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid),
+              likeUserListColRef(cardId).doc(currentUserId),
               ModelUserList(
-                  userId: firebaseAuth.currentUser!.uid,
-                  createdAt: Timestamp.now()));
+                  userId: currentUserId!, createdAt: Timestamp.now()));
           transaction.set(
               userInsightCardColRef()
                   .doc(cardId)
@@ -144,8 +143,7 @@ class InsightCardBottomController extends GetxController {
       likePressed = !likePressed;
       firestore.runTransaction(
         (transaction) async {
-          transaction.delete(
-              likeUserListColRef(cardId).doc(firebaseAuth.currentUser!.uid));
+          transaction.delete(likeUserListColRef(cardId).doc(currentUserId));
           transaction.set(
               userInsightCardColRef()
                   .doc(cardId)

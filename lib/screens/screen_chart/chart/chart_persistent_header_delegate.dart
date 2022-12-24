@@ -40,7 +40,7 @@ class ChartPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         children: [
-          InsightCardHeader(),
+          InsightCardHeader(chartId: cardData!.chartId),
           SizedBox(
             height: height - 41,
             child: Listener(

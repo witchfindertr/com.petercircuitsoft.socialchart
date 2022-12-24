@@ -6,10 +6,7 @@ import 'package:socialchart/navigators/navigator_main/navigator_main_controller.
 import 'package:socialchart/navigators/tab_navigator_notice.dart';
 import 'package:socialchart/navigators/tab_navigator_profile.dart';
 // import 'package:cupertino_icons/cupertino_icons.dart';
-
 import 'package:get/get.dart';
-import 'package:socialchart/app_constant.dart';
-import 'package:socialchart/screens/screen_home/screen_home_controller.dart';
 
 class NavigatorMain extends GetView<NavigatorMainController> {
   const NavigatorMain({super.key});
@@ -49,7 +46,7 @@ class NavigatorMain extends GetView<NavigatorMainController> {
                 BottomNavigationBarItem(
                   icon: Stack(
                     children: [
-                      Icon(CupertinoIcons.bell),
+                      const Icon(CupertinoIcons.bell),
                       Positioned(
                         // draw a red marble
                         top: 0.0,
@@ -64,7 +61,7 @@ class NavigatorMain extends GetView<NavigatorMainController> {
                   activeIcon: Icon(CupertinoIcons.bell_fill),
                   label: "알림",
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(CupertinoIcons.person),
                   activeIcon: Icon(CupertinoIcons.person_fill),
                   label: "내정보",
@@ -75,7 +72,7 @@ class NavigatorMain extends GetView<NavigatorMainController> {
                 controller.onBottomTabTap(index);
               },
             )
-          : SizedBox(height: 0)),
+          : const SizedBox(height: 0)),
     );
   }
 }

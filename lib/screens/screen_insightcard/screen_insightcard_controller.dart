@@ -134,7 +134,7 @@ class ScreenInsightCardController extends GetxController {
             : now;
     await userCommentColRef(cardId)
         .add(ModelUserComment(
-            author: firebaseAuth.currentUser!.uid,
+            author: currentUserId!,
             comment: textController.text,
             createdAt: now,
             commentCreatedAt: commentCreatedAt))

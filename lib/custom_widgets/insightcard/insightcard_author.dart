@@ -63,7 +63,7 @@ class InsightCardAuthor extends StatelessWidget {
                       ScreenProfile.routeName) {
                     return;
                   }
-                  if (cardData.author.id != firebaseAuth.currentUser!.uid) {
+                  if (cardData.author.id != currentUserId) {
                     Get.toNamed(
                       ScreenProfile.routeName,
                       id: navKey?.index,

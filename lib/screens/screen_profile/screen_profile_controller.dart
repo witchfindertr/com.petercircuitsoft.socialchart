@@ -88,7 +88,7 @@ class ScreenProfileController extends GetxController {
   }
 
   // Future<bool> checkAmIfollowing(String userId) {
-  //   return followingListColRef(firebaseAuth.currentUser!.uid)
+  //   return followingListColRef(currentUserId)
   //       .doc(userId)
   //       .get()
   //       .then((value) {
