@@ -68,14 +68,14 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
                         )
                       : const SizedBox(),
                 ),
-                PagedSliverList.separated(
+                PagedSliverList(
                   pagingController: controller.pagingController,
-                  separatorBuilder: (context, index) {
-                    return Container(
-                      color: Theme.of(context).backgroundColor,
-                      height: 8,
-                    );
-                  },
+                  // separatorBuilder: (context, index) {
+                  //   return Container(
+                  //     color: Theme.of(context).backgroundColor,
+                  //     height: 8,
+                  //   );
+                  // },
                   builderDelegate: PagedChildBuilderDelegate<
                       QueryDocumentSnapshot<ModelUserComment>>(
                     itemBuilder: ((context, item, index) {

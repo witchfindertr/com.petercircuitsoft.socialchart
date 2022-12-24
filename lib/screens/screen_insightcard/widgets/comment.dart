@@ -34,7 +34,7 @@ class Comment extends StatelessWidget {
                 top: 10,
                 left: userComment.createdAt == userComment.commentCreatedAt
                     ? 0
-                    : 30,
+                    : 50,
               ),
               child: userAvatar(
                 padding: 0,

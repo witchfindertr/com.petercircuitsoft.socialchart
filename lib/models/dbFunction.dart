@@ -83,8 +83,9 @@ class UserDB {
     return firestore.runTransaction(
       (transaction) async {
         //read following list
-        var result = await transaction
-            .get(followingListColRef(currentUserId).doc(userId));
+        var result = await transaction.get(
+          followingListColRef(currentUserId).doc(userId),
+        );
 
         if (!result.exists) throw ("There is no userId in the list");
 
