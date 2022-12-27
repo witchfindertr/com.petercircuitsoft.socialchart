@@ -13,7 +13,6 @@ import 'package:socialchart/screens/modal_screen_write_modify/modal_screen_write
 import 'package:socialchart/screens/modal_screen_write_modify/modal_screen_write_modify_binding.dart';
 import 'package:socialchart/screens/screen_chart/chart/chart_persistent_header_delegate.dart';
 import 'package:socialchart/screens/screen_chart/screen_chart_controller.dart';
-import 'package:socialchart/screens/screen_write/screen_write.dart';
 
 class ScreenChart extends GetView<ScreenChartController> {
   const ScreenChart({
@@ -24,7 +23,7 @@ class ScreenChart extends GetView<ScreenChartController> {
   final NavKeys navKey;
   @override
   // TODO: implement tag
-  String? get tag => navKey?.name;
+  String? get tag => navKey.name;
 
   Widget floatingButton() {
     return ElevatedButton(
@@ -40,7 +39,6 @@ class ScreenChart extends GetView<ScreenChartController> {
           controller.pagingController.refresh();
         }
       },
-      child: Icon(Icons.add),
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
@@ -58,11 +56,13 @@ class ScreenChart extends GetView<ScreenChartController> {
           },
         ),
       ),
+      child: const Icon(Icons.add),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    //for function tab to scroll top, scroll controller need to be sent
     NavigatorMainController.to.scrollControllerMap.addEntries(
         {'${navKey?.index}$routeName': controller.scrollController}.entries);
     return SafeArea(
@@ -73,8 +73,11 @@ class ScreenChart extends GetView<ScreenChartController> {
           ),
           child: NotificationListener<ScrollNotification>(
             onNotification: (ScrollNotification notification) {
-              if (!controller.streamController.isClosed) {
+              if (!controller.streamController.isClosed &&
+                  notification.metrics.axisDirection != AxisDirection.left &&
+                  notification.metrics.axisDirection != AxisDirection.right) {
                 controller.streamController.add(notification);
+                print(notification.metrics.axisDirection);
               }
               return false;
             },
@@ -97,6 +100,7 @@ class ScreenChart extends GetView<ScreenChartController> {
                   () => SliverPersistentHeader(
                     pinned: true,
                     delegate: ChartPersistentHeaderDelegate(
+                      chartId: controller.chartId,
                       cardData: controller.currentInsightCardData,
                       height: MediaQuery.of(context).size.height * 0.25,
                     ),

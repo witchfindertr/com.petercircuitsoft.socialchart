@@ -14,9 +14,11 @@ import 'package:socialchart/models/model_user_insightcard.dart';
 class ChartPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   ChartPersistentHeaderDelegate({
     required this.cardData,
+    required this.chartId,
     required this.height,
   });
   final ModelInsightCard? cardData;
+  final String chartId;
   final double height;
   final spots = List.generate(101, (i) => (i - 50) / 10)
       .map((x) => FlSpot(x, sin(x)))
@@ -40,75 +42,83 @@ class ChartPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         children: [
-          InsightCardHeader(chartId: cardData!.chartId),
-          SizedBox(
-            height: height - 41,
-            child: Listener(
-              onPointerSignal: (event) {
-                // if (event is PointerScrollEvent) {
-                print("PointerScrollEvent");
-                // }
-              },
-              child: GestureDetector(
-                onHorizontalDragUpdate: (details) {
-                  double primDelta = details.primaryDelta ?? 0.0;
-                  if (primDelta != 0) {
-                    if (primDelta.isNegative) {
-                      print("negative");
-                    } else {
-                      print("positive");
-                    }
-                  }
-                },
-                onScaleStart: (details) {
-                  print('start');
-                },
-                onScaleUpdate: (details) {
-                  print("onScale:${details}");
-                },
-                child: LineChart(
-                  LineChartData(
-                    //grid
-                    gridData: FlGridData(show: false),
-                    //tile
-                    titlesData: FlTitlesData(
-                      rightTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: false,
+          InsightCardHeader(chartId: chartId),
+          Stack(
+            children: [
+              Text(
+                cardData?.createdAt.toDate().toString() ?? "null",
+                overflow: TextOverflow.clip,
+              ),
+              SizedBox(
+                height: height - 41,
+                child: Listener(
+                  onPointerSignal: (event) {
+                    // if (event is PointerScrollEvent) {
+                    print("PointerScrollEvent");
+                    // }
+                  },
+                  child: GestureDetector(
+                    onHorizontalDragUpdate: (details) {
+                      double primDelta = details.primaryDelta ?? 0.0;
+                      if (primDelta != 0) {
+                        if (primDelta.isNegative) {
+                          print("negative");
+                        } else {
+                          print("positive");
+                        }
+                      }
+                    },
+                    // onScaleStart: (details) {
+                    //   print('start');
+                    // },
+                    // onScaleUpdate: (details) {
+                    //   print("onScale:${details}");
+                    // },
+                    child: LineChart(
+                      LineChartData(
+                        //grid
+                        gridData: FlGridData(show: false),
+                        //tile
+                        titlesData: FlTitlesData(
+                          rightTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: false,
+                            ),
+                          ),
+                          leftTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: false,
+                            ),
+                          ),
+                          topTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                                // showTitles: false,
+                                ),
+                          ),
                         ),
-                      ),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: false,
-                        ),
-                      ),
-                      topTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: false,
-                        ),
+                        minY: -1.5,
+                        maxY: 1.5,
+                        clipData: FlClipData.all(),
+                        lineBarsData: [
+                          LineChartBarData(
+                            color: Colors.black,
+                            spots: spots,
+                            isCurved: true,
+                            isStrokeCapRound: true,
+                            barWidth: 3,
+                            belowBarData: BarAreaData(
+                              show: false,
+                            ),
+                            dotData: FlDotData(show: false),
+                          ),
+                        ],
+                        // lineTouchData: LineTouchData(enabled: false),
                       ),
                     ),
-                    minY: -1.5,
-                    maxY: 1.5,
-                    clipData: FlClipData.all(),
-                    lineBarsData: [
-                      LineChartBarData(
-                        color: Colors.black,
-                        spots: spots,
-                        isCurved: true,
-                        isStrokeCapRound: true,
-                        barWidth: 3,
-                        belowBarData: BarAreaData(
-                          show: false,
-                        ),
-                        dotData: FlDotData(show: false),
-                      ),
-                    ],
-                    lineTouchData: LineTouchData(enabled: false),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
           // Flexible(
           //     child: Center(

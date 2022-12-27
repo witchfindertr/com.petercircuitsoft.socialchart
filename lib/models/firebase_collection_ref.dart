@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:socialchart/models/model_chart_data.dart';
+import 'package:socialchart/models/model_chart_info.dart';
 import 'package:socialchart/models/model_chart_list.dart';
+import 'package:socialchart/models/model_data_set.dart';
 import 'package:socialchart/models/model_insightcard_list.dart';
 import 'package:socialchart/models/model_report_card.dart';
 import 'package:socialchart/models/model_user_list.dart';
@@ -140,7 +141,7 @@ CollectionReference<ModelUserReport> userReportColRef() {
 
 //for Chart
 CollectionReference<ModelChartInfo> chartInfoColRef() {
-  return firestore.collection("chartData").withConverter(
+  return firestore.collection("chartInfo").withConverter(
       fromFirestore: ((snapshot, options) =>
           ModelChartInfo.fromJson(snapshot.data()!)),
       toFirestore: (value, options) => value.toJson());
@@ -149,7 +150,7 @@ CollectionReference<ModelChartInfo> chartInfoColRef() {
 CollectionReference<ModelUserList> interestedChartUserListColRef(
     String chartId) {
   return firestore
-      .collection("chartData/$chartId/interestedChartUserList")
+      .collection("chartInfo/$chartId/interestedChartUserList")
       .withConverter(
         fromFirestore: ((snapshot, options) =>
             ModelUserList.fromJson(snapshot.data()!)),
@@ -162,6 +163,15 @@ CollectionReference<ModelReportCard> reportCardColRef() {
   return firestore.collection("cardReports").withConverter(
         fromFirestore: (snapshot, options) =>
             ModelReportCard.fromJson(snapshot.data()!),
+        toFirestore: (value, options) => value.toJson(),
+      );
+}
+
+//for eventData
+CollectionReference<ModelDataSet> dataSetRef() {
+  return firestore.collection('dataSets').withConverter(
+        fromFirestore: (snapshot, options) =>
+            ModelDataSet.fromJson(snapshot.data()!),
         toFirestore: (value, options) => value.toJson(),
       );
 }

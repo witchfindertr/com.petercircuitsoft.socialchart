@@ -87,11 +87,9 @@ class ScreenChartController extends GetxController {
             .delete(interestedChartUserListColRef(chartId).doc(currentUserId));
         //decrease interested user counter
         transaction.set(
-            chartInfoColRef()
-                .doc(chartId)
-                .collection(SHARD_COLLECTION_ID)
-                .doc(),
-            {"interestedUserCounter": -1});
+          chartInfoColRef().doc(chartId).collection(SHARD_COLLECTION_ID).doc(),
+          {"interestedUserCounter": -1},
+        );
         //delete chart id from the user interested chart list
         transaction.delete(userInterestedChartListColRef(currentUserId!).doc());
       } else {
@@ -101,11 +99,9 @@ class ScreenChartController extends GetxController {
             ModelUserList(createdAt: timeStamp, userId: currentUserId!));
         //increase interested user counter
         transaction.set(
-            chartInfoColRef()
-                .doc(chartId)
-                .collection(SHARD_COLLECTION_ID)
-                .doc(),
-            {"interestedUserCounter": 1});
+          chartInfoColRef().doc(chartId).collection(SHARD_COLLECTION_ID).doc(),
+          {"interestedUserCounter": 1},
+        );
         //add chart id to the interested chart list
         transaction.set(
           userInterestedChartListColRef(currentUserId!).doc(),
@@ -115,7 +111,9 @@ class ScreenChartController extends GetxController {
           ),
         );
       }
-    }).then((value) => isChartAdded = !isChartAdded);
+    }).then(
+      (value) => isChartAdded = !isChartAdded,
+    );
   }
 
   //for chart cursor
@@ -173,6 +171,7 @@ class ScreenChartController extends GetxController {
 
   @override
   void onInit() {
+    print("on init");
     pagingController.addPageRequestListener((pageKey) {
       fetchInsightCard(pageKey);
     });
@@ -187,11 +186,6 @@ class ScreenChartController extends GetxController {
         .then((value) => isChartAdded = value.exists, onError: (e) => print(e));
 
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override

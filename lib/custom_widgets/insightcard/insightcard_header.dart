@@ -21,7 +21,7 @@ class InsightCardHeader extends StatelessWidget {
             children: [
               Container(
                 child: Text(
-                  controller.chartInfo?.chartName ?? "Loading...",
+                  controller.chartInfo?.name ?? "Loading...",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
@@ -45,8 +45,7 @@ class InsightCardHeader extends StatelessWidget {
             height: 20,
             child: Marquee(
               style: Theme.of(context).textTheme.bodySmall,
-              text:
-                  "NBS 조사는 휴대전화 가상번호(100%)를 이용한 전화 면접으로 이뤄졌고, 표본 오차는 95% 신뢰수준에서 ±3.1% 포인트다. 응답률은 20.2%",
+              text: controller.chartInfo?.description ?? "설명이 없습니다.",
               blankSpace: 100.0,
               startAfter: 1.seconds,
               crossAxisAlignment: CrossAxisAlignment.start,
