@@ -171,7 +171,8 @@ class ScreenChartController extends GetxController {
 
   @override
   void onInit() {
-    print("on init");
+    super.onInit();
+    print("screen chart controller on init");
     pagingController.addPageRequestListener((pageKey) {
       fetchInsightCard(pageKey);
     });
@@ -184,8 +185,6 @@ class ScreenChartController extends GetxController {
         .doc(currentUserId)
         .get()
         .then((value) => isChartAdded = value.exists, onError: (e) => print(e));
-
-    super.onInit();
   }
 
   @override

@@ -71,6 +71,7 @@ dependencies:
   social_login_buttons: ^1.0.7
   flutter_native_splash: ^2.2.16
   marquee: ^2.2.3
+  algolia: ^1.1.1
 
 dev_dependencies:
   flutter_test:

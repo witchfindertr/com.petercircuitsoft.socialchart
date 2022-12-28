@@ -32,3 +32,13 @@ Widget appbarSendButton(VoidCallback? onPressed) {
     ),
   );
 }
+
+Widget appbarAddChart(VoidCallback? onPressed) {
+  return CupertinoButton(
+    disabledColor: Colors.black12,
+    onPressed: onPressed,
+    child: LinearGradientMask(
+      child: Icon(CupertinoIcons.chart_bar_circle, size: 26),
+    ),
+  );
+}

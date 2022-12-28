@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:socialchart/custom_widgets/text_and_field.dart';
 import 'package:socialchart/custom_widgets/user_avata.dart';
 import 'package:socialchart/screens/modal_screen_profile_setting/modal_screen_profile_setting_controller.dart';
 import 'package:validators/validators.dart';
@@ -209,45 +209,6 @@ class ModalScreenProfileSetting
       ),
     );
   }
-}
-
-Widget textAndField({
-  required String text,
-  required TextEditingController controller,
-  String? hintText,
-  int maxLines = 1,
-  int? maxLength,
-}) {
-  return Padding(
-    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          text,
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(height: 10),
-        TextField(
-          maxLines: maxLines,
-          maxLength: maxLength ?? 50,
-          autocorrect: false,
-          maxLengthEnforcement: MaxLengthEnforcement.enforced,
-          controller: controller,
-          decoration: InputDecoration(
-            alignLabelWithHint: false,
-            hintText: hintText,
-            hintStyle: TextStyle(color: Colors.blueAccent),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
 }
 
 Widget dialogMenuItem({
