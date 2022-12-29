@@ -6,7 +6,7 @@ class ModelChartInfo {
   ModelChartInfo({
     required this.createdAt,
     required this.id,
-    required this.author,
+    required this.authorId,
     required this.name,
     required this.type,
     required this.eventDataIds,
@@ -24,7 +24,7 @@ class ModelChartInfo {
   final String id;
 
   ///chart author id
-  final String author; //user email
+  final String authorId; //user email
   ///chart display name
   final String name;
 
@@ -44,7 +44,7 @@ class ModelChartInfo {
       : this(
           createdAt: json['createdAt']! as Timestamp,
           id: json['id']! as String,
-          author: json['author'] as String,
+          authorId: json['authorId'] as String,
           name: json['name'] as String,
           type: ChartType.values.firstWhere(
               (element) => element.toString() == "ChartType.${json["type"]}"),
@@ -59,7 +59,7 @@ class ModelChartInfo {
     return {
       'createdAt': createdAt,
       'id': id,
-      'author': author,
+      'author': authorId,
       'name': name,
       'type': type.toString().split('.').last,
       'description': description,

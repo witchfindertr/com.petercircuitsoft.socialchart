@@ -64,7 +64,7 @@ class ScreenExplore extends GetView<ScreenExploreController> {
                 ),
                 appbarSearchButton(
                   //todo get to search page
-                  () => print("search button pressed"),
+                  callback: () => print("search button pressed"),
                 )
               ],
             ),

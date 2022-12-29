@@ -1,10 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
+import 'package:socialchart/screens/modal_screen_search/modal_screen_search.dart';
+import 'package:socialchart/screens/modal_screen_search/modal_screen_search_binding.dart';
 
-Widget appbarSearchButton(VoidCallback callback) {
+Widget appbarSearchButton({VoidCallback? callback, int? id}) {
   return CupertinoButton(
-    onPressed: callback,
+    onPressed: callback ??
+        () => Get.to(
+              fullscreenDialog: true,
+              id: id,
+              binding: ModalScreenSearchBinding(),
+              () => ModalScreenSearch(),
+            ),
     child: LinearGradientMask(
       child: const Icon(CupertinoIcons.search, size: 26),
     ),

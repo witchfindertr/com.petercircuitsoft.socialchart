@@ -45,7 +45,7 @@ class ScreenProfile extends GetView<ScreenProfileController> {
                   actions: [
                     appbarSearchButton(
                       //todo get to search page
-                      () => print("search button pressed"),
+                      callback: () => print("search button pressed"),
                     )
                   ],
                 ),

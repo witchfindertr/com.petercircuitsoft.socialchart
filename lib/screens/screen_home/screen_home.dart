@@ -12,6 +12,8 @@ import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_insightcard.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
+import 'package:socialchart/screens/modal_screen_search/modal_screen_search.dart';
+import 'package:socialchart/screens/modal_screen_search/modal_screen_search_binding.dart';
 import 'package:socialchart/screens/screen_home/screen_home_controller.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
 
@@ -45,7 +47,7 @@ class ScreenHome extends GetView<ScreenHomeController> {
                 systemOverlayStyle:
                     SystemUiOverlayStyle(statusBarColor: Colors.amber),
                 actions: [
-                  appbarSearchButton(() => print("search pressed")),
+                  appbarSearchButton(),
                 ],
               ),
               PagedSliverList.separated(

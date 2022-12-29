@@ -19,7 +19,11 @@ import 'package:socialchart/socialchart/socialchart_binding.dart';
 import 'package:socialchart/utils/timeago_custom_messages.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+//environment
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 void main() async {
+  await dotenv.load(fileName: ".env");
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   timeago.setLocaleMessages("kr", KrCustomMessages());

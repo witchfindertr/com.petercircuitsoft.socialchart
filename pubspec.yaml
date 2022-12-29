@@ -72,6 +72,8 @@ dependencies:
   flutter_native_splash: ^2.2.16
   marquee: ^2.2.3
   algolia: ^1.1.1
+  typesense: ^0.3.0
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -99,6 +101,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/images/social_login_buttons/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

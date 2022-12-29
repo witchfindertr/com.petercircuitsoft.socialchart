@@ -9,6 +9,7 @@ class ModalScreenCreateChart extends GetView<ModalScreenCreateChartController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         iconTheme:
             IconThemeData(color: Theme.of(context).textTheme.bodyMedium!.color),
         title: Text(
@@ -43,23 +44,27 @@ class ModalScreenCreateChart extends GetView<ModalScreenCreateChartController> {
             ),
             DropdownButton(
               value: controller.selected,
-              items: [
-                DropdownMenuItem(
-                  value: controller.chartData[0],
-                  alignment: Alignment.center,
-                  child: Text("aaaa"),
-                ),
-                DropdownMenuItem(
-                  value: controller.chartData[1],
-                  alignment: Alignment.center,
-                  child: Text("abbbb"),
-                ),
-                DropdownMenuItem(
-                  value: controller.chartData[2],
-                  alignment: Alignment.center,
-                  child: Text("cccc"),
-                ),
-              ],
+              items: controller.chartDataList
+                  .map((value) =>
+                      DropdownMenuItem(value: value, child: Text(value.name)))
+                  .toList(),
+              // [
+              //   DropdownMenuItem(
+              //     value: controller.chartDataList[0],
+              //     alignment: Alignment.center,
+              //     child: Text("aaaa"),
+              //   ),
+              //   DropdownMenuItem(
+              //     value: controller.chartDataList[1],
+              //     alignment: Alignment.center,
+              //     child: Text("abbbb"),
+              //   ),
+              //   DropdownMenuItem(
+              //     value: controller.chartDataList[2],
+              //     alignment: Alignment.center,
+              //     child: Text("cccc"),
+              //   ),
+              // ],
               onChanged: (value) => print(value),
             ),
             textAndField(
