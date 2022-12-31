@@ -2,7 +2,7 @@
     package="com.petercircuitsoft.socialchart">
    <application
         android:label="socialchart"
-        android:name="${applicationName}"
+        android:name="소셜차트"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

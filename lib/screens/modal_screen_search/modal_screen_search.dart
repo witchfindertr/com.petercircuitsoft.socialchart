@@ -37,28 +37,49 @@ class ModalScreenSearch extends GetView<ModalScreenSearchController> {
       ),
       body: SafeArea(
         child: Obx(
-          () => Container(
-            // color: Colors.blueGrey,
-            child: ListView.builder(
-              itemCount: controller.chartList.length,
-              itemBuilder: (context, index) {
-                return chartSummaryListTile(
-                  title: controller.chartList[index].name,
-                  description: controller.chartList[index].description,
-                  tapCallback: () {
-                    //close itself
-                    Get.back();
-                    //navigate to Screen chart
-                    Get.toNamed(
-                      ScreenChart.routeName,
-                      preventDuplicates: true,
-                      id: navigatorId,
-                      arguments: controller.chartList[index].id,
-                    );
-                  },
-                );
-              },
-            ),
+          () => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+                // color: Colors.blueGrey,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  controller.searchFieldController.text.trim().isEmpty
+                      ? SizedBox()
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Text(
+                            '\'${controller.searchFieldController.text.trim()}\'로 검색한 결과',
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                        ),
+                  Flexible(
+                    child: ListView.separated(
+                      itemCount: controller.chartList.length,
+                      separatorBuilder: (context, index) {
+                        return Divider(
+                          height: 2,
+                        );
+                      },
+                      itemBuilder: (context, index) {
+                        return CharSummaryListTile(
+                          title: controller.chartList[index].name,
+                          description: controller.chartList[index].description,
+                          tapCallback: () {
+                            //close itself
+                            Get.back();
+                            //navigate to Screen chart
+                            Get.toNamed(
+                              ScreenChart.routeName,
+                              preventDuplicates: true,
+                              id: navigatorId,
+                              arguments: controller.chartList[index].id,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ]),
           ),
         ),
       ),
