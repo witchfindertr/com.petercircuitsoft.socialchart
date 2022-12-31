@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/screens/screen_chart/screen_chart.dart';
+import 'package:socialchart/screens/screen_chart/screen_chart_binding.dart';
 import 'package:socialchart/screens/screen_explore/screen_explore.dart';
 import 'package:socialchart/screens/screen_explore/screen_explore_binding.dart';
 import 'package:socialchart/screens/screen_insightcard/screen_insightcard.dart';
@@ -31,6 +33,15 @@ class TabNavigatorExplore extends StatelessWidget {
               page: () => ScreenInsightCard(navKey: NavKeys.explore),
               binding: ScreenInsightCardBinding(
                   navKey: NavKeys.explore, cardId: argc.toString()),
+              settings: settings,
+            );
+          case ScreenChart.routeName:
+            var args = settings.arguments;
+            return GetPageRoute(
+              routeName: ScreenChart.routeName,
+              page: () => ScreenChart(navKey: NavKeys.home),
+              binding: ScreenChartBinding(
+                  navKey: NavKeys.home, chartId: args.toString()),
               settings: settings,
             );
 

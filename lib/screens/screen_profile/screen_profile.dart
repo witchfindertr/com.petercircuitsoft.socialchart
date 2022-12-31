@@ -44,8 +44,9 @@ class ScreenProfile extends GetView<ScreenProfileController> {
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   actions: [
                     appbarSearchButton(
+                      id: navKey.index,
                       //todo get to search page
-                      callback: () => print("search button pressed"),
+                      // callback: () => print("search button pressed"),
                     )
                   ],
                 ),

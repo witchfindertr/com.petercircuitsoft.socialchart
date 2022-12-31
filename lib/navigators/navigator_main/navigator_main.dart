@@ -39,8 +39,8 @@ class NavigatorMain extends GetView<NavigatorMainController> {
                   label: "홈",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.news),
-                  activeIcon: Icon(CupertinoIcons.news_solid),
+                  icon: Icon(CupertinoIcons.rocket),
+                  activeIcon: Icon(CupertinoIcons.rocket_fill),
                   label: "탐색",
                 ),
                 BottomNavigationBarItem(

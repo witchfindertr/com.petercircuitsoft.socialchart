@@ -57,8 +57,10 @@ class ScreenChartController extends GetxController {
       pagingController.appendPage(loadedInsightCard.docs, nextPageKey);
     }
     //update initial currentInsightCardData
-    if (pageKey == pagingController.firstPageKey) {
-      _currentInsightCardData.value = pagingController.itemList?[0].data();
+    if (pageKey == pagingController.firstPageKey &&
+        pagingController.itemList != null &&
+        pagingController.itemList!.isNotEmpty) {
+      _currentInsightCardData.value = pagingController.itemList?.first.data();
     }
   }
 
@@ -184,7 +186,9 @@ class ScreenChartController extends GetxController {
     interestedChartUserListColRef(chartId)
         .doc(currentUserId)
         .get()
-        .then((value) => isChartAdded = value.exists, onError: (e) => print(e));
+        .then((value) => isChartAdded = value.exists, onError: (e) {
+      print(e);
+    });
   }
 
   @override

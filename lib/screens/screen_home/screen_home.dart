@@ -47,7 +47,7 @@ class ScreenHome extends GetView<ScreenHomeController> {
                 systemOverlayStyle:
                     SystemUiOverlayStyle(statusBarColor: Colors.amber),
                 actions: [
-                  appbarSearchButton(),
+                  appbarSearchButton(id: navKey.index),
                 ],
               ),
               PagedSliverList.separated(
@@ -77,6 +77,24 @@ class ScreenHome extends GetView<ScreenHomeController> {
                           cardData: item.data(),
                         );
                       },
+                    );
+                  },
+                  noItemsFoundIndicatorBuilder: (context) {
+                    return Container(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "아직 인사이트 카드가 없습니다.",
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  },
+                  noMoreItemsIndicatorBuilder: (context) {
+                    return Container(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "👆👆더 이상 인사이트 카드가 없습니다.👆👆",
+                        textAlign: TextAlign.center,
+                      ),
                     );
                   },
                 ),

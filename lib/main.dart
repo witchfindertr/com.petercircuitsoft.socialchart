@@ -23,13 +23,24 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
+  //load environment variable
   await dotenv.load(fileName: ".env");
+
+  //ensure binding
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  //preserve the splash screen
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  //set the locale information fo timeago package
   timeago.setLocaleMessages("kr", KrCustomMessages());
+
+  //initialize firebase package
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  //remove splash screen after 1 second delay
   await Future.delayed(
     const Duration(seconds: 1),
     () => FlutterNativeSplash.remove(),

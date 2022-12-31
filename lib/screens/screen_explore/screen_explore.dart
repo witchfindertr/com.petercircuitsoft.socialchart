@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/appbar_buttons.dart';
+import 'package:socialchart/custom_widgets/chart_summary_listtile.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/app_constant.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
@@ -12,27 +13,6 @@ class ScreenExplore extends GetView<ScreenExploreController> {
   const ScreenExplore({super.key, required this.navKey});
   final NavKeys navKey;
   static const routeName = '/ScreenExplore';
-
-  Widget upChartTile(
-      {required String title,
-      String? description,
-      int? userCount,
-      int? cardCount}) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      isThreeLine: description != null ? true : false,
-      title: Text(title),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          description != null ? Text(description) : SizedBox(),
-          Text(
-            "관심 사용자: ${userCount ?? 0}, 인사이트 카드 수: ${cardCount ?? 0}",
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   // TODO: implement tag
@@ -63,8 +43,9 @@ class ScreenExplore extends GetView<ScreenExploreController> {
                   ),
                 ),
                 appbarSearchButton(
+                  id: navKey.index,
                   //todo get to search page
-                  callback: () => print("search button pressed"),
+                  // callback: () => print("search button pressed"),
                 )
               ],
             ),
@@ -79,22 +60,22 @@ class ScreenExplore extends GetView<ScreenExploreController> {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     SizedBox(height: 10),
-                    upChartTile(
+                    chartSummaryListTile(
                         title: "이더리움",
                         cardCount: 20,
                         userCount: 20,
                         description: "이더리움 업비트 차트"),
-                    upChartTile(
+                    chartSummaryListTile(
                       title: "이태원 참사",
                       cardCount: 2023,
                       userCount: 20,
                     ),
-                    upChartTile(
+                    chartSummaryListTile(
                       title: "달러 환율",
                       cardCount: 2023,
                       userCount: 20,
                     ),
-                    upChartTile(
+                    chartSummaryListTile(
                       title: "금리&주택가격",
                       cardCount: 20,
                       userCount: 20123,

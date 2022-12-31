@@ -143,6 +143,24 @@ class ScreenChart extends GetView<ScreenChartController> {
                         },
                       );
                     },
+                    noItemsFoundIndicatorBuilder: (context) {
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          "아직 인사이트 카드가 없습니다.",
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
+                    noMoreItemsIndicatorBuilder: (context) {
+                      return Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          "👆👆마지막 인사이트 카드에요.👆👆",
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
