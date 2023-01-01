@@ -14,6 +14,7 @@ class ModalScreenSearch extends GetView<ModalScreenSearchController> {
   final int navigatorId;
   @override
   Widget build(BuildContext context) {
+    print(Theme.of(context).appBarTheme);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

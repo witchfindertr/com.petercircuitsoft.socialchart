@@ -31,6 +31,7 @@ class UserProfile extends StatelessWidget {
             isCurrentUser: isCurrentUser,
           ),
           UserProfileInfo(
+            userId: userId!,
             userData: userData,
           ),
           Divider(),

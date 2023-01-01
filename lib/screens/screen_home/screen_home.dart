@@ -44,8 +44,6 @@ class ScreenHome extends GetView<ScreenHomeController> {
               MainSliverAppbar(
                 titleText: 'Social Chart',
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                systemOverlayStyle:
-                    SystemUiOverlayStyle(statusBarColor: Colors.amber),
                 actions: [
                   appbarSearchButton(id: navKey.index),
                 ],

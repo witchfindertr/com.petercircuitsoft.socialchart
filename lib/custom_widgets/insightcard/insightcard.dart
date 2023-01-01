@@ -44,11 +44,11 @@ class InsightCard extends StatelessWidget {
         tag: cardData.author.id);
     return Card(
       color: Theme.of(context).scaffoldBackgroundColor,
-      shape: Border.symmetric(
-        horizontal: BorderSide(
-          color: Theme.of(context).highlightColor,
-        ),
-      ),
+      // shape: Border.symmetric(
+      //   horizontal: BorderSide(
+      //     color: Theme.of(context).highlightColor,
+      //   ),
+      // ),
       margin: const EdgeInsets.all(0),
       semanticContainer: true,
       child: Padding(

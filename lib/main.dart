@@ -19,7 +19,7 @@ import 'package:socialchart/socialchart/socialchart_binding.dart';
 import 'package:socialchart/utils/timeago_custom_messages.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-//environment
+//environment variable
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
@@ -51,10 +51,7 @@ void main() async {
       title: 'SocialChart',
       theme: ThemeData(
         fontFamily: "NotoSansKR",
-        appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-        ),
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[300],
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -63,11 +60,8 @@ void main() async {
             selectedItemColor: Colors.blue.shade400),
         scaffoldBackgroundColor: Colors.grey[900],
         backgroundColor: Colors.black,
-        cardColor: Colors.grey[800],
+        cardColor: Colors.grey[900],
         canvasColor: Colors.grey[900],
-        appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
-        ),
       ),
       initialRoute: "/",
       getPages: [

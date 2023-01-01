@@ -1,12 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socialchart/custom_widgets/text_and_link.dart';
 import 'package:socialchart/models/model_user_data.dart';
+import 'package:socialchart/screens/modal_screen_follower.dart/modal_screen_follower.dart';
+import 'package:socialchart/screens/modal_screen_follower.dart/modal_screen_follower_binding.dart';
 import 'package:socialchart/utils/etc.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:validators/validators.dart';
@@ -14,8 +11,10 @@ import 'package:validators/validators.dart';
 class UserProfileInfo extends StatelessWidget {
   const UserProfileInfo({
     super.key,
+    required this.userId,
     this.userData,
   });
+  final String userId;
   final ModelUserData? userData;
   @override
   Widget build(BuildContext context) {
@@ -59,14 +58,21 @@ class UserProfileInfo extends StatelessWidget {
                   var userLink = completeLinkScheme(userData?.userUrl);
                   isURL(userLink) ? launchUrl(Uri.parse(userLink!)) : null;
                 }),
-            Text(
-              "팔로워 ${userData?.followerCounter ?? 0}명 / 팔로잉 ${userData?.followingCounter ?? 0}명",
-              style: Theme.of(context).textTheme.caption!.merge(
-                  userData?.userUrl == null
-                      ? const TextStyle(color: Colors.grey)
-                      : null),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 3,
+            InkWell(
+              child: Text(
+                "팔로워 ${userData?.followerCounter ?? 0}명 / 팔로잉 ${userData?.followingCounter ?? 0}명",
+                style: Theme.of(context).textTheme.caption!.merge(
+                    userData?.userUrl == null
+                        ? const TextStyle(color: Colors.grey)
+                        : null),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+              ),
+              onTap: () => Get.to(
+                () => ModalScreenFollower(),
+                fullscreenDialog: true,
+                binding: ModalScreenFollowerBinding(userId: userId),
+              ),
             ),
           ],
         ));
