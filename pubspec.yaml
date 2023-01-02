@@ -74,6 +74,7 @@ dependencies:
   algolia: ^1.1.1
   typesense: ^0.3.0
   flutter_dotenv: ^5.0.2
+  elastic_app_search: ^0.4.0
 
 dev_dependencies:
   flutter_test:
