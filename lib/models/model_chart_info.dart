@@ -11,8 +11,8 @@ class ModelChartInfo {
     required this.type,
     required this.eventDataIds,
     this.description,
-    this.insightCardCounter,
-    this.interedtedUserCounter,
+    this.insightCardCounter = 0,
+    this.interestedUserCounter = 0,
 
     //last event description String
     //last event summary List<String>
@@ -38,7 +38,7 @@ class ModelChartInfo {
   ///description for the chart
   final String? description;
   final int? insightCardCounter; // user text reported
-  final int? interedtedUserCounter;
+  final int? interestedUserCounter;
 
   ModelChartInfo.fromJson(Map<String, Object?> json)
       : this(
@@ -49,11 +49,13 @@ class ModelChartInfo {
           type: ChartType.values.firstWhere(
               (element) => element.toString() == "ChartType.${json["type"]}"),
           description: json['description'] as String?,
-          eventDataIds: (json['eventDataIds'] as List<dynamic>)
+          eventDataIds: (json['eventDataIds'] == null
+                  ? []
+                  : json['eventDataIds'] as List<dynamic>)
               .map((e) => e.toString())
               .toList(),
           insightCardCounter: json['insightCardCounter'] as int?,
-          interedtedUserCounter: json['interedtedUserCounter'] as int?,
+          interestedUserCounter: json['interestedUserCounter'] as int?,
         );
   Map<String, Object?> toJson() {
     return {
@@ -65,7 +67,7 @@ class ModelChartInfo {
       'description': description,
       'eventDataIds': eventDataIds,
       'insightCardCounter': insightCardCounter,
-      'interedtedUserCounter': interedtedUserCounter,
+      'interestedUserCounter': interestedUserCounter,
     };
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:socialchart/models/model_typesense_result.dart';
+import 'package:socialchart/models/nouse_model_typesense_result.dart';
 import 'package:typesense/typesense.dart';
 
 class TypesenseSearchInstance {

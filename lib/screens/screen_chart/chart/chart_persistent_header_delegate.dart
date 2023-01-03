@@ -31,15 +31,22 @@ class ChartPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     // TODO: implement build
-    return Card(
-      shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(0)),
-        side: BorderSide(
-          color: Colors.blueGrey.withOpacity(0.3),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        border: Border(
+          top: BorderSide(color: Theme.of(context).dividerColor),
+          bottom: BorderSide(color: Theme.of(context).dividerColor),
         ),
       ),
-      margin: EdgeInsets.zero,
-      color: Theme.of(context).scaffoldBackgroundColor,
+      // shape: ContinuousRectangleBorder(
+      //   borderRadius: BorderRadius.all(Radius.circular(0)),
+      //   side: BorderSide(
+      //     color: Colors.blueGrey.withOpacity(0.3),
+      //   ),
+      // ),
+      // margin: EdgeInsets.zero,
       child: Column(
         children: [
           InsightCardHeader(chartId: chartId),

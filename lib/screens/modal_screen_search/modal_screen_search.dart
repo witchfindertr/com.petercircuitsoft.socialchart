@@ -2,12 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialchart/custom_widgets/chart_summary_listtile.dart';
-import 'package:socialchart/custom_widgets/gradient_mask.dart';
-import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
-import 'package:socialchart/custom_widgets/text_and_field.dart';
 import 'package:socialchart/screens/modal_screen_search/modal_screen_search_controller.dart';
 import 'package:socialchart/screens/screen_chart/screen_chart.dart';
-import 'package:typesense/typesense.dart';
 
 class ModalScreenSearch extends GetView<ModalScreenSearchController> {
   ModalScreenSearch({required this.navigatorId});
@@ -32,7 +28,7 @@ class ModalScreenSearch extends GetView<ModalScreenSearchController> {
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
           ),
-          onChanged: (value) => controller.getSearchResult(value),
+          onChanged: (value) => controller.getSearchResult(value, 1),
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
@@ -65,7 +61,15 @@ class ModalScreenSearch extends GetView<ModalScreenSearchController> {
                         return CharSummaryListTile(
                           title: controller.chartList[index].name,
                           description: controller.chartList[index].description,
+                          userCount:
+                              controller.chartList[index].interestedUserCounter,
+                          cardCount:
+                              controller.chartList[index].insightCardCounter,
                           tapCallback: () {
+                            controller.searchInstance.resultClick(
+                                engine: 'chartinfo',
+                                documentId: controller.chartList[index].id,
+                                query: controller.searchFieldController.text);
                             //close itself
                             Get.back();
                             //navigate to Screen chart

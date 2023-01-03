@@ -22,21 +22,24 @@ class InsightCardHeader extends StatelessWidget {
               Container(
                 child: Text(
                   controller.chartInfo?.name ?? "Loading...",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .merge(TextStyle(fontWeight: FontWeight.bold)),
                 ),
               ),
               Container(
                 //current description
                 child: Text(
                   "39%, +1%",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
               Container(
                 //last event date
                 child: Text(
                   "2022.12.12",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
             ],
