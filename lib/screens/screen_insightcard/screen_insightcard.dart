@@ -176,16 +176,17 @@ class ScreenInsightCard extends GetView<ScreenInsightCardController> {
                       controller: controller.textController,
                       enabled: controller.textFieldEnabled,
                       // onTap: controller.scrollToEnd,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: "댓글을 입력하세요.",
-                        contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(10),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 0),
                   CupertinoButton(
                       padding: const EdgeInsets.all(0),
                       child: const Icon(CupertinoIcons.paperplane),

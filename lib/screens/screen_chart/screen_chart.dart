@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:socialchart/custom_widgets/ads/google_inline_ads.dart';
 import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
@@ -109,10 +110,30 @@ class ScreenChart extends GetView<ScreenChartController> {
                 PagedSliverList.separated(
                   pagingController: controller.pagingController,
                   separatorBuilder: (context, index) {
-                    return Container(
-                      color: Theme.of(context).backgroundColor,
-                      height: 8,
-                    );
+                    return index != 0 && index % 10 == 0
+                        ? Column(
+                            children: [
+                              Container(
+                                color: Theme.of(context).backgroundColor,
+                                height: 8,
+                              ),
+                              GoogleInlineAds(
+                                width: MediaQuery.of(context).size.width,
+                                tag: "Home$index",
+                                height: MediaQuery.of(context).size.width *
+                                    250 /
+                                    300,
+                              ),
+                              Container(
+                                color: Theme.of(context).backgroundColor,
+                                height: 8,
+                              ),
+                            ],
+                          )
+                        : Container(
+                            color: Theme.of(context).backgroundColor,
+                            height: 8,
+                          );
                   },
                   builderDelegate: PagedChildBuilderDelegate<
                       QueryDocumentSnapshot<ModelInsightCard>>(

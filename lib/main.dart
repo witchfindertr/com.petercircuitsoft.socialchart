@@ -11,6 +11,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get_storage/get_storage.dart';
 import 'firebase_options.dart';
 
+/**Google Mobile ads */
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 /**Main App */
 import 'package:socialchart/socialchart/socialchart.dart';
 import 'package:socialchart/socialchart/socialchart_binding.dart';
@@ -34,6 +37,11 @@ void main() async {
 
   //set the locale information fo timeago package
   timeago.setLocaleMessages("kr", KrCustomMessages());
+
+  //google mobile ads initialization
+  MobileAds.instance.initialize();
+  //
+  PlatformViewsService.synchronizeToNativeViewHierarchy(false);
 
   //initialize firebase package
   await Firebase.initializeApp(

@@ -464,6 +464,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3"
+  google_mobile_ads:
+    dependency: "direct main"
+    description:
+      path: "packages/google_mobile_ads"
+      ref: master
+      resolved-ref: a58f4663886d72bcd1ea66a7c0292221e938869f
+      url: "https://github.com/SuaMusica/googleads-mobile-flutter.git"
+    source: git
+    version: "2.2.0"
   google_sign_in:
     dependency: "direct main"
     description:
@@ -1085,6 +1094,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  visibility_detector:
+    dependency: transitive
+    description:
+      name: visibility_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.3"
   win32:
     dependency: transitive
     description:

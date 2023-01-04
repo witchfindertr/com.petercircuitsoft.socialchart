@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:socialchart/custom_widgets/ads/google_inline_ads.dart';
 import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/gradient_mask.dart';
 import 'package:socialchart/custom_widgets/insightcard/insightcard_controller.dart';
@@ -48,17 +49,53 @@ class ScreenHome extends GetView<ScreenHomeController> {
                   appbarSearchButton(id: navKey.index),
                 ],
               ),
+              // SliverToBoxAdapter(
+              //   child: Card(
+              //     child: GoogleInlineAds(
+              //       width: MediaQuery.of(context).size.width,
+              //       tag: "HomeMain",
+              //       height: MediaQuery.of(context).size.width * 250 / 300,
+              //     ),
+              //   ),
+              // ),
               PagedSliverList.separated(
                 pagingController: controller.pagingController,
                 separatorBuilder: (context, index) {
-                  return Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: 8,
-                  );
+                  // return Container(
+                  //   color: Theme.of(context).backgroundColor,
+                  //   height: 8,
+                  // );
+                  return index != 0 && index % 10 == 0
+                      ? Column(
+                          children: [
+                            Container(
+                              color: Theme.of(context).backgroundColor,
+                              height: 8,
+                            ),
+                            GoogleInlineAds(
+                              width: MediaQuery.of(context).size.width,
+                              tag: "Home$index",
+                              height:
+                                  MediaQuery.of(context).size.width * 250 / 300,
+                            ),
+                            Container(
+                              color: Theme.of(context).backgroundColor,
+                              height: 8,
+                            ),
+                          ],
+                        )
+                      : Container(
+                          color: Theme.of(context).backgroundColor,
+                          height: 8,
+                        );
                 },
                 builderDelegate: PagedChildBuilderDelegate<
                     QueryDocumentSnapshot<ModelInsightCard>>(
                   itemBuilder: (context, item, index) {
+                    // Get.put<InsightCardController>(InsightCardController(
+                    //     cardId: item.id, cardInfo: item.data()),tag:item.id + routeName);
+                    // if(index != 0 && index % 10 == 0) return
+
                     return GetBuilder<InsightCardController>(
                       init: InsightCardController(
                         cardId: item.id,
@@ -67,12 +104,35 @@ class ScreenHome extends GetView<ScreenHomeController> {
                       ),
                       tag: item.id + routeName,
                       builder: (controller) {
+                        // return Column(
+                        //   children: [
+                        //     index != 0 && index % 10 == 0
+                        //         ? Column(children: [
+                        //             Card(
+                        //               child: GoogleInlineAds(
+                        //                 width:
+                        //                     MediaQuery.of(context).size.width,
+                        //                 tag: "Home$index",
+                        //                 height:
+                        //                     MediaQuery.of(context).size.width *
+                        //                         250 /
+                        //                         300,
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               color: Theme.of(context).backgroundColor,
+                        //               height: 8,
+                        //             )
+                        //           ])
+                        //         : SizedBox(),
                         return InsightCard(
                           routeName: routeName,
                           navKey: navKey,
                           showHeader: true,
                           cardId: item.id,
                           cardData: item.data(),
+                          // )
+                          // ],
                         );
                       },
                     );

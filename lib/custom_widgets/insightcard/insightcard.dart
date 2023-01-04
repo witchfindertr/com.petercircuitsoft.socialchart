@@ -40,8 +40,8 @@ class InsightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var user = Get.put(UserDataFetcher(userId: cardData.author.id),
-        tag: cardData.author.id);
+    // var user = Get.put(UserDataFetcher(userId: cardData.author.id),
+    //     tag: cardData.author.id);
     return Card(
       color: Theme.of(context).scaffoldBackgroundColor,
       // shape: Border.symmetric(

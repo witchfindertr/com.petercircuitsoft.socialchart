@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:socialchart/custom_widgets/ads/google_inline_ads.dart';
 import 'package:socialchart/custom_widgets/appbar_buttons.dart';
 import 'package:socialchart/custom_widgets/chart_summary_listtile.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
@@ -23,11 +24,6 @@ class ScreenExplore extends GetView<ScreenExploreController> {
         {'${navKey.index}$routeName': controller.scrollController}.entries);
     return SafeArea(
       child: Scaffold(
-        // appBar: MainAppbar(
-        //   titleText: "Explore",
-        //   elevation: 0,
-        //   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        // ),
         body: CustomScrollView(
           controller: controller.scrollController,
           slivers: [
@@ -48,6 +44,12 @@ class ScreenExplore extends GetView<ScreenExploreController> {
                   // callback: () => print("search button pressed"),
                 )
               ],
+            ),
+            SliverToBoxAdapter(
+              child: GoogleInlineAds(
+                  tag: "ExploreTop",
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width / 6.4),
             ),
             SliverToBoxAdapter(
               child: Container(
@@ -81,11 +83,6 @@ class ScreenExplore extends GetView<ScreenExploreController> {
                       userCount: 20123,
                     ),
                     SizedBox(height: 20),
-                    AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Container(color: Colors.amber, child: Text("광고")),
-                    ),
-                    SizedBox(height: 20),
                     Text(
                       "인기있는 인사이트 카드",
                       style: Theme.of(context).textTheme.headline6,
@@ -102,6 +99,13 @@ class ScreenExplore extends GetView<ScreenExploreController> {
                     Text(""),
                   ],
                 ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: GoogleInlineAds(
+                tag: "ExploreLast",
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width * 250 / 300,
               ),
             ),
           ],

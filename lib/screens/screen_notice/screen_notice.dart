@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:socialchart/app_constant.dart';
+import 'package:socialchart/custom_widgets/ads/google_inline_ads.dart';
 import 'package:socialchart/custom_widgets/main_sliver_appbar.dart';
 import 'package:socialchart/models/model_user_notice.dart';
 import 'package:socialchart/navigators/navigator_main/navigator_main_controller.dart';
@@ -38,7 +39,12 @@ class ScreenNotice extends GetView<ScreenNoticeController> {
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               ),
               SliverToBoxAdapter(
-                child: const SizedBox(),
+                child: Container(
+                  child: GoogleInlineAds(
+                      tag: "NoticeTop",
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width / 6.4),
+                ),
               ),
               PagedSliverList.separated(
                 pagingController: controller.pagingController,

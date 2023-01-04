@@ -15,17 +15,19 @@ class ModalScreenSearch extends GetView<ModalScreenSearchController> {
       appBar: AppBar(
         elevation: 0,
         leading: CupertinoButton(
-            child: Icon(CupertinoIcons.back), onPressed: () => Get.back()),
+            child: Icon(CupertinoIcons.xmark), onPressed: () => Get.back()),
+        centerTitle: false,
+        titleSpacing: 10,
         title: TextField(
           controller: controller.searchFieldController,
           decoration: InputDecoration(
             alignLabelWithHint: false,
             hintText: "차트 검색",
+            isDense: true,
             // hintStyle: TextStyle(color: Colors.blueAccent),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            contentPadding: const EdgeInsets.all(10),
             border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: BorderRadius.all(Radius.circular(30)),
             ),
           ),
           onChanged: (value) => controller.getSearchResult(value, 1),
